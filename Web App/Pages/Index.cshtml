@@ -4,7 +4,67 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-4">
+    <h1 class="display-4">Fantasy Sports Database</h1>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Players Roster</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>School</th>
+                            <th>Game ID</th>
+                            <th>Class</th>
+                            <th>Health</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Players != null && Model.Players.Any())
+                        {
+                            @foreach (var player in Model.Players)
+                            {
+                                <tr>
+                                    <td>@player.PlayerID</td>
+                                    <td><strong>@player.Name</strong></td>
+                                    <td>@player.SchoolName</td>
+                                    <td>@player.GameID</td>
+                                    <td>@player.Class</td>
+                                    <td>
+                                        <span class="@(player.HealthStatus.ToLower() == "healthy" ? "text-success" : "text-danger")">
+                                            @player.HealthStatus
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge @(player.BenchStatus.ToLower() == "active" ? "bg-success" : "bg-warning")">
+                                            @player.BenchStatus
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">
+                                    <i>No players found in the database</i>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Total Players: @(Model.Players?.Count ?? 0)</small>
+        </div>
+    </div>
 </div>
