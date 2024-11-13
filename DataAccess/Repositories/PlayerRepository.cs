@@ -1,5 +1,8 @@
-﻿using DataAccess.Models;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+using DataAccess.Models;
+using DataAccess.Queries;
+
+namespace DataAccess.Repositories;
 
 public class PlayerRepository
 {
@@ -16,30 +19,27 @@ public class PlayerRepository
 
     public IEnumerable<Player> GetAllPlayers()
     {
-        var players = new List<Player>();
+        List<Player> players = [];
         try
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                var commandText = "SELECT * FROM dbo.Player";
-                using var command = new SqlCommand(commandText, connection);
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            connection.Open();
+            using SqlCommand command = new(PlayerQueries.GetAllPlayers, connection);
 
-                using var reader = command.ExecuteReader();
-                while (reader.Read())
+            using SqlDataReader? reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Player player = new()
                 {
-                    var player = new Player
-                    {
-                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                        Name = Convert.ToString(reader["Name"]) ?? string.Empty,
-                        SchoolName = Convert.ToString(reader["SchoolName"]) ?? string.Empty,
-                        GameID = Convert.ToInt32(reader["GameID"]),
-                        Class = Convert.ToString(reader["Class"]) ?? string.Empty,
-                        HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
-                        BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty
-                    };
-                    players.Add(player);
-                }
+                    PlayerID = Convert.ToInt32(reader["PlayerID"]),
+                    Name = Convert.ToString(reader["Name"]) ?? string.Empty,
+                    SchoolName = Convert.ToString(reader["SchoolName"]) ?? string.Empty,
+                    GameID = Convert.ToInt32(reader["GameID"]),
+                    Class = Convert.ToString(reader["Class"]) ?? string.Empty,
+                    HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
+                    BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty
+                };
+                players.Add(player);
             }
         }
         catch (Exception ex)
