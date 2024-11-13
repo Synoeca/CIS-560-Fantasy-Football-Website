@@ -8,7 +8,7 @@ namespace DataAccess.Queries
 {
     public class GameQueries
     {
-        public const string GetAllGames = "SELECT * FROM Games";
+        public const string GetAllGames = "SELECT * FROM Football.Game";
 
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }

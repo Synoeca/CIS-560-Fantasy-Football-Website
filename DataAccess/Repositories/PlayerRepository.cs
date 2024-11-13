@@ -22,7 +22,7 @@ public class PlayerRepository
         List<Player> players = [];
         try
         {
-            using SqlConnection connection = new SqlConnection(_connectionString);
+            using SqlConnection connection = new(_connectionString);
             connection.Open();
             using SqlCommand command = new(PlayerQueries.GetAllPlayers, connection);
 
