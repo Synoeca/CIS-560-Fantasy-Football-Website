@@ -1,0 +1,55 @@
+﻿@page
+@model TeamsModel
+@{
+    ViewData["Title"] = "Teams";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Teams Roster</h2>
+                <span class="badge badge-primary">Total: @(Model.Teams?.Count ?? 0)</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">School Name</th>
+                            <th scope="col">Team Name</th>
+                            <th scope="col">City</th>
+                            <th scope="col">State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Teams != null && Model.Teams.Any())
+                        {
+                            @foreach (var team in Model.Teams)
+                            {
+                                <tr>
+                                    <td>@team.TeamID</td>
+                                    <td><strong>@team.SchoolName</strong></td>
+                                    <td>@team.TeamName</td>
+                                    <td>@team.City</td>
+                                    <td>@team.State</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-info-circle me-2"></i>No teams found in the database
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
