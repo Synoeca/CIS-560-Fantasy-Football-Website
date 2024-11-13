@@ -99,8 +99,38 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <!-- Players Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Players
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Players/Offense">Offense</a></li>
+                                <li><a class="dropdown-item" asp-page="/Players/Defense">Defense</a></li>
+                                <li><a class="dropdown-item" asp-page="/Players/SpecialTeams">Special Teams</a></li>
+                                <li><a class="dropdown-item" asp-page="/Players/Positions">Positions</a></li>
+                            </ul>
+                        </li>
+                        <!-- Teams Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Teams
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Teams/RealTeams">School Teams</a></li>
+                                <li><a class="dropdown-item" asp-page="/Teams/Fantasy">Fantasy Teams</a></li>
+                            </ul>
+                        </li>
+                        <!-- Games & Seasons -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Games & Seasons
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Games/Schedule">Game Schedule</a></li>
+                                <li><a class="dropdown-item" asp-page="/Games/Results">Game Results</a></li>
+                                <li><a class="dropdown-item" asp-page="/Seasons/Index">Seasons</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
