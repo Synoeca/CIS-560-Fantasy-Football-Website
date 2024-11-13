@@ -5,63 +5,150 @@
 }
 
 <div class="container">
-    <div class="card shadow-sm">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">Players Roster</h2>
-                <span class="badge badge-primary">Total: @(Model.Players?.Count ?? 0)</span>
+    <!-- Quick Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-primary">@(Model.Players?.Count ?? 0)</h3>
+                    <p class="card-text text-muted">Total Players</p>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">School</th>
-                            <th scope="col">Game</th>
-                            <th scope="col">Class</th>
-                            <th scope="col">Health</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Players != null && Model.Players.Any())
-                        {
-                            @foreach (var player in Model.Players)
-                            {
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-primary">@(Model.Teams?.Count ?? 0)</h3>
+                    <p class="card-text text-muted">Active Teams</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-primary">@(Model.Games?.Count ?? 0)</h3>
+                    <p class="card-text text-muted">Games Played</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-primary">Season 2024</h3>
+                    <p class="card-text text-muted">Current Season</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Games -->
+        <div class="col-md-8 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Recent Games</h4>
+                        <a asp-page="/Games/Index" class="btn btn-sm btn-primary">View All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td>@player.PlayerID</td>
-                                    <td><strong>@player.Name</strong></td>
-                                    <td>@player.SchoolName</td>
-                                    <td>@player.GameID</td>
-                                    <td>@player.Class</td>
-                                    <td>
-                                        <span class="@(player.HealthStatus.ToLower() == "healthy" ? "text-success" : "text-danger")">
-                                            @player.HealthStatus
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge @(player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">
-                                            @player.BenchStatus
-                                        </span>
-                                    </td>
+                                    <th>Date</th>
+                                    <th>Home Team</th>
+                                    <th>Score</th>
+                                    <th>Away Team</th>
                                 </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="7" class="text-center py-4">
-                                    <div class="text-muted">
-                                        <i class="fas fa-info-circle me-2"></i>No players found in the database
+                            </thead>
+                            <tbody>
+                                @if (Model.Games != null && Model.Games.Any())
+                                {
+                                    @foreach (var game in Model.Games.Take(5))
+                                    {
+                                        <tr>
+                                            <td>@game.Date.ToString("MM/dd/yyyy")</td>
+                                            <td>@game.HomeTeam</td>
+                                            <td class="text-center">
+                                                <strong>@game.HomeTeamScore - @game.AwayTeamScore</strong>
+                                            </td>
+                                            <td>@game.AwayTeam</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Teams -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Featured Teams</h4>
+                        <a asp-page="/Teams/Index" class="btn btn-sm btn-primary">View All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if (Model.Teams != null && Model.Teams.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var team in Model.Teams.Take(5))
+                            {
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">@team.TeamName</h6>
+                                        <small class="text-muted">@team.SchoolName</small>
                                     </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                    <span class="badge bg-primary rounded-pill">@team.City, @team.State</span>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="mb-0">Quick Actions</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Players/Index" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-users mb-2"></i>
+                                <br/>View Players
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Teams/Index" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-shield-alt mb-2"></i>
+                                <br/>View Teams
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Games/Schedule" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-calendar mb-2"></i>
+                                <br/>View Schedule
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Games/Results" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-trophy mb-2"></i>
+                                <br/>View Results
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

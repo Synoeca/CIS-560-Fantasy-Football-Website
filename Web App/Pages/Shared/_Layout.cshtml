@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Fantasy Sports Database</title>
+    <title>@ViewData["Title"] - Fantasy Football Database</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web_App.styles.css" asp-append-version="true" />
@@ -86,6 +86,10 @@
     </style>
 </head>
 <body>
+    @{
+        bool isIndexPage = ViewContext.RouteData.Values["Page"]?.ToString() == "/Index";
+    }
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
@@ -101,7 +105,7 @@
                         </li>
                         <!-- Players Section -->
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Players/Index">Players</a>
+                            <a class="nav-link" asp-area="" asp-page="/Player">Players</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -150,12 +154,23 @@
         </nav>
     </header>
 
-    <div class="stats-header">
-        <div class="container text-center">
-            <h1 class="display-4">Fantasy Football Database</h1>
-            <p class="lead">Player Statistics and Information</p>
+    @if (isIndexPage)
+    {
+        <div class="stats-header">
+            <div class="container text-center">
+                <h1 class="display-4">Fantasy Football Database</h1>
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="stats-header">
+            <div class="container text-center">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+                <p class="lead">@(ViewData["Subtitle"] ?? "Player Statistics and Information")</p>
+            </div>
+        </div>
+    }
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -165,7 +180,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Fantasy Sports Database - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - Fantasy Football Database - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 

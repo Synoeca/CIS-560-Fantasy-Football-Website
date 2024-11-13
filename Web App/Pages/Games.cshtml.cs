@@ -1,4 +1,3 @@
-// Pages/Games.cshtml.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;

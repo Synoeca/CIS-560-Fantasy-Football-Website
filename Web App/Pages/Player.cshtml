@@ -1,4 +1,68 @@
 ﻿@page
 @model Web_App.Pages.PlayerModel
 @{
+    ViewData["Title"] = "Player";
+    ViewData["Subtitle"] = "Player Information and Statistics";
 }
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Players Roster</h2>
+                <span class="badge badge-primary">Total: @(Model.Players?.Count ?? 0)</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">School</th>
+                            <th scope="col">Game</th>
+                            <th scope="col">Class</th>
+                            <th scope="col">Health</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Players != null && Model.Players.Any())
+                        {
+                            @foreach (var player in Model.Players)
+                            {
+                                <tr>
+                                    <td>@player.PlayerID</td>
+                                    <td><strong>@player.Name</strong></td>
+                                    <td>@player.SchoolName</td>
+                                    <td>@player.GameID</td>
+                                    <td>@player.Class</td>
+                                    <td>
+                                        <span class="@(player.HealthStatus.ToLower() == "healthy" ? "text-success" : "text-danger")">
+                                            @player.HealthStatus
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge @(player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">
+                                            @player.BenchStatus
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-info-circle me-2"></i>No players found in the database
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
