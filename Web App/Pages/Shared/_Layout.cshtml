@@ -3,16 +3,93 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Web_App</title>
+    <title>@ViewData["Title"] - Fantasy Sports Database</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web_App.styles.css" asp-append-version="true" />
+    <style>
+        :root {
+            --primary-color: #330A57;
+            --secondary-color: #A090C4;
+        }
+
+        body {
+            font-family: 'Figtree', sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+
+        .navbar-toggler {
+            background-color: var(--secondary-color);
+        }
+
+        .stats-header {
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            background-color: var(--secondary-color) !important;
+            color: var(--primary-color) !important;
+        }
+
+        .table-light {
+            background-color: var(--secondary-color) !important;
+            color: var(--primary-color) !important;
+        }
+
+        .badge {
+            padding: 0.5em 1em;
+            border-radius: 4px;
+        }
+
+        .badge-primary {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5em 1em;
+            font-size: 0.9em;
+        }
+
+        .badge-secondary {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .status-active {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-benched {
+            background-color: #ffc107;
+            color: var(--primary-color);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(160, 144, 196, 0.1) !important;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white !important;
+        }
+
+            .footer a {
+                color: var(--secondary-color) !important;
+            }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Web_App</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Fantasy Sports DB</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,16 +97,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+    <div class="stats-header">
+        <div class="container text-center">
+            <h1 class="display-4">Fantasy Sports Database</h1>
+            <p class="lead">Player Statistics and Information</p>
+        </div>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -38,14 +123,13 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Web_App - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - Fantasy Sports Database - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
