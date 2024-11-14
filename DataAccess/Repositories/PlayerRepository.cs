@@ -33,8 +33,7 @@ public class PlayerRepository
                 {
                     PlayerID = Convert.ToInt32(reader["PlayerID"]),
                     Name = Convert.ToString(reader["Name"]) ?? string.Empty,
-                    SchoolName = Convert.ToString(reader["SchoolName"]) ?? string.Empty,
-                    GameID = Convert.ToInt32(reader["GameID"]),
+                    TeamID = Convert.ToInt32(reader["TeamID"]),
                     Class = Convert.ToString(reader["Class"]) ?? string.Empty,
                     HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
                     BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty

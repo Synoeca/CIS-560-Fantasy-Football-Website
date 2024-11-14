@@ -9,8 +9,7 @@ namespace DataAccess.Models
 	public class Player
 	{
 		public int PlayerID { get; set; }
-		public string SchoolName { get; set; }
-		public int GameID { get; set; }
+		public int TeamID { get; set; }
 		public string Name { get; set; }
 		public string Class { get; set; }
 		public string HealthStatus { get; set; }
