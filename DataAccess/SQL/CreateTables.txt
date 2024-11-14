@@ -15,7 +15,7 @@ IF OBJECT_ID(N'Football.Team', 'U') IS NULL
 		[State] VARCHAR(50) NOT NULL
 	);
 GO
-
+n
 -- Game Table
 IF OBJECT_ID(N'Football.Game', 'U') IS NULL
 	CREATE TABLE Football.Game (
