@@ -104,45 +104,24 @@
                             <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <!-- Players Section -->
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Player">Players</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                Players List
+                                Players
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Player">List</a></li>
                                 <li><a class="dropdown-item" asp-page="/Players/Offense">Offense</a></li>
                                 <li><a class="dropdown-item" asp-page="/Players/Defense">Defense</a></li>
                                 <li><a class="dropdown-item" asp-page="/Players/SpecialTeams">Special Teams</a></li>
-                                <li><a class="dropdown-item" asp-page="/Players/Positions">Positions</a></li>
                             </ul>
                         </li>
                         <!-- Teams Section -->
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Teams">Teams</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                Teams List
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-page="/Teams/RealTeams">School Teams</a></li>
-                                <li><a class="dropdown-item" asp-page="/Teams/Fantasy">Fantasy Teams</a></li>
-                            </ul>
-                        </li>
                         <!-- Games Section -->
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Games">Games</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                Games List
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-page="/Games/Schedule">Game Schedule</a></li>
-                                <li><a class="dropdown-item" asp-page="/Games/Results">Game Results</a></li>
-                            </ul>
                         </li>
                         <!-- Seasons -->
                         <li class="nav-item">
