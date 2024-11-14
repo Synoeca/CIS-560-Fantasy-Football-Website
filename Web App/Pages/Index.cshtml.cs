@@ -1,48 +1,34 @@
-// IndexModel.cs
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccess.Models;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Web_App.Pages
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    private readonly ILogger<IndexModel> _logger;
+    public GameRepository GameRepository { get; set; }
+    public TeamRepository TeamRepository { get; set; }
+    public PlayerRepository PlayerRepository { get; set; }
+
+    public List<Game> Games { get; set; } = [];
+    public List<Team> Teams { get; set; } = [];
+    public List<Player> Players { get; set; } = [];
+
+    public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly PlayerRepository _playerRepository;
-        private readonly TeamRepository _teamRepository;
-        private readonly GameRepository _gameRepository;
-
-        public List<Player> Players { get; set; } = [];
-        public List<Team> Teams { get; set; } = [];
-        public List<Game> Games { get; set; } = [];
-
-        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
+        _logger = logger;
+        string? connectionString = configuration.GetConnectionString("DefaultConnection");
+        if (connectionString != null)
         {
-            _logger = logger;
-            string? connectionString = configuration.GetConnectionString("DefaultConnection");
-            if (connectionString != null)
-            {
-                _playerRepository = new PlayerRepository(connectionString);
-                _teamRepository = new TeamRepository(connectionString);
-                _gameRepository = new GameRepository(connectionString);
-            }
+            GameRepository = new GameRepository(connectionString);
+            TeamRepository = new TeamRepository(connectionString);
+            PlayerRepository = new PlayerRepository(connectionString);
         }
+    }
 
-        public void OnGet()
-        {
-            try
-            {
-                Players = _playerRepository.GetAllPlayers().ToList();
-                Teams = _teamRepository.GetAllTeams().ToList();
-                Games = _gameRepository.GetAllGames()
-                    .OrderByDescending(g => g.Date)
-                    .ToList();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error loading dashboard data");
-            }
-        }
+    public void OnGet()
+    {
+        Games = GameRepository.GetAllGames().ToList();
+        Teams = TeamRepository.GetAllTeams().ToList();
+        Players = PlayerRepository.GetAllPlayers().ToList();
     }
 }
