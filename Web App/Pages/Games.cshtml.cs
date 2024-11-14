@@ -11,7 +11,6 @@ namespace Web_App.Pages
     {
         private readonly ILogger<GamesModel> _logger;
         public GameRepository GameRepository { get; set; }
-        public TeamRepository TeamRepository { get; private set; }
         public List<Game> Games { get; set; } = [];
 
         public GamesModel(ILogger<GamesModel> logger, IConfiguration configuration)
@@ -21,7 +20,6 @@ namespace Web_App.Pages
             if (connectionString != null)
             {
                 GameRepository = new GameRepository(connectionString);
-                TeamRepository = new TeamRepository(connectionString);
             }
         }
 

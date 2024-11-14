@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Queries
 {
-    public class FantasyTeamPlayerQueries
+    public static class FantasyTeamPlayerQueries
     {
-        public const string GetAllFantasyTeamPlayers = "SELECT * FROM FantasyTeamPlayer";
+        public static readonly string GetAllFantasyTeamPlayers = "SELECT * FROM FantasyTeamPlayer";
 
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }

@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Queries
 {
-    public class TeamQueries
+    public static class TeamQueries
     {
-        public const string GetAllTeams = "SELECT * FROM Football.Team";
+        public static readonly string GetAllTeams = "SELECT * FROM Football.Team";
 
-        public const string GetTeamNameById =
-           """
-              SELECT TeamName
-              FROM Football.Team
-              WHERE TeamID = @TeamID
-            """;
+        /// <summary>
+        /// Gets team name by team ID
+        /// </summary>
+        public static readonly string GetTeamNameById ="""
+                                                                     SELECT TeamName
+                                                                     FROM Football.Team
+                                                                     WHERE TeamID = @TeamID
+                                                       """;
 
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }
