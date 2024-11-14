@@ -10,6 +10,13 @@ namespace DataAccess.Queries
     {
         public const string GetAllTeams = "SELECT * FROM Football.Team";
 
+        public const string GetTeamNameById =
+           """
+              SELECT TeamName
+              FROM Football.Team
+              WHERE TeamID = @TeamID
+            """;
+
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }
 }
