@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Queries
 {
-    public class DefenseQueries
+    public static class DefenseQueries
     {
-        public const string GetAllDefenses = "SELECT * FROM Defense";
+        public static readonly string GetAllDefenses = "SELECT * FROM Defense";
 
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }

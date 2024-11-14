@@ -1,0 +1,68 @@
+﻿@page
+@using DataAccess.Models
+@model SeasonsModel
+@{
+    ViewData["Title"] = "Seasons";
+    ViewData["Subtitle"] = "Season Records and Statistics";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Seasons Records</h2>
+                <span class="badge badge-primary">Total: @(Model.Seasons?.Count ?? 0)</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Team</th>
+                            <th scope="col">Game</th>
+                            <th scope="col">Wins</th>
+                            <th scope="col">Loses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Seasons != null && Model.Seasons.Any())
+                        {
+                            @foreach (Seasons season in Model.Seasons)
+                            {
+                                <tr>
+                                    <td>@season.SeasonID</td>
+                                    <td>@(season.Year?.ToString() ?? "N/A")</td>
+                                    <td>
+                                        @if (season.TeamID.HasValue)
+                                        {
+                                            <strong>@Model.TeamRepository.GetTeamNameById(season.TeamID.Value)</strong>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </td>
+                                    <td>@(season.GameID?.ToString() ?? "N/A")</td>
+                                    <td>@(season.Wins?.ToString() ?? "N/A")</td>
+                                    <td>@(season.Loses?.ToString() ?? "N/A")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-info-circle me-2"></i>No seasons found in the database
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

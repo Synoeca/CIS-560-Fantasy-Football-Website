@@ -22,6 +22,22 @@ namespace DataAccess.Repositories
             _connectionString = connectionString;
         }
 
+        public string GetTeamNameById(int teamId)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                connection.Open();
+                using SqlCommand command = new(TeamQueries.GetTeamNameById, connection);
+                command.Parameters.AddWithValue("@TeamID", teamId);
+                return Convert.ToString(command.ExecuteScalar()) ?? string.Empty;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         public IEnumerable<Game> GetAllGames()
         {
             List<Game> games = [];

@@ -27,6 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <tbody>
                         @if (Model.Games != null && Model.Games.Any())
                         {
                             @foreach (Game game in Model.Games)
@@ -34,8 +35,8 @@
                                 <tr>
                                     <td>@game.GameID</td>
                                     <td>@game.Date.ToString("MM/dd/yyyy")</td>
-                                    <td><strong>@game.HomeTeam</strong></td>
-                                    <td><strong>@game.AwayTeam</strong></td>
+                                    <td><strong>@Model.GameRepository.GetTeamNameById(Convert.ToInt32(game.HomeTeam))</strong></td>
+                                    <td><strong>@Model.GameRepository.GetTeamNameById(Convert.ToInt32(game.AwayTeam))</strong></td>
                                     <td>@game.HomeTeamScore</td>
                                     <td>@game.AwayTeamScore</td>
                                 </tr>

@@ -10,19 +10,22 @@ namespace Web_App.Pages
     public class GamesModel : PageModel
     {
         private readonly ILogger<GamesModel> _logger;
-        private readonly GameRepository _gameRepository;
+        public GameRepository GameRepository { get; set; }
         public List<Game> Games { get; set; } = [];
 
         public GamesModel(ILogger<GamesModel> logger, IConfiguration configuration)
         {
             _logger = logger;
             string? connectionString = configuration.GetConnectionString("DefaultConnection");
-            if (connectionString != null) _gameRepository = new GameRepository(connectionString);
+            if (connectionString != null)
+            {
+                GameRepository = new GameRepository(connectionString);
+            }
         }
 
         public void OnGet()
         {
-            Games = _gameRepository.GetAllGames().ToList();
+            Games = GameRepository.GetAllGames().ToList();
         }
     }
 }
