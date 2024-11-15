@@ -10,12 +10,12 @@ IF OBJECT_ID(N'Football.Team', 'U') IS NULL
 	CREATE TABLE Football.Team (
 		TeamID INT NOT NULL PRIMARY KEY,
 		SchoolName NVARCHAR(255) NOT NULL UNIQUE,
-		TeamName VARCHAR(255) NOT NULL,
-		City VARCHAR(255) NOT NULL,
-		[State] VARCHAR(50) NOT NULL
+		TeamName NVARCHAR(255) NOT NULL,
+		City NVARCHAR(255) NOT NULL,
+		[State] NVARCHAR(2) NOT NULL
 	);
 GO
-n
+
 -- Game Table
 IF OBJECT_ID(N'Football.Game', 'U') IS NULL
 	CREATE TABLE Football.Game (
