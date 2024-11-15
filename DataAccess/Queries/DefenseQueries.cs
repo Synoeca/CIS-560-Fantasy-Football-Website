@@ -8,7 +8,7 @@ namespace DataAccess.Queries
 {
     public static class DefenseQueries
     {
-        public static readonly string GetAllDefenses = "SELECT * FROM Defense";
+        public static readonly string GetAllDefenses = "SELECT * FROM Football.Defense";
 
         public static readonly string GetDefenseStatsByPlayerId = "SELECT * FROM Football.Defense WHERE PlayerID = @PlayerID";
 

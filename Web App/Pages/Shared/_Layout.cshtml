@@ -12,7 +12,11 @@
         @@font-face {
             font-family: 'Marsden Heavy';
             src: url('/fonts/Marsden-S-Heavy.eot');
-            src: local('Marsden Slim Heavy'), local('Marsden-S-Heavy'), url('/fonts/Marsden-S-Heavy.eot?#iefix') format('embedded-opentype'), url('/fonts/Marsden-S-Heavy.woff2') format('woff2'), url('/fonts/Marsden-S-Heavy.woff') format('woff'), url('/fonts/Marsden-S-Heavy.ttf') format('truetype');
+            src: local('Marsden Slim Heavy'), local('Marsden-S-Heavy'),
+                 url('/fonts/Marsden-S-Heavy.eot?#iefix') format('embedded-opentype'),
+                 url('/fonts/Marsden-S-Heavy.woff2') format('woff2'),
+                 url('/fonts/Marsden-S-Heavy.woff') format('woff'),
+                 url('/fonts/Marsden-S-Heavy.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -95,9 +99,9 @@
             color: white !important;
         }
 
-            .footer a {
-                color: var(--secondary-color) !important;
-            }
+        .footer a {
+            color: var(--secondary-color) !important;
+        }
     </style>
 </head>
 <body>
@@ -119,12 +123,16 @@
                             <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <!-- Players Section -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Player">Players</a>
                         </li>
                         <!-- Teams Section -->
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Teams">Teams</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="teamsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Teams</a>
+                            <ul class="dropdown-menu" aria-labelledby="teamsDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Teams">Teams</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/FantasyTeam">Fantasy Team</a></li>
+                            </ul>
                         </li>
                         <!-- Games Section -->
                         <li class="nav-item">
@@ -166,13 +174,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Fantasy Football Database - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+            &copy; 2024 - Fantasy Football Database - 
+             <a asp-area="" asp-page="/Privacy">Privacy</a>
+         </div>
+     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", false)
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="~/js/site.js" asp-append-version="true"></script>
+     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

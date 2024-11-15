@@ -8,7 +8,7 @@ namespace DataAccess.Queries
 {
     public static class FantasyTeamPlayerQueries
     {
-        public static readonly string GetAllFantasyTeamPlayers = "SELECT * FROM FantasyTeamPlayer";
+        public static readonly string GetAllFantasyTeamPlayers = "SELECT * FROM Football.FantasyTeamPlayer";
 
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }
