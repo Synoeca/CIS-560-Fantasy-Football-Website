@@ -2,7 +2,7 @@
 @using DataAccess.Models
 @model Web_App.Pages.PlayerModel
 @{
-    ViewData["Title"] = "Player";
+    ViewData["Title"] = "Players";
     ViewData["Subtitle"] = "Player Information and Statistics";
 }
 <div class="container">
@@ -101,7 +101,11 @@
                         {
                             <tr>
                                 <td>@player.PlayerID</td>
-                                <td><strong>@player.Name</strong></td>
+                                <td>
+                                    <a asp-page="/Individual" asp-route-playerId="@player.PlayerID" class="text-decoration-none">
+                                        <strong>@player.Name</strong>
+                                    </a>
+                                </td>
                                 <td>@Model.TeamRepository.GetTeamNameById(Convert.ToInt32(player.TeamID))</td>
                                 <td>@player.Class</td>
                                 <td>

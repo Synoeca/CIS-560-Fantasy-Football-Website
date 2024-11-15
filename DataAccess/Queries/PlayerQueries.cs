@@ -41,6 +41,12 @@
                                                               OFFSET @Offset ROWS
                                                               FETCH NEXT @PageSize ROWS ONLY
                                                           """;
+
+        public static readonly string GetPlayerById = """
+                                                          SELECT * 
+                                                          FROM Football.Player 
+                                                          WHERE PlayerID = @PlayerID
+                                                      """;
     }
 
 

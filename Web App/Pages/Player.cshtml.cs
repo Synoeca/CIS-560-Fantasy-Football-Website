@@ -52,10 +52,8 @@ namespace Web_App.Pages
 
         public void OnGet()
         {
-            // Get Teams for dropdown
             Teams = TeamRepository.GetAllTeams().ToList();
 
-            // Populate filter dropdowns
             TeamsList = Teams.Select(t => new SelectListItem
             {
                 Value = t.TeamID.ToString(),
@@ -64,19 +62,18 @@ namespace Web_App.Pages
 
             ClassesList =
             [
-                new() { Value = "Freshman", Text = "Freshman" },
-                new() { Value = "Sophomore", Text = "Sophomore" },
-                new() { Value = "Junior", Text = "Junior" },
-                new() { Value = "Senior", Text = "Senior" }
+                new SelectListItem { Value = "Freshman", Text = "Freshman" },
+                new SelectListItem { Value = "Sophomore", Text = "Sophomore" },
+                new SelectListItem { Value = "Junior", Text = "Junior" },
+                new SelectListItem { Value = "Senior", Text = "Senior" }
             ];
 
             StatusList =
             [
-                new() { Value = "Active", Text = "Active" },
-                new() { Value = "Benched", Text = "Benched" }
+                new SelectListItem { Value = "Active", Text = "Active" },
+                new SelectListItem { Value = "Benched", Text = "Benched" }
             ];
 
-            // Get total count
             TotalFilteredCount = _playerRepository.GetFilteredPlayersCount(
                 SearchString,
                 TeamFilter,
@@ -84,11 +81,9 @@ namespace Web_App.Pages
                 StatusFilter
             );
 
-            // Calculate pagination
             TotalPages = (int)Math.Ceiling(TotalFilteredCount / (double)PageSize);
             CurrentPage = Math.Max(1, Math.Min(CurrentPage, TotalPages));
 
-            // Get filtered and paginated data
             Players = _playerRepository.GetFilteredPlayers(
                 SearchString,
                 TeamFilter,

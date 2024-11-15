@@ -10,6 +10,8 @@ namespace DataAccess.Queries
     {
         public static readonly string GetAllDefenses = "SELECT * FROM Defense";
 
+        public static readonly string GetDefenseStatsByPlayerId = "SELECT * FROM Football.Defense WHERE PlayerID = @PlayerID";
+
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }
 }

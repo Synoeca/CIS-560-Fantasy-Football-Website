@@ -163,5 +163,35 @@ namespace DataAccess.Repositories
             }
             return players;
         }
+
+        public Player GetPlayerById(int playerId)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                connection.Open();
+                using SqlCommand command = new(PlayerQueries.GetPlayerById, connection);
+                command.Parameters.AddWithValue("@PlayerID", playerId);
+
+                using SqlDataReader? reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    return new Player
+                    {
+                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
+                        Name = Convert.ToString(reader["Name"]) ?? string.Empty,
+                        TeamID = Convert.ToInt32(reader["TeamID"]),
+                        Class = Convert.ToString(reader["Class"]) ?? string.Empty,
+                        HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
+                        BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty
+                    };
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Repository error: {ex.Message}");
+            }
+        }
     }
 }

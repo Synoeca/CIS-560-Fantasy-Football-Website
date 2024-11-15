@@ -10,6 +10,8 @@ namespace DataAccess.Queries
     {
         public const string GetAllSpecialTeams = "SELECT * FROM SpecialTeams";
 
+        public static readonly string GetSpecialTeamsStatsByPlayerId = "SELECT * FROM Football.SpecialTeams WHERE PlayerID = @PlayerID";
+
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }
 }
