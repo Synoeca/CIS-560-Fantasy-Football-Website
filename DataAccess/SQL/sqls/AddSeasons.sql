@@ -1,4 +1,4 @@
-USE CIS560;
+USE Team13;
 
 INSERT INTO Football.Seasons (SeasonID, GameID, TeamID, [Year], Wins, Loses)
 VALUES

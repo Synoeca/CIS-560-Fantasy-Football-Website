@@ -1,4 +1,4 @@
-USE CIS560;
+USE Team13;
 
 INSERT INTO Football.Game (GameID, HomeTeam, AwayTeam, [Date], HomeTeamScore, AwayTeamScore) 
 VALUES 

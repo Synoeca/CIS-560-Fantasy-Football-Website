@@ -1,4 +1,4 @@
-USE CIS560;
+USE Team13;
 GO
 
 IF SCHEMA_ID(N'Football') IS NULL

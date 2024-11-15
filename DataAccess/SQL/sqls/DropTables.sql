@@ -1,4 +1,4 @@
-USE CIS560;
+USE Team13;
 GO
 
 IF OBJECT_ID(N'Football.FantasyTeamPlayer', 'U') IS NOT NULL
