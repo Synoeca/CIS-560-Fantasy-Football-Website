@@ -37,7 +37,8 @@ namespace Web_App.Services
                     "CreateTables.sql",
                     "AddBig12Teams.sql",
                     "AddBig12Players.sql",
-                    "AddGamesSeasons.sql"
+                    "AddGames.sql",
+                    "AddSeasons.sql"
                 ];
 
                 await using SqlConnection connection = new(_connectionString);
