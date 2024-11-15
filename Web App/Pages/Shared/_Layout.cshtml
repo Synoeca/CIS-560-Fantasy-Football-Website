@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web_App.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/fonts/stylesheet.css" />
     <style>
+        @@font-face {
+            font-family: 'Marsden Heavy';
+            src: url('/fonts/Marsden-S-Heavy.eot');
+            src: local('Marsden Slim Heavy'), local('Marsden-S-Heavy'), url('/fonts/Marsden-S-Heavy.eot?#iefix') format('embedded-opentype'), url('/fonts/Marsden-S-Heavy.woff2') format('woff2'), url('/fonts/Marsden-S-Heavy.woff') format('woff'), url('/fonts/Marsden-S-Heavy.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --primary-color: #330A57;
             --secondary-color: #A090C4;
@@ -15,6 +25,11 @@
 
         body {
             font-family: 'Figtree', sans-serif;
+        }
+
+        h1, h2, h4 {
+            font-family: 'Marsden Heavy', sans-serif;
+            font-weight: 800;
         }
 
         .navbar {
@@ -158,6 +173,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>
