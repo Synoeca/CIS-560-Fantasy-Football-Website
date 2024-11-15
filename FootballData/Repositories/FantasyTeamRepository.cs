@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using DataAccess.Models;
-using DataAccess.Queries;
+using FootballData.Sql.Queries;
 
 namespace DataAccess.Repositories
 {
-	public class FantasyTeamRepository
+    public class FantasyTeamRepository
 	{
 		private readonly string _connectionString;
 

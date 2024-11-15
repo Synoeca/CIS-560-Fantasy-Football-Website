@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Queries
+namespace FootballData.Sql.Queries
 {
     public static class TeamQueries
     {
@@ -13,7 +13,7 @@ namespace DataAccess.Queries
         /// <summary>
         /// Gets team name by team ID
         /// </summary>
-        public static readonly string GetTeamNameById ="""
+        public static readonly string GetTeamNameById = """
                                                                      SELECT TeamName
                                                                      FROM Football.Team
                                                                      WHERE TeamID = @TeamID

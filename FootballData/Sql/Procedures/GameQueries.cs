@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Queries
+namespace FootballData.Sql.Queries
 {
-    public static class FantasyTeamPlayerQueries
+    public static class GameQueries
     {
-        public static readonly string GetAllFantasyTeamPlayers = "SELECT * FROM FantasyTeamPlayer";
+        public static readonly string GetAllGames = "SELECT * FROM Football.Game";
+
+
 
         // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }
