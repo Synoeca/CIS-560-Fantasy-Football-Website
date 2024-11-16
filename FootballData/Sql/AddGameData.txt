@@ -1,26 +1,26 @@
 ﻿USE CIS560;
 GO
 
-INSERT INTO Football.Game(HomeTeam, AwayTeam, [Date], HomeTeamScore, AwayTeamScore)
+INSERT INTO Football.Game(HomeTeam, AwayTeam, [Date], [Week], HomeTeamScore, AwayTeamScore)
 VALUES 
   -- Arizona at Kansas State
- (9, 1, 2024-09-13, 0, 31, 7),
+ (9, 1, '2024-09-13', 0, 31, 7),
 
  -- UCF at TCU
- (12, 14, 2024-09-14, 0, 34, 35),
+ (12, 14, '2024-09-14', 0, 34, 35),
 
  -- Kansas at West Virginia
- (16, 10, 2024-09-21, 0, 32, 28),
+ (16, 10, '2024-09-21', 0, 32, 28),
 
  -- Houston at Cincinnati
- (5, 7, 2024-09-21, 0, 34, 0),
+ (5, 7, '2024-09-21', 0, 34, 0),
 
  -- Arizona State at Texas Tech
- (13, 2, 2024-09-21, 0, 30, 22),
+ (13, 2, '2024-09-21', 0, 30, 22),
 
  -- Utah at Oklahoma State
- (11, 15, 2024-09-21, 0, 19, 22),
+ (11, 15, '2024-09-21', 0, 19, 22),
 
  -- Baylor at Colorado
- (6, 3, 2024-09-21, 0, 7, 0);
+ (6, 3, '2024-09-21', 0, 7, 0);
 GO
