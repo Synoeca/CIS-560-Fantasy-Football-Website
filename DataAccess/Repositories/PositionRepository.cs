@@ -18,7 +18,7 @@ namespace DataAccess.Repositories
 		{
 			List<Position> positions = [];
             using SqlConnection connection = new(_connectionString);
-            SqlCommand command = new SqlCommand(PositionQueries.GetAllPositions, connection);
+            SqlCommand command = new(PositionQueries.GetAllPositions, connection);
             connection.Open();
             SqlDataReader? reader = command.ExecuteReader();
             while (reader.Read())

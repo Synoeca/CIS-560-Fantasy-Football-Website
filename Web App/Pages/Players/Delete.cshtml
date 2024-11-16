@@ -1,0 +1,57 @@
+﻿@page "{id:int}"
+@model Web_App.Pages.Players.DeleteModel
+@{
+    ViewData["Title"] = "Delete Player";
+}
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Delete Player</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h3 class="alert-heading">Are you sure you want to delete this player?</h3>
+                <p>This action cannot be undone.</p>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">@Model.Player.Name</dd>
+
+                        <dt class="col-sm-4">Team</dt>
+                        <dd class="col-sm-8">@Model.TeamName</dd>
+
+                        <dt class="col-sm-4">Class</dt>
+                        <dd class="col-sm-8">@Model.Player.Class</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Health Status</dt>
+                        <dd class="col-sm-8">
+                            <span class="@(Model.Player.HealthStatus?.ToLower() == "healthy" ? "text-success" : "text-danger")">
+                                @Model.Player.HealthStatus
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-4">Bench Status</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge @(Model.Player.BenchStatus?.ToLower() == "active" ? "status-active" : "status-benched")">
+                                @Model.Player.BenchStatus
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <form method="post">
+                <input type="hidden" asp-for="Player.PlayerID" />
+                <button type="submit" class="btn btn-danger">Delete Player</button>
+                <a asp-page="./Player" class="btn btn-secondary">Back to List</a>
+            </form>
+        </div>
+    </div>
+</div>

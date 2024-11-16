@@ -164,7 +164,7 @@ namespace DataAccess.Repositories
             return players;
         }
 
-        public Player GetPlayerById(int playerId)
+        public Player? GetPlayerById(int playerId)
         {
             try
             {
@@ -187,6 +187,71 @@ namespace DataAccess.Repositories
                     };
                 }
                 return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Repository error: {ex.Message}");
+            }
+        }
+
+        public int InsertPlayer(Player player)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                connection.Open();
+                using SqlCommand command = new(PlayerQueries.InsertPlayer, connection);
+
+                command.Parameters.AddWithValue("@Name", player.Name);
+                command.Parameters.AddWithValue("@TeamID", player.TeamID);
+                command.Parameters.AddWithValue("@Class", player.Class);
+                command.Parameters.AddWithValue("@HealthStatus", player.HealthStatus);
+                command.Parameters.AddWithValue("@BenchStatus", player.BenchStatus);
+
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Repository error: {ex.Message}");
+            }
+        }
+
+        public bool UpdatePlayer(Player player)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                connection.Open();
+                using SqlCommand command = new(PlayerQueries.UpdatePlayer, connection);
+
+                command.Parameters.AddWithValue("@PlayerID", player.PlayerID);
+                command.Parameters.AddWithValue("@Name", player.Name);
+                command.Parameters.AddWithValue("@TeamID", player.TeamID);
+                command.Parameters.AddWithValue("@Class", player.Class);
+                command.Parameters.AddWithValue("@HealthStatus", player.HealthStatus);
+                command.Parameters.AddWithValue("@BenchStatus", player.BenchStatus);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Repository error: {ex.Message}");
+            }
+        }
+
+        public bool DeletePlayer(int playerId)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                connection.Open();
+                using SqlCommand command = new(PlayerQueries.DeletePlayer, connection);
+
+                command.Parameters.AddWithValue("@PlayerID", playerId);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
             }
             catch (Exception ex)
             {

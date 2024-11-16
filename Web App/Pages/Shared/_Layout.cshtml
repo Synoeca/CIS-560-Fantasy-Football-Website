@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web_App.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/fonts/stylesheet.css" />
     <style>
         @@font-face {
@@ -102,6 +103,41 @@
         .footer a {
             color: var(--secondary-color) !important;
         }
+
+        .action-buttons {
+            transition: opacity 0.2s ease-in-out;
+            display: inline-flex;
+            gap: 0.5rem;
+        }
+
+            .action-buttons .btn {
+                opacity: 0;
+                transition: opacity 0.2s ease-in-out;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.875rem;
+                color: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+
+        tr:hover .action-buttons .btn {
+            opacity: 1;
+        }
+
+        .action-buttons .btn-outline-danger {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .action-buttons .btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .action-buttons .btn-outline-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
     </style>
 </head>
 <body>
@@ -124,7 +160,7 @@
                         </li>
                         <!-- Players Section -->
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Player">Players</a>
+                            <a class="nav-link" asp-area="" asp-page="/Players/Player">Players</a>
                         </li>
                         <!-- Teams Section -->
                         <li class="nav-item dropdown">

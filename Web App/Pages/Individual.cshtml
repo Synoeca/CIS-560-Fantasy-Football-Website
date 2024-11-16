@@ -1,4 +1,5 @@
 ﻿@page
+@using DataAccess.Models
 @model Web_App.Pages.IndividualModel
 @{
     ViewData["Title"] = "Player Details";
@@ -65,7 +66,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var stat in Model.OffenseStats)
+                                @foreach (Offense? stat in Model.OffenseStats)
                                 {
                                     <tr>
                                         <td>@stat.GameID</td>
@@ -96,7 +97,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var stat in Model.DefenseStats)
+                                @foreach (Defense? stat in Model.DefenseStats)
                                 {
                                     <tr>
                                         <td>@stat.GameID</td>
@@ -126,7 +127,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var stat in Model.SpecialTeamsStats)
+                                @foreach (SpecialTeams? stat in Model.SpecialTeamsStats)
                                 {
                                     <tr>
                                         <td>@stat.GameID</td>

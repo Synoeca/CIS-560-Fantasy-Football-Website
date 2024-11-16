@@ -12,7 +12,7 @@ namespace Web_App.Pages
         private readonly DefenseRepository _defenseRepository;
         private readonly SpecialTeamsRepository _specialTeamsRepository;
 
-        public Player Player { get; set; }
+        public Player? Player { get; set; }
         public List<Offense> OffenseStats { get; set; }
         public List<Defense> DefenseStats { get; set; }
         public List<SpecialTeams> SpecialTeamsStats { get; set; }

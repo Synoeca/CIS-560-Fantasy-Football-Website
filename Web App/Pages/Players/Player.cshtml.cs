@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Web_App.Pages
+namespace Web_App.Pages.Players
 {
     public class PlayerModel : PageModel
     {
