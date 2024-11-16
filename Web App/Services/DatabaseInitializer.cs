@@ -44,10 +44,10 @@ namespace Web_App.Services
                 // Check if database exists
                 const string checkDbQuery = """
                                             
-                                                        SELECT COUNT(*) 
-                                                        FROM sys.databases 
-                                                        WHERE name = 'Team13'
-                                            """;
+                            SELECT COUNT(*) 
+                            FROM sys.databases 
+                            WHERE name = 'Team13'
+                """;
 
                 await using SqlCommand checkCommand = new(checkDbQuery, masterConnection);
                 int dbExists = Convert.ToInt32(await checkCommand.ExecuteScalarAsync());

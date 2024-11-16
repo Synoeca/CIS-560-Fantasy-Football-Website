@@ -19,7 +19,7 @@ GO
 -- Game Table
 IF OBJECT_ID(N'Football.Game', 'U') IS NULL
 	CREATE TABLE Football.Game (
-		GameID INT NOT NULL PRIMARY KEY,
+		GameID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 		HomeTeam INT NOT NULL,
 		AwayTeam INT NOT NULL,
 		[Date] DATE NOT NULL,

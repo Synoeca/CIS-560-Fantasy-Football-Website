@@ -5,7 +5,7 @@ using DataAccess.Models;
 using System.Collections.Generic;
 using DataAccess.Repositories;
 
-namespace Web_App.Pages
+namespace Web_App.Pages.Games
 {
     public class GamesModel : PageModel
     {

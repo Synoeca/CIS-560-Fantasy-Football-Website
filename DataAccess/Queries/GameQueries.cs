@@ -1,17 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccess.Queries
+﻿public static class GameQueries
 {
-    public static class GameQueries
-    {
-        public static readonly string GetAllGames = "SELECT * FROM Football.Game";
+    public static readonly string GetAllGames = """
+        SELECT GameID, HomeTeam, AwayTeam, Date, HomeTeamScore, AwayTeamScore 
+        FROM Football.Game
+    """;
 
+    public static readonly string InsertGame = """
+       INSERT INTO Football.Game (HomeTeam, AwayTeam, Date, HomeTeamScore, AwayTeamScore)
+       VALUES (@HomeTeam, @AwayTeam, @Date, @HomeTeamScore, @AwayTeamScore);
+       SELECT SCOPE_IDENTITY();
+   """;
 
+    public static readonly string UpdateGame = """
+       UPDATE Football.Game
+       SET HomeTeam = @HomeTeam,
+           AwayTeam = @AwayTeam,
+           Date = @Date,
+           HomeTeamScore = @HomeTeamScore,
+           AwayTeamScore = @AwayTeamScore
+       WHERE GameID = @GameID
+   """;
 
-        // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
-    }
+    public static readonly string DeleteGame = """
+       DELETE FROM Football.Game
+       WHERE GameID = @GameID
+   """;
+
+    public static readonly string GetGameById = """
+        SELECT GameID, HomeTeam, AwayTeam, Date, HomeTeamScore, AwayTeamScore
+        FROM Football.Game
+        WHERE GameID = @GameID
+    """;
 }
