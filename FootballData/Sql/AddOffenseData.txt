@@ -1,0 +1,187 @@
+﻿USE CIS560;
+GO
+
+INSERT INTO Football.Offense(PlayerID, GameID, PassingYards, PassingAttempts, RushingYards, Carries, ReceivingYards, Receptions, Touchdowns)
+VALUES 
+ -- Arizona at Kansas State Offense
+ -- Arizona
+ (4, 1, 268, 42, 5, 3, 0, 0, 0), -- Noah Fifita
+ (7, 1, 0, 0, 48, 14, 2, 1, 1), -- Quali Conley
+ (12, 1, 0, 0, 3, 2, 14, 2, 0), -- Kedrick Reescano
+ (23, 1, 0, 0, 0, 0, 138, 11, 0), -- Tetairoa McMillan
+ (21, 1, 0, 0, 0, 0, 75, 6, 0), -- Montana Lemonious-Craig
+ (11, 1, 0, 0, 0, 0, 19, 2, 0), -- Rayshon Luke
+ (18, 1, 0, 0, 0, 0, 12, 1, 0), -- Chris Hunter
+ (19, 1, 0, 0, 0, 0, 6, 1, 0), -- Devin Hyatt
+ (32, 1, 0, 0, 0, 0, 5, 1, 0), -- Sam Olson
+ (28, 1, 0, 0, 0, 0, 0, 0, 0), -- Malachi Riley
+ (29, 1, 0, 0, 0, 0, 0, 0, 0), -- Keyan Burnett
+ (26, 1, 0, 0, 0, 0, -3, 1, 0), -- Jeremiah Patterson
+
+ -- Kansas State
+ (519, 1, 156, 23, 110, 17, 0, 0, 2), -- Avery Johnson
+ (524, 1, 0, 0, 86, 17, 0, 0, 1), -- DJ Giddens
+ (523, 1, 0, 0, 41, 6, 3, 1, 0), -- Dylan Edwards
+ (530, 1, 0, 0, 0, 0, 60, 3, 0), -- Jayce Brown
+ (548, 1, 0, 0, 0, 0, 45, 3, 1), -- Brayden Loftin
+ (535, 1, 0, 0, 0, 0, 22, 2, 0), -- Keagan Johnson
+ (531, 1, 0, 0, 0, 0, 9, 1, 0), -- Dante Cephas
+ (534, 1, 0, 0, 0, 0, 8, 1, 0), -- Jadon Jackson
+ (552, 1, 0, 0, 0, 0, 6, 2, 1), -- Will Swanson
+ (542, 1, 0, 0, 0, 0, 3, 1, 0), -- Tre Spivey
+
+ -- UCF at TCU Offense
+ -- UCF
+ (873, 2, 230, 22, 46, 9, 0, 0, 3), -- KJ Jefferson
+ (879, 2, 0, 0, 180, 29, 29, 1, 3), -- RJ Harvey
+ (876, 2, 0, 0, 24, 7, 0, 0, 0), -- Peny Boone
+ (895, 2, 0, 0, 19, 4, -2, 2, 0), -- Xavier Townsend
+ (881, 2, 0, 0, 13, 3, 0, 0, 0), -- Myles Montgomery
+ (882, 2, 0, 0, 7, 2, 0, 0, 0), -- Johnny Richardson
+ (887, 2, 0, 0, 0, 0, 145, 6, 2), -- Kobe Hudson
+ (902, 2, 0, 0, 0, 0, 43, 3, 0), -- Randy Pittman Jr.
+ (889, 2, 0, 0, 0, 0, 15, 1, 0), -- Jacoby Jones
+
+ -- TCU
+ (731, 2, 402, 52, 10, 1, 0, 0, 4), -- Josh Hoover
+ (738, 2, 0, 0, 35, 11, 8, 4, 0), -- Cam Cook
+ (740, 2, 0, 0, 14, 2, 0, 0, 0), -- Dominique Johnson
+ (764, 2, 0, 0, 2, 1, 37, 4, 2), -- Savion Williams
+ (742, 2, 0, 0, 1, 1, 21, 1, 0), -- Jeremy Payne
+ (747, 2, 0, 0, 0, 0, 200, 9, 1), -- Jack Bech
+ (759, 2, 0, 0, 0, 0, 54, 4, 1), -- Eric McAlister
+ (761, 2, 0, 0, 0, 0, 46, 5, 0), -- JP Richardson
+ (767, 2, 0, 0, 0, 0, 15, 3, 0), -- Drake Dabney
+ (766, 2, 0, 0, 0, 0, 14, 3, 0), -- Chase Curtis
+ (751, 2, 0, 0, 0, 0, 7, 2, 0), -- JoJo Earle
+
+ -- Kansas at West Virginia Offense
+ -- Kansas
+ (586, 3, 184, 25, 11, 7, 0, 0, 1), -- Jalon Daniels
+ (595, 3, 0, 0, 110, 27, 2, 1, 1), -- Devin Neal
+ (603, 3, 0, 0, 55, 3, 75, 6, 2), -- Luke Grimm
+ (599, 3, 0, 0, 0, 0, 46, 2, 0), -- Lawrence Arnold
+ (615, 3, 0, 0, 0, 0, 25, 2, 0), -- Jared Casey
+ (611, 3, 0, 0, 0, 0, 22, 2, 0), -- Quentin Skinner
+ (620, 3, 0, 0, 0, 0, 9, 1, 0), -- Trevor Kardell
+
+ -- West Virginia
+ (1005, 3, 295, 30, 87, 17, 0, 0, 3), -- Garrett Greene
+ (1012, 3, 0, 0, 38, 6, 0, 0, 0), -- CJ Donaldson Jr.
+ (1016, 3, 0, 0, 15, 6, 16, 2, 1), -- Jahiem White
+ (1026, 3, 0, 0, 12, 2, 41, 2, 1), -- Rodney Gallagher III
+ (1007, 3, 0, 0, -3, 1, 0, 0, 0), -- Nicco Marchiol
+ (1019, 3, 0, 0, 0, 0, 150, 7, 0), -- Hudson Clement
+ (1029, 3, 0, 0, 0, 0, 70, 2, 0), -- Traylon Ray
+ (1038, 3, 0, 0, 0, 0, 18, 2, 1), -- Kole Taylor
+ (1018, 3, 0, 0, 0, 0, 0, 0, 0), -- Jaden Bray
+ (1032, 3, 0, 0, 0, 0, 0, 0, 0), -- Jarel Williams
+
+ -- Houston at Cincinnati Offense
+ -- Houston
+ (375, 4, 73, 16, 27, 9, 0, 0, 0), -- Donovan Smith
+ (372, 4, 19, 5, 34, 9, 0, 0, 0), -- Zeon Chriss
+ (383, 4, 0, 0, 62, 6, 23, 2, 0), -- Re'Shaun Sanford II
+ (385, 4, 0, 0, 20, 6, 12, 2, 0), -- Stacy Sneed
+ (380, 4, 0, 0, 5, 3, -1, 1, 0), -- Parker Jenkins
+ (393, 4, 0, 0, 0, 0, 51, 2, 0), -- Joseph Manjack IV
+ (406, 4, 0, 0, 0, 0, 5, 2, 0), -- Maliq Carr
+ (394, 4, 0, 0, 0, 0, 3, 1, 0), -- Mekhi Mews
+ (402, 4, 0, 0, 0, 0, 0, 1, 0), -- Jonah Wilson
+ (392, 4, 0, 0, 0, 0, -1, 2, 0), -- Stephon Johnson
+
+ -- Cincinnati
+ (255, 4, 188, 15, 4, 3, 0, 0, 3), -- Brendan Sorsby
+ (254, 4, 25, 4, -2, 4, 0, 0, 0), -- Brady Lichtenberg
+ (261, 4, 0, 0, 78, 16, 19, 2, 1), -- Corey Kiner
+ (263, 4, 0, 0, 38, 4, 0, 0, 0), -- Chance Williams
+ (258, 4, 0, 0, 17, 3, 0, 0, 0), -- Manny Covey
+ (262, 4, 0, 0, 8, 3, 0, 0, 0), -- Evan Pryor
+ (259, 4, 0, 0, 8, 3, 0, 0, 0), -- Victor Dawson
+ (265, 4, 0, 0, 0, 0, 60, 3, 0), -- Sterling Berkhalter
+ (266, 4, 0, 0, 0, 0, 34, 2, 2), -- Xzavier Henderson
+ (280, 4, 0, 0, 0, 0, 31, 2, 0), -- Joe Royer
+ (271, 4, 0, 0, 0, 0, 20, 1, 0), -- Jamoi Mayes
+ (268, 4, 0, 0, 0, 0, 17, 1, 0), -- Tony Johnson
+ (274, 4, 0, 0, 0, 0, 10, 1, 0), -- Tyrin Smith
+ (277, 4, 0, 0, 0, 0, 10, 1, 0), -- Joey Beljan
+ (283, 4, 0, 0, 0, 0, 7, 1, 0), -- Devyn Zahursky
+ (267, 4, 0, 0, 0, 0, 5, 1, 0), -- Barry Jackson Jr.
+
+ -- Arizona State at Texas Tech Offense
+ -- Arizona State
+ (66, 5, 282, 38, 25, 9, 0, 0, 1), -- Sam Leavitt
+ (73, 5, 0, 0, 60, 18, 117, 6, 2), -- Cam Skattebo
+ (69, 5, 0, 0, 9, 3, 23, 3, 0), -- Kyson Brown
+ (79, 5, 0, 0, 0, 0, 74, 6, 0), -- Xavier Guillory
+ (87, 5, 0, 0, 0, 0, 33, 2, 0), -- Jordyn Tyson
+ (95, 5, 0, 0, 0, 0, 22, 3, 0), -- Chamon Metayer
+ (86, 5, 0, 0, 0, 0, 13, 2, 0), -- Melquan Stovall
+ (84, 5, 0, 0, 0, 0, 0, 0, 0), -- Jake Smith
+ (81, 5, 0, 0, 0, 0, 0, 0, 0), -- Malik McClain
+
+ -- Texas Tech
+ (807, 5, 201, 44, -15, 3, 0, 0, 2), -- Behren Morton
+ (809, 5, 0, 0, 117, 27, 3, 2, 0), -- Tahj Brooks
+ (810, 5, 0, 0, 24, 3, 0, 0, 0), -- Cameron Dickey
+ (814, 5, 0, 0, 7, 2, 0, 0, 0), -- J'Koby Williams
+ (833, 5, 0, 0, 3, 1, 0, 0, 1), -- Jalin Conyers
+ (823, 5, 0, 0, 0, 0, 89, 10, 1), -- Josh Kelly
+ (818, 5, 0, 0, 0, 0, 63, 5, 0), -- Caleb Douglas
+ (819, 5, 0, 0, 0, 0, 29, 3, 0), -- Coy Eakin
+ (839, 5, 0, 0, 0, 0, 12, 1, 0), -- Mason Tharp
+ (837, 5, 0, 0, 0, 0, 5, 1, 1), -- Johncarlos Miller II
+ (821, 5, 0, 0, 0, 0, 0, 1, 0), -- Micah Hudson
+ (824, 5, 0, 0, 0, 0, 0, 1, 0), -- Drae McCray
+
+ -- Utah at Oklahoma State Offense
+ -- Utah
+ (938, 6, 207, 29, 41, 6, 0, 0, 1), -- Isaac Wilson
+ (940, 6, 0, 0, 182, 25, -2, 2, 0), -- Micah Bernard
+ (946, 6, 0, 0, 10, 4, 5, 1, 0), -- Charlie Vincent
+ (943, 6, 0, 0, 9, 8, 0, 0, 0), -- Mike Mitchell
+ (945, 6, 0, 0, 7, 5, 0, 0, 0), -- Dijon Stanley
+ (971, 6, 0, 0, 1, 1, 74, 4, 2), -- Brant Kuithe
+ (961, 6, 0, 0, 0, 0, 95, 7, 0), -- Dorian Singer
+ (958, 6, 0, 0, 0, 0, 35, 3, 0), -- Money Parks
+ (965, 6, 0, 0, 0, 0, 0, 0, 0), -- Dallen Bentley
+
+ -- Oklahoma State
+ (652, 6, 206, 33, -8, 1, 0, 0, 2), -- Alan Bowman
+ (654, 6, 31, 11, 0, 1, 0, 0, 0), -- Garret Rangel
+ (660, 6, 0, 0, 42, 11, 16, 3, 0), -- Ollie Gordon II
+ (684, 6, 0, 0, 11, 1, 47, 4, 1), -- Brennan Presley
+ (665, 6, 0, 0, 3, 1, 3, 1, 0), -- Sesi Vailahi
+ (687, 6, 0, 0, 0, 0, 50, 3, 0), -- De'Zhaun Stribling
+ (685, 6, 0, 0, 0, 0, 49, 3, 0), -- Talyn Shettron
+ (681, 6, 0, 0, 0, 0, 42, 3, 1), -- Rashod Owens
+ (675, 6, 0, 0, 0, 0, 30, 2, 0), -- Gavin Freeman
+ (692, 6, 0, 0, 0, 0, 0, 0, 0), -- Tyler Foster
+
+ -- Baylor at Colorado Offense
+ -- Baylor
+ (131, 7, 148, 21, 82, 9, 0, 0, 3), -- Sawyer Robertson
+ (137, 7, 0, 0, 47, 15, 19, 1, 0), -- Dominic Richardson
+ (138, 7, 0, 0, 21, 10, 14, 2, 0), -- Bryson Washington
+ (135, 7, 0, 0, 13, 4, 0, 0, 0), -- Dawson Pendergrass
+ (136, 7, 0, 0, 3, 2, 0, 0, 0), -- Richard Reese
+ (140, 7, 0, 0, 0, 1, 36, 3, 1), -- Monaray Baldwin
+ (151, 7, 0, 0, 0, 0, 43, 2, 1), -- Hal Presley
+ (149, 7, 0, 0, 0, 0, 30, 2, 0), -- Ketron Jackson Jr.
+ (144, 7, 0, 0, 0, 0, 6, 1, 0), -- Josh Cameron
+ (157, 7, 0, 0, 0, 0, 0, 0, 0), -- Michael Trigg
+ (148, 7, 0, 0, 0, 0, 0, 0, 0), -- Ashtyn Hawkins
+
+ -- Colorado
+ (312, 7, 341, 41, 26, 19, 0, 0, 3), -- Shedeur Sanders
+ (316, 7, 0, 0, 41, 12, -3, 1, 0), -- Isaiah Augustave
+ (322, 7, 0, 0, 22, 9, -1, 1, 2), -- Micah Welch
+ (325, 7, 0, 0, 3, 1, 40, 4, 0), -- Jimmy Horn Jr.
+ (326, 7, 0, 0, 0, 0, 130, 7, 0), -- Travis Hunter
+ (331, 7, 0, 0, 0, 0, 71, 2, 1), -- Omarion Miller
+ (338, 7, 0, 0, 0, 0, 68, 4, 1), -- LaJohntay Wester
+ (330, 7, 0, 0, 0, 0, 27, 3, 0), -- Drelon Miller
+ (334, 7, 0, 0, 0, 0, 5, 1, 0), -- Will Sheppard
+ (343, 7, 0, 0, 0, 0, 5, 1, 0), -- Sav'ell Smalls
+ (339, 7, 0, 0, 0, 0, -1, 1, 0); -- Sam Hart
+GO
