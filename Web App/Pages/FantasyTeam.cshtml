@@ -47,11 +47,6 @@
                                 </a>
                             </th>
                             <th scope="col">
-                                <a asp-page="/FantasyTeam" asp-route-sortOrder="@(Model.SortOrder == "points" ? "points_desc" : "points")" class="text-dark text-decoration-none">
-                                    Points @(Model.SortOrder switch { "points" => "↑", "points_desc" => "↓", _ => "" })
-                                </a>
-                            </th>
-                            <th scope="col">
                                 <a asp-page="/FantasyTeam" asp-route-sortOrder="@(Model.SortOrder == "wins" ? "wins_desc" : "wins")" class="text-dark text-decoration-none">
                                     Wins @(Model.SortOrder switch { "wins" => "↑", "wins_desc" => "↓", _ => "" })
                                 </a>
@@ -67,7 +62,6 @@
                                 <tr>
                                     <td>@team.FantasyTeamID</td>
                                     <td><strong>@team.FantasyTeamName</strong></td>
-                                    <td>@team.PointsScored</td>
                                     <td>@team.Wins</td>
                                     <td>@team.Losses</td>
                                 </tr>

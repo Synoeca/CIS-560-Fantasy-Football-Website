@@ -27,7 +27,6 @@ namespace DataAccess.Repositories
                 {
                     FantasyTeamID = reader.GetInt32(0),
                     FantasyTeamName = reader.GetString(1),
-                    PointsScored = reader.GetInt32(2),
                     Wins = reader.GetInt32(3),
                     Losses = reader.GetInt32(4)
                 });
@@ -66,9 +65,8 @@ namespace DataAccess.Repositories
                 {
                     FantasyTeamID = reader.GetInt32(0),
                     FantasyTeamName = reader.GetString(1),
-                    PointsScored = reader.GetInt32(2),
-                    Wins = reader.GetInt32(3),
-                    Losses = reader.GetInt32(4)
+                    Wins = reader.GetInt32(2),
+                    Losses = reader.GetInt32(3)
                 });
             }
 

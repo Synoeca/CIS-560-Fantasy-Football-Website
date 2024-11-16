@@ -76,7 +76,6 @@ IF OBJECT_ID(N'Football.FantasyTeam', 'U') IS NULL
 	CREATE TABLE Football.FantasyTeam (
 		FantasyTeamID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 		FantasyTeamName NVARCHAR(255) NOT NULL UNIQUE,
-		PointsScored INT NOT NULL,
 		Wins INT NOT NULL,
 		Losses INT NOT NULL
 	);

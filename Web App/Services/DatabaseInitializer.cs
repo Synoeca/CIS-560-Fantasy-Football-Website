@@ -120,6 +120,7 @@ namespace Web_App.Services
                     "AddBig12Teams.sql",
                     "AddBig12Players.sql",
                     "AddPositions.sql",
+                    "AddFantasyTeams.sql",
                     "AddFantasyTeamPlayer.sql",
                     "AddGames.sql",
                     "AddOffenseData.sql",
