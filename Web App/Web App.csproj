@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\Seasons\" />
-    <Folder Include="Pages\Teams\" />
   </ItemGroup>
 
 </Project>

@@ -120,7 +120,10 @@ namespace Web_App.Services
                     "AddBig12Teams.sql",
                     "AddBig12Players.sql",
                     "AddGames.sql",
-                    "AddSeasons.sql"
+                    "AddSeasons.sql",
+                    "AddOffenses.sql",
+                    "AddDefenses.sql",
+                    "AddSpecialTeams.sql"
                 ];
 
                 await using SqlConnection connection = new(_connectionString);

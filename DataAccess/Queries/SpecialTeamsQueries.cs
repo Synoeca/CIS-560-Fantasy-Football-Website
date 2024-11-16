@@ -1,17 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccess.Queries
+﻿public static class SpecialTeamsQueries
 {
-    public class SpecialTeamsQueries
-    {
-        public const string GetAllSpecialTeams = "SELECT * FROM Football.SpecialTeams";
+    // Existing query
+    public static readonly string GetSpecialTeamsStatsByPlayerId = """
+                                                                       SELECT * FROM Football.SpecialTeams 
+                                                                       WHERE PlayerID = @PlayerID
+                                                                   """;
 
-        public static readonly string GetSpecialTeamsStatsByPlayerId = "SELECT * FROM Football.SpecialTeams WHERE PlayerID = @PlayerID";
+    // Add these new queries
+    public static readonly string GetSpecialTeamsStatsByPlayerAndGame = """
+                                                                            SELECT * FROM Football.SpecialTeams 
+                                                                            WHERE PlayerID = @PlayerID AND GameID = @GameID
+                                                                        """;
 
-        // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
-    }
+    public static readonly string InsertSpecialTeamsStats = """
+                                                                INSERT INTO Football.SpecialTeams 
+                                                                (PlayerID, GameID, FieldGoalsMade, FieldGoalsAttempted, 
+                                                                 ExtraPointsMade, ExtraPointsAttempted, ReturnYards, ReturnAttempts)
+                                                                VALUES 
+                                                                (@PlayerID, @GameID, @FieldGoalsMade, @FieldGoalsAttempted,
+                                                                 @ExtraPointsMade, @ExtraPointsAttempted, @ReturnYards, @ReturnAttempts)
+                                                            """;
+
+    public static readonly string UpdateSpecialTeamsStats = """
+                                                                UPDATE Football.SpecialTeams
+                                                                SET FieldGoalsMade = @FieldGoalsMade,
+                                                                    FieldGoalsAttempted = @FieldGoalsAttempted,
+                                                                    ExtraPointsMade = @ExtraPointsMade,
+                                                                    ExtraPointsAttempted = @ExtraPointsAttempted,
+                                                                    ReturnYards = @ReturnYards,
+                                                                    ReturnAttempts = @ReturnAttempts
+                                                                WHERE PlayerID = @PlayerID AND GameID = @GameID
+                                                            """;
+
+    public static readonly string DeleteSpecialTeamsStats = """
+                                                                DELETE FROM Football.SpecialTeams
+                                                                WHERE PlayerID = @PlayerID AND GameID = @GameID
+                                                            """;
+
+    public static readonly string GetAllSpecialTeamsStats = """
+                                                                SELECT * FROM Football.SpecialTeams
+                                                            """;
+
+    public static readonly string GetSpecialTeamsByGameId = """
+                                                                SELECT * FROM Football.SpecialTeams
+                                                                WHERE GameID = @GameID
+                                                            """;
 }

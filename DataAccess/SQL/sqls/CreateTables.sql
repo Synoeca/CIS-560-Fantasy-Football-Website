@@ -93,8 +93,8 @@ IF OBJECT_ID(N'Football.SpecialTeams', 'U') IS NULL
 		GameID INT NOT NULL,
 		FieldGoalsMade INT NOT NULL,
 		FieldGoalsAttempted INT NOT NULL,
-		ExtraPointsMade INT NOT NULL,
-		ExtraPointsAttempted INT NOT NULL,
+		ExtraPointsMade INT,
+		ExtraPointsAttempted INT,
 		ReturnYards INT NOT NULL,
 		ReturnAttempts INT NOT NULL,
 		CONSTRAINT FK_SpecialTeams_Game FOREIGN KEY (GameID)
@@ -108,7 +108,7 @@ IF OBJECT_ID(N'Football.Defense', 'U') IS NULL
 		PlayerID INT NOT NULL PRIMARY KEY,
 		GameID INT NOT NULL,
 		Interceptions INT NOT NULL,
-		Tackles INT NOT NULL,
+		Tackles INT,
 		Sacks INT NOT NULL,
 		ForcedFumbles INT NOT NULL,
 		CONSTRAINT FK_Defense_Game FOREIGN KEY (GameID)
