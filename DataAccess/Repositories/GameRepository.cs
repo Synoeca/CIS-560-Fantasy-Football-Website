@@ -55,6 +55,7 @@ namespace DataAccess.Repositories
                         HomeTeam = reader["HomeTeam"] is DBNull ? string.Empty : Convert.ToString(reader["HomeTeam"]),
                         AwayTeam = reader["AwayTeam"] is DBNull ? string.Empty : Convert.ToString(reader["AwayTeam"]),
                         Date = reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
+                        Week = reader["Week"] is DBNull ? 0 : Convert.ToInt32(reader["Week"]),
                         HomeTeamScore = reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
                         AwayTeamScore = reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
                     };

@@ -32,8 +32,6 @@ namespace DataAccess.Repositories
                         GameID = Convert.ToInt32(reader["GameID"]),
                         FieldGoalsMade = Convert.ToInt32(reader["FieldGoalsMade"]),
                         FieldGoalsAttempted = Convert.ToInt32(reader["FieldGoalsAttempted"]),
-                        ExtraPointsMade = Convert.ToInt32(reader["ExtraPointsMade"]),
-                        ExtraPointsAttempted = Convert.ToInt32(reader["ExtraPointsAttempted"]),
                         ReturnYards = Convert.ToSingle(reader["ReturnYards"]),
                         ReturnAttempts = Convert.ToInt32(reader["ReturnAttempts"])
                     });

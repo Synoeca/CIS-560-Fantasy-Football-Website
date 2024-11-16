@@ -31,7 +31,6 @@ namespace DataAccess.Repositories
                         PlayerID = Convert.ToInt32(reader["PlayerID"]),
                         GameID = Convert.ToInt32(reader["GameID"]),
                         Interceptions = Convert.ToInt32(reader["Interceptions"]),
-                        Tackles = Convert.ToInt32(reader["Tackles"]),
                         Sacks = Convert.ToInt32(reader["Sacks"]),
                         ForcedFumbles = Convert.ToInt32(reader["ForcedFumbles"])
                     });

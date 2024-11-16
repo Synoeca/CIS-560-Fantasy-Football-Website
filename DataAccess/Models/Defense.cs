@@ -11,7 +11,6 @@ namespace DataAccess.Models
         public int PlayerID { get; set; }
         public int GameID { get; set; }
         public int Interceptions { get; set; }
-        public int Tackles { get; set; }
         public int Sacks { get; set; }
         public int ForcedFumbles { get; set; }
     }
