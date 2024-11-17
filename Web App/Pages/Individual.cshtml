@@ -3,7 +3,7 @@
 @model Web_App.Pages.IndividualModel
 @{
     ViewData["Title"] = "Player Details";
-    ViewData["Subtitle"] = $"{Model.Player.Name}'s Statistics";
+    ViewData["Subtitle"] = $"{Model.Player?.Name}'s Statistics";
 }
 
 <style>
@@ -29,121 +29,207 @@
     <div class="card shadow-sm">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">@Model.Player.Name</h2>
-                <span class="badge badge-primary">@Model.Player.Class</span>
+                <h2 class="mb-0">@Model.Player?.Name</h2>
+                <span class="badge badge-primary">@Model.Player?.Class</span>
             </div>
         </div>
         <div class="card-body">
-            <p>Team: @Model.Player.TeamID | Status: <span class="badge @(Model.Player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">@Model.Player.BenchStatus</span></p>
+            <p>
+                <span class="fw-bold">Team:</span>
+                @{
+                    System.Diagnostics.Debug.Assert(Model.Player != null, "Model.Player != null");
+                }
+                @Model.TeamRepository.GetTeamNameById(Model.Player.TeamID) | <span class="fw-bold">Status:</span> <span class="badge @(Model.Player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">@Model.Player.BenchStatus</span>
+            </p>
+            @{
+                bool hasOffense = Model.OffenseStats.Any();
+                bool hasDefense = Model.DefenseStats.Any();
+                bool hasSpecialTeams = Model.SpecialTeamsStats.Any();
 
-            <ul class="nav nav-tabs" id="statsTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="offense-tab" data-bs-toggle="tab" data-bs-target="#offense" type="button" role="tab" aria-controls="offense" aria-selected="true">Offense</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="defense-tab" data-bs-toggle="tab" data-bs-target="#defense" type="button" role="tab" aria-controls="defense" aria-selected="false">Defense</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="special-teams-tab" data-bs-toggle="tab" data-bs-target="#special-teams" type="button" role="tab" aria-controls="special-teams" aria-selected="false">Special Teams</button>
-                </li>
-            </ul>
-
-            <div class="tab-content mt-3" id="statsTabContent">
-                <div class="tab-pane fade show active" id="offense" role="tabpanel" aria-labelledby="offense-tab">
-                    <h3>Offense Statistics</h3>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Game ID</th>
-                                    <th>Passing Yards</th>
-                                    <th>Passing Attempts</th>
-                                    <th>Rushing Yards</th>
-                                    <th>Carries</th>
-                                    <th>Receiving Yards</th>
-                                    <th>Receptions</th>
-                                    <th>Touchdowns</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (Offense? stat in Model.OffenseStats)
-                                {
-                                    <tr>
-                                        <td>@stat.GameID</td>
-                                        <td>@stat.PassingYards</td>
-                                        <td>@stat.PassingAttempts</td>
-                                        <td>@stat.RushingYards</td>
-                                        <td>@stat.Carries</td>
-                                        <td>@stat.ReceivingYards</td>
-                                        <td>@stat.Receptions</td>
-                                        <td>@stat.Touchdowns</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                string firstActiveTab = hasOffense ? "offense" :
+                hasDefense ? "defense" :
+                hasSpecialTeams ? "special-teams" : "";
+            }
+            @if (hasOffense || hasDefense || hasSpecialTeams)
+            {
+                <ul class="nav nav-tabs" id="statsTabs" role="tablist">
+                    @if (hasOffense)
+                    {
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @(firstActiveTab == "offense" ? "active" : "")"
+                                    id="offense-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#offense"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="offense"
+                                    aria-selected="@(firstActiveTab == "offense" ? "true" : "false")">
+                                Offense
+                            </button>
+                        </li>
+                    }
+                    @if (hasDefense)
+                    {
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @(firstActiveTab == "defense" ? "active" : "")"
+                                    id="defense-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#defense"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="defense"
+                                    aria-selected="@(firstActiveTab == "defense" ? "true" : "false")">
+                                Defense
+                            </button>
+                        </li>
+                    }
+                    @if (@hasSpecialTeams)
+                    {
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @(firstActiveTab == "special-teams" ? "active" : "")"
+                                    id="special-teams-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#special-teams"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="special-teams"
+                                    aria-selected="@(firstActiveTab == "special-teams" ? "true" : "false")">
+                                Special Teams
+                            </button>
+                        </li>
+                    }
+                </ul>
+                <div class="tab-content mt-3" id="statsTabContent">
+                    @if (hasOffense)
+                    {
+                        <div class="tab-pane fade @(firstActiveTab == "offense" ? "show active" : "")"
+                             id="offense"
+                             role="tabpanel"
+                             aria-labelledby="offense-tab">
+                            <h3>Offense Statistics</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Matchup</th>
+                                            <th>Passing Yards</th>
+                                            <th>Passing Attempts</th>
+                                            <th>Rushing Yards</th>
+                                            <th>Carries</th>
+                                            <th>Receiving Yards</th>
+                                            <th>Receptions</th>
+                                            <th>Touchdowns</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Offense? stat in Model.OffenseStats)
+                                        {
+                                            Game? game = Model.GameRepository.GetGameById(stat.GameID);
+                                            string awayTeam = Model.TeamRepository.GetTeamNameById((int)game?.AwayTeam!);
+                                            <tr>
+                                                <td>@game?.Date.ToString("MM/dd/yyyy")</td>
+                                                <td>vs. @awayTeam</td>
+                                                <td>@stat.PassingYards</td>
+                                                <td>@stat.PassingAttempts</td>
+                                                <td>@stat.RushingYards</td>
+                                                <td>@stat.Carries</td>
+                                                <td>@stat.ReceivingYards</td>
+                                                <td>@stat.Receptions</td>
+                                                <td>@stat.Touchdowns</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    @if (hasDefense)
+                    {
+                        <div class="tab-pane fade @(firstActiveTab == "defense" ? "show active" : "")" 
+                             id="defense"
+                             role="tabpanel" 
+                             aria-labelledby="defense-tab">
+                            <h3>Defense Statistics</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Matchup</th>
+                                            <th>Interceptions</th>
+                                            <th>Tackles</th>
+                                            <th>Sacks</th>
+                                            <th>Forced Fumbles</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Defense? stat in Model.DefenseStats)
+                                        {
+                                            Game? game = Model.GameRepository.GetGameById(stat.GameID);
+                                            string awayTeam = Model.TeamRepository.GetTeamNameById((int)game?.AwayTeam!);
+                                            <tr>
+                                                <td>@game?.Date.ToString("MM/dd/yyyy")</td>
+                                                <td>vs. @awayTeam</td>
+                                                <td>@stat.Interceptions</td>
+                                                <td>@stat.Tackles</td>
+                                                <td>@stat.Sacks</td>
+                                                <td>@stat.ForcedFumbles</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    @if (hasSpecialTeams)
+                    {
+                        <div class="tab-pane fade @(firstActiveTab == "special-teams" ? "show active" : "")"
+                             id="special-teams"
+                             role="tabpanel"
+                             aria-labelledby="special-teams-tab">
+                            <h3>Special Teams Statistics</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Matchup</th>
+                                            <th>Field Goals Made</th>
+                                            <th>Field Goals Attempted</th>
+                                            <th>Extra Points Made</th>
+                                            <th>Extra Points Attempted</th>
+                                            <th>Return Yards</th>
+                                            <th>Return Attempts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (SpecialTeams? stat in Model.SpecialTeamsStats)
+                                        {
+                                            Game? game = Model.GameRepository.GetGameById(stat.GameID);
+                                            string awayTeam = Model.TeamRepository.GetTeamNameById((int)game?.AwayTeam!);
+                                            <tr>
+                                                <td>@game?.Date.ToString("MM/dd/yyyy")</td>
+                                                <td>vs. @awayTeam</td>
+                                                <td>@stat.FieldGoalsMade</td>
+                                                <td>@stat.FieldGoalsAttempted</td>
+                                                <td>@stat.ExtraPointsMade</td>
+                                                <td>@stat.ExtraPointsAttempted</td>
+                                                <td>@stat.ReturnYards</td>
+                                                <td>@stat.ReturnAttempts</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
                 </div>
-                <div class="tab-pane fade" id="defense" role="tabpanel" aria-labelledby="defense-tab">
-                    <h3>Defense Statistics</h3>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Game ID</th>
-                                    <th>Interceptions</th>
-                                    <th>Tackles</th>
-                                    <th>Sacks</th>
-                                    <th>Forced Fumbles</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (Defense? stat in Model.DefenseStats)
-                                {
-                                    <tr>
-                                        <td>@stat.GameID</td>
-                                        <td>@stat.Interceptions</td>
-                                        <td>@stat.Tackles</td>
-                                        <td>@stat.Sacks</td>
-                                        <td>@stat.ForcedFumbles</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="special-teams" role="tabpanel" aria-labelledby="special-teams-tab">
-                    <h3>Special Teams Statistics</h3>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Game ID</th>
-                                    <th>Field Goals Made</th>
-                                    <th>Field Goals Attempted</th>
-                                    <th>Extra Points Made</th>
-                                    <th>Extra Points Attempted</th>
-                                    <th>Return Yards</th>
-                                    <th>Return Attempts</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (SpecialTeams? stat in Model.SpecialTeamsStats)
-                                {
-                                    <tr>
-                                        <td>@stat.GameID</td>
-                                        <td>@stat.FieldGoalsMade</td>
-                                        <td>@stat.FieldGoalsAttempted</td>
-                                        <td>@stat.ExtraPointsMade</td>
-                                        <td>@stat.ExtraPointsAttempted</td>
-                                        <td>@stat.ReturnYards</td>
-                                        <td>@stat.ReturnAttempts</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            }
+            else
+            {
+                <p class="mt-3">No statistics available for this player.</p>
+            }
         </div>
     </div>
 </div>

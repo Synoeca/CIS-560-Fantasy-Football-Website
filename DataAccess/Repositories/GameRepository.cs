@@ -52,8 +52,8 @@ namespace DataAccess.Repositories
                     Game game = new()
                     {
                         GameID = Convert.ToInt32(reader["GameID"]),
-                        HomeTeam = reader["HomeTeam"] is DBNull ? string.Empty : Convert.ToString(reader["HomeTeam"]),
-                        AwayTeam = reader["AwayTeam"] is DBNull ? string.Empty : Convert.ToString(reader["AwayTeam"]),
+                        HomeTeam = reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
+                        AwayTeam = reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
                         Date = reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
                         HomeTeamScore = reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
                         AwayTeamScore = reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
@@ -149,8 +149,8 @@ namespace DataAccess.Repositories
                     return new Game
                     {
                         GameID = Convert.ToInt32(reader["GameID"]),
-                        HomeTeam = reader["HomeTeam"] is DBNull ? string.Empty : Convert.ToString(reader["HomeTeam"]),
-                        AwayTeam = reader["AwayTeam"] is DBNull ? string.Empty : Convert.ToString(reader["AwayTeam"]),
+                        HomeTeam = reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
+                        AwayTeam = reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
                         Date = reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
                         HomeTeamScore = reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
                         AwayTeamScore = reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])

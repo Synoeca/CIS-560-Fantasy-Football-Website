@@ -9,8 +9,8 @@ namespace DataAccess.Models
     public class Game
     {
         public int GameID { get; set; }
-        public string? HomeTeam { get; set; }
-        public string? AwayTeam { get; set; }
+        public int? HomeTeam { get; set; }
+        public int? AwayTeam { get; set; }
         public DateTime Date { get; set; }
         public int Week { get; set; }
         public int HomeTeamScore { get; set; }

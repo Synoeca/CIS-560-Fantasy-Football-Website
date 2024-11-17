@@ -22,7 +22,6 @@ namespace DataAccess.Repositories
                 connection.Open();
                 using SqlCommand command = new(DefenseQueries.GetDefenseStatsByPlayerId, connection);
                 command.Parameters.AddWithValue("@PlayerID", playerId);
-
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -30,10 +29,10 @@ namespace DataAccess.Repositories
                     {
                         PlayerID = Convert.ToInt32(reader["PlayerID"]),
                         GameID = Convert.ToInt32(reader["GameID"]),
-                        Interceptions = Convert.ToInt32(reader["Interceptions"]),
-                        Tackles = Convert.ToInt32(reader["Tackles"]),
-                        Sacks = Convert.ToInt32(reader["Sacks"]),
-                        ForcedFumbles = Convert.ToInt32(reader["ForcedFumbles"])
+                        Interceptions = reader["Interceptions"] is DBNull ? 0 : Convert.ToInt32(reader["Interceptions"]),
+                        Tackles = reader["Tackles"] is DBNull ? 0 : Convert.ToInt32(reader["Tackles"]),
+                        Sacks = reader["Sacks"] is DBNull ? 0 : Convert.ToInt32(reader["Sacks"]),
+                        ForcedFumbles = reader["ForcedFumbles"] is DBNull ? 0 : Convert.ToInt32(reader["ForcedFumbles"])
                     });
                 }
             }

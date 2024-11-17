@@ -16,6 +16,8 @@ namespace Web_App.Pages
         public List<Offense> OffenseStats { get; set; }
         public List<Defense> DefenseStats { get; set; }
         public List<SpecialTeams> SpecialTeamsStats { get; set; }
+        public GameRepository GameRepository { get; set; }
+        public TeamRepository TeamRepository { get; set; }
 
         public IndividualModel(IConfiguration configuration)
         {
@@ -26,6 +28,8 @@ namespace Web_App.Pages
                 _offenseRepository = new OffenseRepository(connectionString);
                 _defenseRepository = new DefenseRepository(connectionString);
                 _specialTeamsRepository = new SpecialTeamsRepository(connectionString);
+                GameRepository = new GameRepository(connectionString);
+                TeamRepository = new TeamRepository(connectionString);
             }
         }
 

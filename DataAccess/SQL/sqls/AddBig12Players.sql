@@ -57,7 +57,6 @@ VALUES
  (N'Rhino Tapa''atoutai', 15, N'Freshman' , N'Healthy' , N'Active'),
  (N'Zarius Wells', 15, N'Freshman' , N'Healthy' , N'Active'),
  (N'Michael Wooten', 15, N'Sophomore' , N'Healthy' , N'Active'),
- (N'Arizona Defense', 15, N' ', N'Healthy', N'Active'),
  (N'Tyler Loop', 15, N'Senior' , N'Healthy' , N'Active'),
  (N'Michael Salgado-Medina', 15, N'Freshman' , N'Healthy' , N'Active'),
  (N'Lachlan Bruce', 15, N'Junior' , N'Healthy' , N'Active'),
