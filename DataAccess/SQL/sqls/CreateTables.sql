@@ -23,6 +23,7 @@ IF OBJECT_ID(N'Football.Game', 'U') IS NULL
 		HomeTeam INT NOT NULL,
 		AwayTeam INT NOT NULL,
 		[Date] DATE NOT NULL,
+		[Week] INT NOT NULL,
 		HomeTeamScore INT NOT NULL,
 		AwayTeamScore INT NOT NULL,
 		CONSTRAINT FK_Game_HomeTeam FOREIGN KEY (HomeTeam)
@@ -69,18 +70,15 @@ GO
 IF OBJECT_ID(N'Football.Position', 'U') IS NULL
 	CREATE TABLE Football.Position (
 		PositionID INT NOT NULL PRIMARY KEY,
-		PositionName NVARCHAR(50) NOT NULL UNIQUE,
-		MinCount INT NOT NULL,
-		MaxCount INT NOT NULL
+		PositionName NVARCHAR(50) NOT NULL UNIQUE
 	);
 GO
 
 -- FantasyTeam Table
 IF OBJECT_ID(N'Football.FantasyTeam', 'U') IS NULL
 	CREATE TABLE Football.FantasyTeam (
-		FantasyTeamID INT NOT NULL PRIMARY KEY,
+		FantasyTeamID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 		FantasyTeamName NVARCHAR(255) NOT NULL UNIQUE,
-		PointsScored INT NOT NULL,
 		Wins INT NOT NULL,
 		Losses INT NOT NULL
 	);
@@ -88,8 +86,8 @@ GO
 
 -- SpecialTeams Table
 IF OBJECT_ID(N'Football.SpecialTeams', 'U') IS NULL
-	CREATE TABLE Football.SpecialTeams (
-		PlayerID INT PRIMARY KEY NOT NULL,
+		CREATE TABLE Football.SpecialTeams (
+		PlayerID INT NOT NULL,
 		GameID INT NOT NULL,
 		FieldGoalsMade INT NOT NULL,
 		FieldGoalsAttempted INT NOT NULL,
@@ -97,29 +95,35 @@ IF OBJECT_ID(N'Football.SpecialTeams', 'U') IS NULL
 		ExtraPointsAttempted INT,
 		ReturnYards INT NOT NULL,
 		ReturnAttempts INT NOT NULL,
+		CONSTRAINT PK_SpecialTeams PRIMARY KEY (PlayerID, GameID),  -- Composite primary key
 		CONSTRAINT FK_SpecialTeams_Game FOREIGN KEY (GameID)
-			REFERENCES Football.Game(GameID)
+			REFERENCES Football.Game(GameID),
+		CONSTRAINT FK_SpecialTeams_Player FOREIGN KEY (PlayerID)
+			REFERENCES Football.Player(PlayerID)
 	);
 GO
 
 -- Defense Table
 IF OBJECT_ID(N'Football.Defense', 'U') IS NULL
 	CREATE TABLE Football.Defense (
-		PlayerID INT NOT NULL PRIMARY KEY,
+		PlayerID INT NOT NULL,
 		GameID INT NOT NULL,
 		Interceptions INT NOT NULL,
 		Tackles INT,
 		Sacks INT NOT NULL,
 		ForcedFumbles INT NOT NULL,
+		CONSTRAINT PK_Defense PRIMARY KEY (PlayerID, GameID),  -- Composite primary key
 		CONSTRAINT FK_Defense_Game FOREIGN KEY (GameID)
-			REFERENCES Football.Game(GameID)
-	);
+			REFERENCES Football.Game(GameID),
+		CONSTRAINT FK_Defense_Player FOREIGN KEY (PlayerID)
+			REFERENCES Football.Player(PlayerID)
+);
 GO
 
 -- Offense Table
 IF OBJECT_ID(N'Football.Offense', 'U') IS NULL
 	CREATE TABLE Football.Offense (
-		PlayerID INT NOT NULL PRIMARY KEY,
+		PlayerID INT NOT NULL,
 		GameID INT NOT NULL,
 		PassingYards INT NOT NULL,
 		PassingAttempts INT NOT NULL,
@@ -128,9 +132,12 @@ IF OBJECT_ID(N'Football.Offense', 'U') IS NULL
 		ReceivingYards INT NOT NULL,
 		Receptions INT NOT NULL,
 		Touchdowns INT NOT NULL,
+		CONSTRAINT PK_Offense PRIMARY KEY (PlayerID, GameID),  -- Composite primary key
 		CONSTRAINT FK_Offense_Game FOREIGN KEY (GameID)
-			REFERENCES Football.Game(GameID)
-	);
+			REFERENCES Football.Game(GameID),
+		CONSTRAINT FK_Offense_Player FOREIGN KEY (PlayerID)
+			REFERENCES Football.Player(PlayerID)
+);
 GO
 
 -- FantasyTeamPlayer Table

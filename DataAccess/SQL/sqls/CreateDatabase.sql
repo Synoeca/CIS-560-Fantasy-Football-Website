@@ -4,7 +4,7 @@ BEGIN
 END
 GO
 
-USE CIS5600;
+USE Team13;
 GO
 
 IF SCHEMA_ID(N'Football') IS NULL
