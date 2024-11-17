@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Text.RegularExpressions;
+using DataAccess.Queries;
 
 namespace Web_App.Services
 {
@@ -42,14 +43,8 @@ namespace Web_App.Services
                 await masterConnection.OpenAsync();
 
                 // Check if database exists
-                const string checkDbQuery = """
-                                            
-                            SELECT COUNT(*) 
-                            FROM sys.databases 
-                            WHERE name = 'Team13'
-                """;
 
-                await using SqlCommand checkCommand = new(checkDbQuery, masterConnection);
+                await using SqlCommand checkCommand = new(DBQueries.CheckDB, masterConnection);
                 int dbExists = Convert.ToInt32(await checkCommand.ExecuteScalarAsync());
 
                 if (dbExists == 0)
@@ -86,14 +81,37 @@ namespace Web_App.Services
                 await using SqlConnection connection = new(_connectionString);
                 await connection.OpenAsync();
 
-                const string checkDataQuery = "SELECT COUNT(*) FROM Football.Team";
-                await using SqlCommand dataCommand = new(checkDataQuery, connection);
+                // First check if the Football schema exists
+
+                await using SqlCommand schemaCommand = new(DBQueries.CheckSchema, connection);
+                int schemaExists = Convert.ToInt32(await schemaCommand.ExecuteScalarAsync());
+
+                if (schemaExists == 0)
+                {
+                    _logger.LogInformation("Football schema does not exist.");
+                    return false;
+                }
+
+                // Then check if the Team table exists in the Football schema
+
+                await using SqlCommand tableCommand = new(DBQueries.CheckTable, connection);
+                int tableExists = Convert.ToInt32(await tableCommand.ExecuteScalarAsync());
+
+                if (tableExists == 0)
+                {
+                    _logger.LogInformation("Football.Team table does not exist.");
+                    return false;
+                }
+
+                // Only if both schema and table exist, check for data
+                await using SqlCommand dataCommand = new(DBQueries.CheckData, connection);
                 int teamCount = Convert.ToInt32(await dataCommand.ExecuteScalarAsync());
 
                 return teamCount > 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogWarning(ex, "Error checking database initialization status");
                 return false;
             }
         }
