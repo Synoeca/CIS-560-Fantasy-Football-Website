@@ -55,6 +55,7 @@ namespace DataAccess.Repositories
                         HomeTeam = reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
                         AwayTeam = reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
                         Date = reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
+                        Week = reader["Week"] is DBNull ? 0 : Convert.ToInt32(reader["Week"]),
                         HomeTeamScore = reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
                         AwayTeamScore = reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
                     };
@@ -79,6 +80,7 @@ namespace DataAccess.Repositories
                 command.Parameters.AddWithValue("@HomeTeam", game.HomeTeam);
                 command.Parameters.AddWithValue("@AwayTeam", game.AwayTeam);
                 command.Parameters.AddWithValue("@Date", game.Date);
+                command.Parameters.AddWithValue("@Week", game.Week);
                 command.Parameters.AddWithValue("@HomeTeamScore", game.HomeTeamScore);
                 command.Parameters.AddWithValue("@AwayTeamScore", game.AwayTeamScore);
 
@@ -89,6 +91,7 @@ namespace DataAccess.Repositories
                 throw new Exception($"Error inserting game: {ex.Message}");
             }
         }
+
 
         public bool UpdateGame(Game game)
         {
@@ -102,6 +105,7 @@ namespace DataAccess.Repositories
                 command.Parameters.AddWithValue("@HomeTeam", game.HomeTeam);
                 command.Parameters.AddWithValue("@AwayTeam", game.AwayTeam);
                 command.Parameters.AddWithValue("@Date", game.Date);
+                command.Parameters.AddWithValue("@Week", game.Week);
                 command.Parameters.AddWithValue("@HomeTeamScore", game.HomeTeamScore);
                 command.Parameters.AddWithValue("@AwayTeamScore", game.AwayTeamScore);
 
@@ -152,6 +156,7 @@ namespace DataAccess.Repositories
                         HomeTeam = reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
                         AwayTeam = reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
                         Date = reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
+                        Week = reader["Week"] is DBNull ? 0 : Convert.ToInt32(reader["Week"]),
                         HomeTeamScore = reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
                         AwayTeamScore = reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
                     };

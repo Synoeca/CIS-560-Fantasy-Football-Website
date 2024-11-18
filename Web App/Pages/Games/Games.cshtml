@@ -25,6 +25,7 @@
                     <thead style="background-color: var(); color: var();">
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Week</th>
                             <th scope="col">Date</th>
                             <th scope="col">Home Team</th>
                             <th scope="col">Away Team</th>
@@ -40,6 +41,7 @@
                             {
                                 <tr>
                                     <td>@game.GameID</td>
+                                    <td>@game.Week</td>
                                     <td>@game.Date.ToString("MM/dd/yyyy")</td>
                                     <td>
                                         <strong>@Model.GameRepository.GetTeamNameById(Convert.ToInt32(game.HomeTeam))</strong>
@@ -69,7 +71,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="7" class="text-center py-4">
+                                <td colspan="8" class="text-center py-4">
                                     <div class="text-muted">
                                         <i class="fas fa-info-circle me-2"></i>No games found in the database
                                     </div>

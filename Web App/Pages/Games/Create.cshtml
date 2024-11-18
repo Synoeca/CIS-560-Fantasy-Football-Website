@@ -31,14 +31,20 @@
 
                     <div class="col-md-4">
                         <label asp-for="Game.Date" class="form-label">Game Date</label>
-                        <input asp-for="Game.Date" 
-                               type="date" 
-                               class="form-control" 
-                               required 
+                        <input asp-for="Game.Date"
+                               type="date"
+                               class="form-control"
+                               required
                                value="@DateTime.Today.ToString("yyyy-MM-dd")"
                                min="1753-01-01"
                                max="9999-12-31" />
                         <span asp-validation-for="Game.Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Game.Week" class="form-label">Week</label>
+                        <input asp-for="Game.Week" type="number" class="form-control" required min="1" />
+                        <span asp-validation-for="Game.Week" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-4">
@@ -70,7 +76,7 @@
 
     <script>
         // Add client-side validation to ensure home team and away team are different
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             const homeTeam = document.getElementById('@Html.IdFor(m => m.Game.HomeTeam)').value;
             const awayTeam = document.getElementById('@Html.IdFor(m => m.Game.AwayTeam)').value;
 
