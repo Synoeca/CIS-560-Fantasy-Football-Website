@@ -25,6 +25,12 @@
                     </div>
 
                     <div class="col-md-4">
+                        <label asp-for="Game.Week" class="form-label">Week</label>
+                        <input asp-for="Game.Week" type="number" class="form-control" required min="1" />
+                        <span asp-validation-for="Game.Week" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
                         <label asp-for="Game.HomeTeam" class="form-label">Home Team</label>
                         <select asp-for="Game.HomeTeam" class="form-select" asp-items="Model.TeamsList" required>
                             <option value="">Select Home Team</option>
@@ -40,13 +46,13 @@
                         <span asp-validation-for="Game.AwayTeam" class="text-danger"></span>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label asp-for="Game.HomeTeamScore" class="form-label">Home Team Score</label>
                         <input asp-for="Game.HomeTeamScore" type="number" class="form-control" required min="0" />
                         <span asp-validation-for="Game.HomeTeamScore" class="text-danger"></span>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label asp-for="Game.AwayTeamScore" class="form-label">Away Team Score</label>
                         <input asp-for="Game.AwayTeamScore" type="number" class="form-control" required min="0" />
                         <span asp-validation-for="Game.AwayTeamScore" class="text-danger"></span>
@@ -69,7 +75,7 @@
 
     <script>
         // Add client-side validation to ensure home team and away team are different
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             const homeTeam = document.getElementById('@Html.IdFor(m => m.Game.HomeTeam)').value;
             const awayTeam = document.getElementById('@Html.IdFor(m => m.Game.AwayTeam)').value;
 

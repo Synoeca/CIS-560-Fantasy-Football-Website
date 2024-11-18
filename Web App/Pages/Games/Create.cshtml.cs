@@ -14,7 +14,8 @@ namespace Web_App.Pages.Games
         [BindProperty]
         public Game Game { get; set; } = new()
         {
-            Date = DateTime.Today
+            Date = DateTime.Today,
+            Week = 1 // Default value for Week
         };
         public List<SelectListItem> TeamsList { get; set; } = [];
 
@@ -46,6 +47,7 @@ namespace Web_App.Pages.Games
         {
             if (!ModelState.IsValid)
             {
+                OnGet(); // Reload the form data
                 return Page();
             }
 
