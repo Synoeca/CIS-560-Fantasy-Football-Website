@@ -21,5 +21,21 @@ namespace DataAccess.Queries
                        GROUP BY t.SchoolName, s.Year
                        ORDER BY s.Year DESC
            """;
+
+        public static readonly string GetPlayerPerformanceByGame = """
+                     SELECT 
+                         p.PlayerID,
+                         AVG(o.PassingAttempts) AS AveragePassingAttempts,
+                         AVG(o.RushingYards) AS AverageRushingYards,
+                         AVG(o.Carries) AS AverageCarries,
+                         AVG(o.ReceivingYards) AS AverageReceivingYards,
+                         AVG(o.Receptions) AS AverageReceptions,
+                         AVG(o.Touchdowns) AS AverageTouchdowns
+                     FROM Football.Player p
+                     INNER JOIN Football.Offense o ON p.PlayerID = o.PlayerID
+                     INNER JOIN Football.Game g ON o.GameID = g.GameID
+                     WHERE YEAR(g.[Date]) = @Year
+                     GROUP BY p.PlayerID;
+          """;
     }
 }
