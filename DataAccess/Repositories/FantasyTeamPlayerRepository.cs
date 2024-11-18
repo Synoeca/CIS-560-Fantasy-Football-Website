@@ -81,7 +81,7 @@ namespace DataAccess.Repositories
                 }
 
                 // Fetch the PositionID using PositionRepository
-                var positionRepository = new PositionRepository(_connectionString);
+                PositionRepository positionRepository = new PositionRepository(_connectionString);
                 int positionId = positionRepository.GetPositionIdByPlayerId(playerId);
 
                 if (positionId == 0)
@@ -150,6 +150,43 @@ namespace DataAccess.Repositories
                 throw new Exception($"Error retrieving available players: {ex.Message}");
             }
             return availablePlayers;
+        }
+
+        public IEnumerable<FantasyTeamPlayer> GetRosterByFantasyId(int fantasyTeamId)
+        {
+            List<FantasyTeamPlayer> roster = new List<FantasyTeamPlayer>();
+
+            using SqlConnection connection = new(_connectionString);
+            SqlCommand command = new(FantasyTeamPlayerQueries.GetRosterByFantasyId, connection);
+
+            command.Parameters.AddWithValue("@FantasyTeamID", fantasyTeamId);
+
+            connection.Open();
+            using SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                roster.Add(new FantasyTeamPlayer
+                {
+                    PlayerID = reader.GetInt32(reader.GetOrdinal("PlayerID")),
+                    PositionID = reader.GetInt32(reader.GetOrdinal("PositionID")),
+                    FantasyTeamID = fantasyTeamId // Set the fantasy team ID for reference if needed
+                });
+            }
+
+            return roster;
+        }
+
+        public void RemovePlayerFromRoster(int fantasyTeamId, int playerId)
+        {
+            using SqlConnection connection = new(_connectionString);
+            SqlCommand command = new(FantasyTeamPlayerQueries.RemovePlayerFromRoster, connection);
+
+            command.Parameters.AddWithValue("@FantasyTeamID", fantasyTeamId);
+            command.Parameters.AddWithValue("@PlayerID", playerId);
+
+            connection.Open();
+            command.ExecuteNonQuery();
         }
     }
 }

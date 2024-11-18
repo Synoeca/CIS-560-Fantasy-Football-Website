@@ -83,62 +83,69 @@
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle">
                                     <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">
-                                                <a asp-page="/FantasyTeam" 
-                                                   asp-route-PlayerSortOrder="@(Model.PlayerSortOrder == "name" ? "name_desc" : "name")"
-                                                   asp-route-PlayerSearchString="@Model.PlayerSearchString"
-                                                   asp-route-PositionFilter="@Model.PositionFilter"
-                                                   class="text-dark text-decoration-none">
-                                                    Player Name @(Model.PlayerSortOrder switch { "name" => "↑", "name_desc" => "↓", _ => "" })
-                                                </a>
-                                            </th>
-                                            <th scope="col">
-                                                <a asp-page="/FantasyTeam" 
-                                                   asp-route-PlayerSortOrder="@(Model.PlayerSortOrder == "position" ? "position_desc" : "position")"
-                                                   asp-route-PlayerSearchString="@Model.PlayerSearchString"
-                                                   asp-route-PositionFilter="@Model.PositionFilter"
-                                                   class="text-dark text-decoration-none">
-                                                    Position @(Model.PlayerSortOrder switch { "position" => "↑", "position_desc" => "↓", _ => "" })
-                                                </a>
-                                            </th>
-                                            <th scope="col">Actions</th>
-                                        </tr>
+                                    <tr>
+                                        <th scope="col">
+                                            <a asp-page="/FantasyTeam" 
+                                               asp-route-PlayerSortOrder="@(Model.PlayerSortOrder == "name" ? "name_desc" : "name")"
+                                               asp-route-PlayerSearchString="@Model.PlayerSearchString"
+                                               asp-route-PositionFilter="@Model.PositionFilter"
+                                               class="text-dark text-decoration-none">
+                                                Player Name @(Model.PlayerSortOrder switch { "name" => "↑", "name_desc" => "↓", _ => "" })
+                                            </a>
+                                        </th>
+                                        <th scope="col">
+                                            <a asp-page="/FantasyTeam" 
+                                               asp-route-PlayerSortOrder="@(Model.PlayerSortOrder == "position" ? "position_desc" : "position")"
+                                               asp-route-PlayerSearchString="@Model.PlayerSearchString"
+                                               asp-route-PositionFilter="@Model.PositionFilter"
+                                               class="text-dark text-decoration-none">
+                                                Position @(Model.PlayerSortOrder switch { "position" => "↑", "position_desc" => "↓", _ => "" })
+                                            </a>
+                                        </th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @if (Model.AvailablePlayers.Any())
-                                        {
-                                            @foreach (var player in Model.AvailablePlayers)
-                                            {
-                                                <tr>
-                                                    <td>@Model.PlayerRepository!.GetPlayerNameById(player.PlayerID)</td>
-                                                    <td>@Model.PositionRepository!.GetPositionNameById(player.PositionID)</td>
-                                                    <td>
-                                                        <form method="post" asp-page-handler="DraftPlayer" class="d-inline">
-                                                            <input type="hidden" name="playerId" value="@player.PlayerID" />
-                                                            <input type="hidden" name="fantasyTeamId" value="@Model.CurrentDraftingTeamId" />
-                                                            <button type="submit" 
-                                                                    class="btn btn-sm btn-success @(Model.CurrentDraftingTeamId == 0 ? "disabled" : "")"
-                                                                    disabled="@(Model.CurrentDraftingTeamId == 0)">
-                                                                <i class="fas fa-plus-circle me-1"></i>Draft
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                        else
+                                    @if (Model.AvailablePlayers.Any())
+                                    {
+                                        @foreach (FantasyTeamPlayer player in Model.AvailablePlayers)
                                         {
                                             <tr>
-                                                <td colspan="3" class="text-center py-4">
-                                                    <div class="text-muted">
-                                                        <i class="fas fa-info-circle me-2"></i>No available players found
-                                                    </div>
+                                                <td>@Model.PlayerRepository!.GetPlayerNameById(player.PlayerID)</td>
+                                                <td>@Model.PositionRepository!.GetPositionNameById(player.PositionID)</td>
+                                                <td>
+                                                    <form method="post" asp-page-handler="DraftPlayer" class="d-inline">
+                                                        <input type="hidden" name="playerId" value="@player.PlayerID" />
+                                                        <input type="hidden" name="fantasyTeamId" value="@Model.CurrentDraftingTeamId" />
+                                                        <button type="submit" 
+                                                                class="btn btn-sm btn-success @(Model.CurrentDraftingTeamId == 0 ? "disabled" : "")"
+                                                                disabled="@(Model.CurrentDraftingTeamId == 0)">
+                                                            <i class="fas fa-plus-circle me-1"></i>Draft
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="3" class="text-center py-4">
+                                                <div class="text-muted">
+                                                    <i class="fas fa-info-circle me-2"></i>No available players found
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
                                     </tbody>
                                 </table>
+                                <!-- End Draft Button -->
+                                @if (Model.IsDraftInProgress)
+                                {
+                                    <form method="post" asp-page-handler="EndDraft" id="endDraftForm">
+                                        <button type="submit" class="btn btn-danger mt-3">End Draft</button>
+                                    </form>
+                                }
                             </div>
 
                             <!-- Players Pagination -->
@@ -243,15 +250,15 @@
                                     <td>@team.Wins</td>
                                     <td>@team.Losses</td>
                                     <td>
-                                        <a asp-page="./EditFantasyTeam" asp-route-id="@team.FantasyTeamID" 
+                                        <a asp-page="./Edit" asp-route-id="@team.FantasyTeamID" 
                                            class="btn btn-sm btn-outline-primary me-1">
                                             <i class="fas fa-edit me-1"></i>Edit
                                         </a>
-                                        <a asp-page="./DeleteFantasyTeam" asp-route-id="@team.FantasyTeamID" 
+                                        <a asp-page="./Delete" asp-route-id="@team.FantasyTeamID" 
                                            class="btn btn-sm btn-outline-danger me-1">
                                             <i class="fas fa-trash me-1"></i>Delete
                                         </a>
-                                        <a asp-page="./ManageRoster" asp-route-id="@team.FantasyTeamID" 
+                                        <a asp-page="./Roster" asp-route-id="@team.FantasyTeamID" 
                                            class="btn btn-sm btn-outline-secondary">
                                             <i class="fas fa-users me-1"></i>Roster
                                         </a>

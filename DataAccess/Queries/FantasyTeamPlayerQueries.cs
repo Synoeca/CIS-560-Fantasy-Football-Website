@@ -59,5 +59,17 @@
             WHERE p.PlayerID = @PlayerID
                 AND ftp.FantasyTeamID IS NULL
         """;
+
+        public static readonly string GetRosterByFantasyId = """
+             SELECT PlayerID, PositionID 
+             FROM Football.FantasyTeamPlayer
+             WHERE FantasyTeamID = @FantasyTeamID;
+         """;
+
+        public static readonly string RemovePlayerFromRoster = """
+               UPDATE Football.FantasyTeamPlayer
+               SET FantasyTeamID = NULL
+               WHERE FantasyTeamID = @FantasyTeamID AND PlayerID = @PlayerID;
+           """;
     }
 }

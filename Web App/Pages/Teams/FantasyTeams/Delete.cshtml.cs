@@ -12,13 +12,12 @@ namespace Web_App.Pages.Teams.FantasyTeams
         [BindProperty]
         public FantasyTeam? Team { get; set; }
 
+        public bool IsDraftInProgress { get; set; }
+
         public DeleteModel(IConfiguration configuration)
         {
             string? connectionString = configuration.GetConnectionString("DefaultConnection");
-            if (connectionString != null)
-            {
-                _fantasyTeamRepository = new FantasyTeamRepository(connectionString);
-            }
+            _fantasyTeamRepository = new FantasyTeamRepository(connectionString);
         }
 
         public IActionResult OnGet(int id)
@@ -28,6 +27,9 @@ namespace Web_App.Pages.Teams.FantasyTeams
             {
                 return NotFound();
             }
+
+            // Check if draft is in progress
+            IsDraftInProgress = _fantasyTeamRepository.IsDraftInProgress();
             return Page();
         }
 
@@ -36,6 +38,14 @@ namespace Web_App.Pages.Teams.FantasyTeams
             if (Team == null)
             {
                 return NotFound();
+            }
+
+            // Check if draft is in progress before allowing deletion
+            IsDraftInProgress = _fantasyTeamRepository.IsDraftInProgress();
+            if (IsDraftInProgress)
+            {
+                ModelState.AddModelError(string.Empty, "Cannot delete team while draft is in progress.");
+                return Page(); // Return to the page with an error message
             }
 
             _fantasyTeamRepository.DeleteFantasyTeam(Team.FantasyTeamID);

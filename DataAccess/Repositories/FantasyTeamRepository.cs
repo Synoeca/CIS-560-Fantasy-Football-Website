@@ -189,7 +189,7 @@ namespace DataAccess.Repositories
                 SqlCommand command = new(FantasyTeamQueries.GetCurrentDraftingTeam, connection);
                 connection.Open();
 
-                var result = command.ExecuteScalar();
+                object? result = command.ExecuteScalar();
                 return result != DBNull.Value ? (int)result : 0; // Return 0 if no current drafting team found
             }
             catch (Exception ex)
@@ -260,6 +260,30 @@ namespace DataAccess.Repositories
             {
                 throw new Exception($"Error deleting fantasy team: {ex.Message}", ex);
             }
+        }
+
+        public string GetFantasyTeamNameById(int fantasyTeamId)
+        {
+            string teamName = string.Empty;
+
+            using SqlConnection connection = new(_connectionString);
+            SqlCommand command = new("""
+                                         SELECT FantasyTeamName 
+                                         FROM Football.FantasyTeam 
+                                         WHERE FantasyTeamID = @FantasyTeamID;
+                                     """, connection);
+
+            command.Parameters.AddWithValue("@FantasyTeamID", fantasyTeamId);
+
+            connection.Open();
+            using SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                teamName = reader.GetString(reader.GetOrdinal("FantasyTeamName"));
+            }
+
+            return teamName;
         }
     }
 }

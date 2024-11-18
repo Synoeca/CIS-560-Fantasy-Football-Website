@@ -11,7 +11,7 @@ GO
 
 IF NOT EXISTS (SELECT 1 FROM Football.DraftStatus)
 BEGIN
-    INSERT INTO Football.DraftStatus (IsDraftInProgress, CurrentRound, CurrentPosition, TotalTeams)
-    VALUES (0, 0, 0, 3);
+    INSERT INTO Football.DraftStatus (IsDraftInProgress, CurrentDraftingTeamID, CurrentRound, CurrentPosition, TotalTeams)
+    VALUES (0, 1, 0, 0, 3);
 END
 GO

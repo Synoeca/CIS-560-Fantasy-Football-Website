@@ -1,0 +1,40 @@
+﻿@page
+@using DataAccess.Models
+@model Web_App.Pages.Teams.FantasyTeams.RosterModel
+
+<h2>Roster for Team: @Model.FantasyTeamName (ID: @Model.FantasyTeamId)</h2>
+
+@if (Model.Roster.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Player Name</th>
+            <th>Position</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (FantasyTeamPlayer player in Model.Roster)
+        {
+            <tr>
+                <td>@Model.GetPlayerName(player.PlayerID)</td>
+                <td>@Model.GetPositionName(player.PositionID)</td>
+                <td>
+                    <form method="post" asp-page-handler="RemovePlayerFromRoster">
+                        <input type="hidden" name="playerId" value="@player.PlayerID" />
+                        <input type="hidden" name="FantasyTeamId" value="@Model.FantasyTeamId" />
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">No players in the roster.</div>
+}
+
+<a asp-page="./FantasyTeam" class="btn btn-secondary">Back to Teams</a>

@@ -109,7 +109,7 @@ namespace Web_App.Pages.Teams.FantasyTeams
                 CurrentDraftingTeamId = _fantasyTeamRepository.GetCurrentDraftingTeamId();
 
                 // Get filtered and paginated available players
-                var (players, totalCount) = _fantasyTeamPlayerRepository.GetFilteredAvailablePlayers(
+                (IEnumerable<FantasyTeamPlayer>? players, int totalCount) = _fantasyTeamPlayerRepository.GetFilteredAvailablePlayers(
                     PlayerSearchString,
                     PlayerSortOrder,
                     PositionFilter,
