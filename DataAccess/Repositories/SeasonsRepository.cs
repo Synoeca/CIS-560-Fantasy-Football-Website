@@ -81,5 +81,40 @@ namespace DataAccess.Repositories
                 return null;
             }
         }
+
+        public IEnumerable<SeasonPerformance> GetSeasonPerformance(int year)
+        {
+            List<SeasonPerformance> performances = [];
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                connection.Open();
+                //const string query = AggregatingQueries.GetTeamPerformanceBySeason;
+
+                using SqlCommand command = new(AggregatingQueries.GetTeamPerformanceBySeason, connection);
+                command.Parameters.AddWithValue("@Year", year);
+                using SqlDataReader? reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SeasonPerformance performance = new()
+                    {
+                        Season = Convert.ToInt32(reader["Season"]),
+                        SchoolName = reader["SchoolName"].ToString() ?? string.Empty,
+                        Wins = Convert.ToInt32(reader["Wins"]),
+                        Losses = Convert.ToInt32(reader["Losses"]),
+                        WinningPercentage = Convert.ToDecimal(reader["WinningPercentage"])
+                    };
+                    performances.Add(performance);
+                }
+                return performances;
+            }
+            catch
+            {
+                return Enumerable.Empty<SeasonPerformance>();
+            }
+        }
+
+
     }
 }

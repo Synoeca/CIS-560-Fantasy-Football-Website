@@ -1,0 +1,74 @@
+﻿@page
+@model SeasonPerformanceModel
+@{
+    ViewData["Title"] = "Season Performance";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">2024 Season Performance</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>School</th>
+                                    <th>Wins</th>
+                                    <th>Losses</th>
+                                    <th>Win %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var team in Model.Performance2024)
+                                {
+                                    <tr>
+                                        <td>@team.SchoolName</td>
+                                        <td>@team.Wins</td>
+                                        <td>@team.Losses</td>
+                                        <td>@team.WinningPercentage.ToString("F2")%</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="mb-0">2023 Season Performance</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>School</th>
+                                    <th>Wins</th>
+                                    <th>Losses</th>
+                                    <th>Win %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var team in Model.Performance2023)
+                                {
+                                    <tr>
+                                        <td>@team.SchoolName</td>
+                                        <td>@team.Wins</td>
+                                        <td>@team.Losses</td>
+                                        <td>@team.WinningPercentage.ToString("F2")%</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
