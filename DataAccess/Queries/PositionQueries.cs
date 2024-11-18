@@ -4,6 +4,16 @@
 	{
 		public static readonly string GetAllPositions = "SELECT * FROM Football.Position";
 
-		// Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
-	}
+        public static readonly string GetPositionNameById = """
+            SELECT PositionName 
+            FROM Football.Position 
+            WHERE PositionID = @PositionID
+        """;
+
+        public static readonly string GetPositionIdByPlayerId = """
+            SELECT PositionID
+            FROM Football.FantasyTeamPlayer
+            WHERE PlayerID = @PlayerID
+        """;
+    }
 }

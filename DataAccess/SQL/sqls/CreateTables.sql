@@ -76,12 +76,13 @@ GO
 
 -- FantasyTeam Table
 IF OBJECT_ID(N'Football.FantasyTeam', 'U') IS NULL
-	CREATE TABLE Football.FantasyTeam (
-		FantasyTeamID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-		FantasyTeamName NVARCHAR(255) NOT NULL UNIQUE,
-		Wins INT NOT NULL,
-		Losses INT NOT NULL
-	);
+    CREATE TABLE Football.FantasyTeam (
+        FantasyTeamID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+        FantasyTeamName NVARCHAR(255) NOT NULL UNIQUE,
+        Wins INT NOT NULL,
+        Losses INT NOT NULL,
+        DraftStatus NVARCHAR(50) NOT NULL DEFAULT 'Not Started'  -- Added DraftStatus column
+    );
 GO
 
 -- SpecialTeams Table
@@ -144,11 +145,22 @@ GO
 IF OBJECT_ID(N'Football.FantasyTeamPlayer', 'U') IS NULL
 	CREATE TABLE Football.FantasyTeamPlayer (
 		PlayerID INT NOT NULL PRIMARY KEY,
-		FantasyTeamID INT NOT NULL,
+		FantasyTeamID INT NULL,
 		PositionID INT NOT NULL,
 		CONSTRAINT FK_FantasyTeam FOREIGN KEY (FantasyTeamID)
 			REFERENCES Football.FantasyTeam(FantasyTeamID),
 		CONSTRAINT FK_Position FOREIGN KEY (PositionID)
 			REFERENCES Football.Position(PositionID)
 	);
+GO
+
+IF OBJECT_ID(N'Football.DraftStatus', 'U') IS NULL
+    CREATE TABLE Football.DraftStatus (
+        DraftStatusID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+        IsDraftInProgress BIT NOT NULL DEFAULT 0,
+		CurrentDraftingTeamID INT NULL DEFAULT 0,
+        CurrentRound INT NOT NULL DEFAULT 0,
+        CurrentPosition INT NOT NULL DEFAULT 0,
+        TotalTeams INT NOT NULL DEFAULT 0
+    );
 GO

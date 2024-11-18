@@ -41,7 +41,7 @@
                 @{
                     System.Diagnostics.Debug.Assert(Model.Player != null, "Model.Player != null");
                 }
-                @Model.TeamRepository.GetTeamNameById(Model.Player.TeamID) | <span class="fw-bold">Status:</span> <span class="badge @(Model.Player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">@Model.Player.BenchStatus</span>
+                @Model.TeamRepository!.GetTeamNameById(Model.Player.TeamID) | <span class="fw-bold">Status:</span> <span class="badge @(Model.Player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">@Model.Player.BenchStatus</span>
             </p>
             
             <ul class="nav nav-tabs" id="statsTabs" role="tablist">

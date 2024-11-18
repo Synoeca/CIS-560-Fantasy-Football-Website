@@ -10,8 +10,6 @@ namespace DataAccess.Models
 	{
 		public int PositionID { get; set; }
 		public string PositionName { get; set; }
-		public int MinCount { get; set; }
-		public int MaxCount { get; set; }
 	}
 }
 

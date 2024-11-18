@@ -68,5 +68,18 @@
             DELETE FROM Football.Player
             WHERE PlayerID = @PlayerID
         """;
+
+        public static readonly string GetAvailablePlayers = """
+                SELECT p.*
+                FROM Football.Player p
+                LEFT JOIN Football.FantasyTeamPlayer ftp ON p.PlayerID = ftp.PlayerID
+                WHERE ftp.FantasyTeamID IS NULL
+        """;
+
+        public static readonly string GetPlayerNameById = """
+              SELECT Name 
+              FROM Football.Player 
+              WHERE PlayerID = @PlayerID
+          """;
     }
 }

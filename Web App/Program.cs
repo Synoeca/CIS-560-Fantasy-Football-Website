@@ -14,6 +14,8 @@ if (string.IsNullOrEmpty(connectionString))
 }
 
 builder.Services.AddScoped<PlayerRepository>(_ => new PlayerRepository(connectionString));
+builder.Services.AddScoped<FantasyTeamRepository>(_ => new FantasyTeamRepository(connectionString));
+builder.Services.AddScoped<PositionRepository>(_ => new PositionRepository(connectionString));
 
 WebApplication app = builder.Build();
 

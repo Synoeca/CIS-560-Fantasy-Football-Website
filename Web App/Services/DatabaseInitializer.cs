@@ -143,7 +143,8 @@ namespace Web_App.Services
                     "AddDefenses.sql",
                     "AddSpecialTeams.sql",
                     "AddPositions.sql",
-                    "AddFantasyTeams.sql"
+                    "AddFantasyTeams.sql",
+                    "AddFantasyTeamPlayers.sql"
                 ];
 
                 await using SqlConnection connection = new(_connectionString);
