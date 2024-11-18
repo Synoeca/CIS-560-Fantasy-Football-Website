@@ -1,0 +1,59 @@
+﻿@page "{playerId:int}/{gameId:int}"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Web_App.Pages.Individuals.SpecialTeam.DeleteModel
+@{
+    ViewData["Title"] = "Delete Special Teams Stats";
+}
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Delete Special Teams Stats</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h3 class="alert-heading">Are you sure you want to delete these special teams stats?</h3>
+                <p>This action cannot be undone.</p>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Game Date</dt>
+                        <dd class="col-sm-8">@Model.Game?.Date.ToString("MM/dd/yyyy")</dd>
+
+                        <dt class="col-sm-4">Field Goals Made</dt>
+                        <dd class="col-sm-8">@Model.SpecialTeams.FieldGoalsMade</dd>
+
+                        <dt class="col-sm-4">Field Goals Attempted</dt>
+                        <dd class="col-sm-8">@Model.SpecialTeams.FieldGoalsAttempted</dd>
+
+                        <dt class="col-sm-4">Extra Points Made</dt>
+                        <dd class="col-sm-8">@Model.SpecialTeams.ExtraPointsMade</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Extra Points Attempted</dt>
+                        <dd class="col-sm-8">@Model.SpecialTeams.ExtraPointsAttempted</dd>
+
+                        <dt class="col-sm-4">Return Yards</dt>
+                        <dd class="col-sm-8">@Model.SpecialTeams.ReturnYards</dd>
+
+                        <dt class="col-sm-4">Return Attempts</dt>
+                        <dd class="col-sm-8">@Model.SpecialTeams.ReturnAttempts</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <button type="submit" class="btn btn-danger">Delete Special Teams Stats</button>
+                <a asp-page="/Individuals/Individual"
+                   asp-route-playerId="@Model.PlayerID"
+                   asp-route-activeTab="specialteams"
+                   class="btn btn-secondary">Back to Player</a>
+            </form>
+        </div>
+    </div>
+</div>

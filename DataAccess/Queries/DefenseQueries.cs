@@ -12,6 +12,21 @@ namespace DataAccess.Queries
 
         public static readonly string GetDefenseStatsByPlayerId = "SELECT * FROM Football.Defense WHERE PlayerID = @PlayerID";
 
-        // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
+        public static readonly string GetDefenseByPlayerAndGame = "SELECT * FROM Football.Defense WHERE PlayerID = @PlayerID AND GameID = @GameID";
+
+        public static readonly string InsertDefense = """
+              INSERT INTO Football.Defense (PlayerID, GameID, Interceptions, Tackles, Sacks, ForcedFumbles)
+              VALUES (@PlayerID, @GameID, @Interceptions, @Tackles, @Sacks, @ForcedFumbles)
+          """;
+
+        public static readonly string UpdateDefense = """
+              UPDATE Football.Defense 
+              SET Interceptions = @Interceptions, 
+                  Tackles = @Tackles, 
+                  Sacks = @Sacks, 
+                  ForcedFumbles = @ForcedFumbles
+              WHERE PlayerID = @PlayerID AND GameID = @GameID
+          """;
+        public static readonly string DeleteDefense = "DELETE FROM Football.Defense WHERE PlayerID = @PlayerID AND GameID = @GameID";
     }
 }

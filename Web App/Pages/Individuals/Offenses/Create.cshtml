@@ -1,0 +1,68 @@
+﻿@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Add Offense Stats";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Add New Offense Stats</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Offense.GameID" class="form-label">Game</label>
+                        <select asp-for="Offense.GameID" class="form-select" asp-items="Model.GamesList" required>
+                            <option value="">Select Game</option>
+                        </select>
+                        <span asp-validation-for="Offense.GameID" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Offense.PassingYards" class="form-label">Passing Yards</label>
+                        <input asp-for="Offense.PassingYards" class="form-control" type="number" step="0.1" required />
+                        <span asp-validation-for="Offense.PassingYards" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Offense.PassingAttempts" class="form-label">Passing Attempts</label>
+                        <input asp-for="Offense.PassingAttempts" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Offense.PassingAttempts" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Offense.RushingYards" class="form-label">Rushing Yards</label>
+                        <input asp-for="Offense.RushingYards" class="form-control" type="number" step="0.1" required />
+                        <span asp-validation-for="Offense.RushingYards" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Offense.Carries" class="form-label">Carries</label>
+                        <input asp-for="Offense.Carries" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Offense.Carries" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Offense.ReceivingYards" class="form-label">Receiving Yards</label>
+                        <input asp-for="Offense.ReceivingYards" class="form-control" type="number" step="0.1" required />
+                        <span asp-validation-for="Offense.ReceivingYards" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Offense.Receptions" class="form-label">Receptions</label>
+                        <input asp-for="Offense.Receptions" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Offense.Receptions" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Offense.Touchdowns" class="form-label">Touchdowns</label>
+                        <input asp-for="Offense.Touchdowns" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Offense.Touchdowns" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Add Offense Stats</button>
+                        <a asp-page="/Individuals/Individual" 
+                           asp-route-playerId="@Model.PlayerID" 
+                           asp-route-activeTab="offense" 
+                           class="btn btn-secondary">Back to Player Details</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ namespace DataAccess.Models
         public int FieldGoalsAttempted { get; set; }
         public int? ExtraPointsMade { get; set; }        // Make nullable
         public int? ExtraPointsAttempted { get; set; }   // Make nullable
-        public int ReturnYards { get; set; }
+        public float ReturnYards { get; set; }
         public int ReturnAttempts { get; set; }
     }
 }

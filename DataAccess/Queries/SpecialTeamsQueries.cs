@@ -1,12 +1,12 @@
-﻿public static class SpecialTeamsQueries
+﻿namespace DataAccess.Queries;
+
+public static class SpecialTeamsQueries
 {
-    // Existing query
     public static readonly string GetSpecialTeamsStatsByPlayerId = """
            SELECT * FROM Football.SpecialTeams 
            WHERE PlayerID = @PlayerID
        """;
 
-    // Add these new queries
     public static readonly string GetSpecialTeamsStatsByPlayerAndGame = """
             SELECT * FROM Football.SpecialTeams 
             WHERE PlayerID = @PlayerID AND GameID = @GameID

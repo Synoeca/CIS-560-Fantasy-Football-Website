@@ -1,0 +1,53 @@
+﻿@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Add Defense Stats";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Add New Defense Stats</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Defense.GameID" class="form-label">Game</label>
+                        <select asp-for="Defense.GameID" class="form-select" asp-items="Model.GamesList" required>
+                            <option value="">Select Game</option>
+                        </select>
+                        <span asp-validation-for="Defense.GameID" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.Interceptions" class="form-label">Interceptions</label>
+                        <input asp-for="Defense.Interceptions" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.Interceptions" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.Tackles" class="form-label">Tackles</label>
+                        <input asp-for="Defense.Tackles" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.Tackles" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.Sacks" class="form-label">Sacks</label>
+                        <input asp-for="Defense.Sacks" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.Sacks" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.ForcedFumbles" class="form-label">Forced Fumbles</label>
+                        <input asp-for="Defense.ForcedFumbles" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.ForcedFumbles" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Add Defense Stats</button>
+                        <a asp-page="/Individuals/Individual" 
+                           asp-route-playerId="@Model.PlayerID" 
+                           asp-route-activeTab="defense" 
+                           class="btn btn-secondary">Back to Player Details</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

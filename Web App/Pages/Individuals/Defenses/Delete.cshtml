@@ -1,0 +1,46 @@
+﻿@page "{playerId:int}/{gameId:int}"
+@model DeleteModel
+@{
+    ViewData["Title"] = "Delete Defense Stats";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Delete Defense Stats</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h3 class="alert-heading">Are you sure you want to delete these defense stats?</h3>
+                <p>This action cannot be undone.</p>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Game Date</dt>
+                        <dd class="col-sm-8">@Model.Game?.Date.ToString("MM/dd/yyyy")</dd>
+                        <dt class="col-sm-4">Interceptions</dt>
+                        <dd class="col-sm-8">@Model.Defense.Interceptions</dd>
+                        <dt class="col-sm-4">Tackles</dt>
+                        <dd class="col-sm-8">@Model.Defense.Tackles</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Sacks</dt>
+                        <dd class="col-sm-8">@Model.Defense.Sacks</dd>
+                        <dt class="col-sm-4">Forced Fumbles</dt>
+                        <dd class="col-sm-8">@Model.Defense.ForcedFumbles</dd>
+                    </dl>
+                </div>
+            </div>
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <button type="submit" class="btn btn-danger">Delete Defense Stats</button>
+                <a asp-page="/Individuals/Individual" 
+                   asp-route-playerId="@Model.PlayerID" 
+                   asp-route-activeTab="defense" 
+                   class="btn btn-secondary">Back to Player</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -3,21 +3,24 @@ using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Web_App.Pages
+namespace Web_App.Pages.Individuals
 {
     public class IndividualModel : PageModel
     {
-        private readonly PlayerRepository _playerRepository;
-        private readonly OffenseRepository _offenseRepository;
-        private readonly DefenseRepository _defenseRepository;
-        private readonly SpecialTeamsRepository _specialTeamsRepository;
+        private readonly PlayerRepository? _playerRepository;
+        private readonly OffenseRepository? _offenseRepository;
+        private readonly DefenseRepository? _defenseRepository;
+        private readonly SpecialTeamsRepository? _specialTeamsRepository;
 
         public Player? Player { get; set; }
-        public List<Offense> OffenseStats { get; set; }
-        public List<Defense> DefenseStats { get; set; }
-        public List<SpecialTeams> SpecialTeamsStats { get; set; }
-        public GameRepository GameRepository { get; set; }
-        public TeamRepository TeamRepository { get; set; }
+        public List<Offense>? OffenseStats { get; set; }
+        public List<Defense>? DefenseStats { get; set; }
+        public List<SpecialTeams>? SpecialTeamsStats { get; set; }
+        public GameRepository? GameRepository { get; set; }
+        public TeamRepository? TeamRepository { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string ActiveTab { get; set; } = "offense";
 
         public IndividualModel(IConfiguration configuration)
         {
@@ -35,10 +38,10 @@ namespace Web_App.Pages
 
         public IActionResult OnGet(int playerId)
         {
-            Player = _playerRepository.GetPlayerById(playerId);
-            OffenseStats = _offenseRepository.GetOffenseStatsByPlayerId(playerId);
-            DefenseStats = _defenseRepository.GetDefenseStatsByPlayerId(playerId);
-            SpecialTeamsStats = _specialTeamsRepository.GetSpecialTeamsStatsByPlayerId(playerId);
+            Player = _playerRepository?.GetPlayerById(playerId);
+            OffenseStats = _offenseRepository?.GetOffenseStatsByPlayerId(playerId);
+            DefenseStats = _defenseRepository?.GetDefenseStatsByPlayerId(playerId);
+            SpecialTeamsStats = _specialTeamsRepository?.GetSpecialTeamsStatsByPlayerId(playerId);
 
             return Page();
         }

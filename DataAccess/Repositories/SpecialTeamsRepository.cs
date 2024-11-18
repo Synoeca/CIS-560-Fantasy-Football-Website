@@ -11,9 +11,9 @@ public class SpecialTeamsRepository
         _connectionString = connectionString;
     }
 
-    public List<SpecialTeams> GetSpecialTeamsStatsByPlayerId(int playerId)
+    public List<SpecialTeams>? GetSpecialTeamsStatsByPlayerId(int playerId)
     {
-        List<SpecialTeams> specialTeamsStats = [];
+        List<SpecialTeams>? specialTeamsStats = [];
         try
         {
             using SqlConnection connection = new(_connectionString);
@@ -36,7 +36,7 @@ public class SpecialTeamsRepository
                     ExtraPointsAttempted = reader["ExtraPointsAttempted"] is DBNull
                         ? null
                         : Convert.ToInt32(reader["ExtraPointsAttempted"]),
-                    ReturnYards = Convert.ToInt32(reader["ReturnYards"]),
+                    ReturnYards = reader["ReturnYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReturnYards"]),
                     ReturnAttempts = Convert.ToInt32(reader["ReturnAttempts"])
                 });
             }
@@ -77,7 +77,7 @@ public class SpecialTeamsRepository
         }
     }
 
-    public bool UpdateSpecialTeamsStats(SpecialTeams stats)
+    public bool UpdateSpecialTeamsStats(SpecialTeams? stats)
     {
         try
         {
@@ -150,7 +150,7 @@ public class SpecialTeamsRepository
                     ExtraPointsAttempted = reader["ExtraPointsAttempted"] is DBNull
                         ? null
                         : Convert.ToInt32(reader["ExtraPointsAttempted"]),
-                    ReturnYards = Convert.ToInt32(reader["ReturnYards"]),
+                    ReturnYards = reader["ReturnYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReturnYards"]),
                     ReturnAttempts = Convert.ToInt32(reader["ReturnAttempts"])
                 };
             }
