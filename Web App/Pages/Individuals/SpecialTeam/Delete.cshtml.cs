@@ -11,7 +11,7 @@ namespace Web_App.Pages.Individuals.SpecialTeam
         private readonly GameRepository _gameRepository;
 
         [BindProperty]
-        public SpecialTeams SpecialTeams { get; set; } = new();
+        public SpecialTeams? SpecialTeams { get; set; } = new();
         public Game? Game { get; set; }
 
         [BindProperty(SupportsGet = true)]
