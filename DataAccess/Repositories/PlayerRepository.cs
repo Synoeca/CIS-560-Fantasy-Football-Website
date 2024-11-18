@@ -304,5 +304,53 @@ namespace DataAccess.Repositories
             }
             return playerName;
         }
+
+        public IEnumerable<PlayerGamePerformance> GetPlayerPerformance(int year)
+        {
+            List<PlayerGamePerformance> performances = [];
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                connection.Open();
+                string query = @"
+           SELECT 
+               p.PlayerID,
+               AVG(o.PassingAttempts) AS AveragePassingAttempts,
+               AVG(o.RushingYards) AS AverageRushingYards,
+               AVG(o.Carries) AS AverageCarries,
+               AVG(o.ReceivingYards) AS AverageReceivingYards,
+               AVG(o.Receptions) AS AverageReceptions,
+               AVG(o.Touchdowns) AS AverageTouchdowns
+           FROM Football.Player p
+           INNER JOIN Football.Offense o ON p.PlayerID = o.PlayerID
+           INNER JOIN Football.Game g ON o.GameID = g.GameID
+           WHERE YEAR(g.[Date]) = @Year
+           GROUP BY p.PlayerID;";
+
+                using SqlCommand command = new(query, connection);
+                command.Parameters.AddWithValue("@Year", year);
+                using SqlDataReader? reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    PlayerGamePerformance performance = new()
+                    {
+                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
+                        AveragePassingAttempts = Convert.ToDouble(reader["AveragePassingAttempts"]),
+                        AverageRushingYards = Convert.ToDouble(reader["AverageRushingYards"]),
+                        AverageCarries = Convert.ToDouble(reader["AverageCarries"]),
+                        AverageReceivingYards = Convert.ToDouble(reader["AverageReceivingYards"]),
+                        AverageReceptions = Convert.ToDouble(reader["AverageReceptions"]),
+                        AverageTouchdowns = Convert.ToDouble(reader["AverageTouchdowns"])
+                    };
+                    performances.Add(performance);
+                }
+                return performances;
+            }
+            catch
+            {
+                return Enumerable.Empty<PlayerGamePerformance>();
+            }
+        }
     }
 }
