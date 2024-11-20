@@ -52,17 +52,14 @@ GO
 -- Player Table
 IF OBJECT_ID(N'Football.Player', 'U') IS NULL
 	CREATE TABLE Football.Player (
-		PlayerID INT PRIMARY KEY IDENTITY(1,1),
-		[Name] NVARCHAR(50) NOT NULL,
+		PlayerID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 		TeamID INT NOT NULL,
-		GameID INT,
+		[Name] NVARCHAR(50) NOT NULL,
 		Class NVARCHAR(50) NOT NULL,
 		HealthStatus NVARCHAR(50) NOT NULL,
 		BenchStatus NVARCHAR(50) NOT NULL,
 		CONSTRAINT FK_Player_Team FOREIGN KEY (TeamID)
 			REFERENCES Football.Team(TeamID),
-		CONSTRAINT FK_Player_Game FOREIGN KEY (GameID)
-			REFERENCES Football.Game(GameID)
 	);
 GO
 
@@ -92,15 +89,9 @@ IF OBJECT_ID(N'Football.SpecialTeams', 'U') IS NULL
 		GameID INT NOT NULL,
 		FieldGoalsMade INT NOT NULL,
 		FieldGoalsAttempted INT NOT NULL,
-		ExtraPointsMade INT,
-		ExtraPointsAttempted INT,
 		ReturnYards DECIMAL(8, 1) NOT NULL,
 		ReturnAttempts INT NOT NULL,
 		CONSTRAINT PK_SpecialTeams PRIMARY KEY (PlayerID, GameID),  -- Composite primary key
-		CONSTRAINT FK_SpecialTeams_Game FOREIGN KEY (GameID)
-			REFERENCES Football.Game(GameID),
-		CONSTRAINT FK_SpecialTeams_Player FOREIGN KEY (PlayerID)
-			REFERENCES Football.Player(PlayerID)
 	);
 GO
 
@@ -110,14 +101,9 @@ IF OBJECT_ID(N'Football.Defense', 'U') IS NULL
 		PlayerID INT NOT NULL,
 		GameID INT NOT NULL,
 		Interceptions INT NOT NULL,
-		Tackles INT,
 		Sacks INT NOT NULL,
 		ForcedFumbles INT NOT NULL,
 		CONSTRAINT PK_Defense PRIMARY KEY (PlayerID, GameID),  -- Composite primary key
-		CONSTRAINT FK_Defense_Game FOREIGN KEY (GameID)
-			REFERENCES Football.Game(GameID),
-		CONSTRAINT FK_Defense_Player FOREIGN KEY (PlayerID)
-			REFERENCES Football.Player(PlayerID)
 );
 GO
 
@@ -134,10 +120,6 @@ IF OBJECT_ID(N'Football.Offense', 'U') IS NULL
         Receptions INT NOT NULL,
         Touchdowns INT NOT NULL,
         CONSTRAINT PK_Offense PRIMARY KEY (PlayerID, GameID),
-        CONSTRAINT FK_Offense_Game FOREIGN KEY (GameID)
-            REFERENCES Football.Game(GameID),
-        CONSTRAINT FK_Offense_Player FOREIGN KEY (PlayerID)
-            REFERENCES Football.Player(PlayerID)
     );
 GO
 

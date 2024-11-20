@@ -29,13 +29,6 @@ public class SpecialTeamsRepository
                     GameID = Convert.ToInt32(reader["GameID"]),
                     FieldGoalsMade = Convert.ToInt32(reader["FieldGoalsMade"]),
                     FieldGoalsAttempted = Convert.ToInt32(reader["FieldGoalsAttempted"]),
-                    // Handle nullable fields
-                    ExtraPointsMade = reader["ExtraPointsMade"] is DBNull
-                        ? null
-                        : Convert.ToInt32(reader["ExtraPointsMade"]),
-                    ExtraPointsAttempted = reader["ExtraPointsAttempted"] is DBNull
-                        ? null
-                        : Convert.ToInt32(reader["ExtraPointsAttempted"]),
                     ReturnYards = reader["ReturnYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReturnYards"]),
                     ReturnAttempts = Convert.ToInt32(reader["ReturnAttempts"])
                 });
@@ -62,10 +55,6 @@ public class SpecialTeamsRepository
             command.Parameters.AddWithValue("@GameID", stats.GameID);
             command.Parameters.AddWithValue("@FieldGoalsMade", stats.FieldGoalsMade);
             command.Parameters.AddWithValue("@FieldGoalsAttempted", stats.FieldGoalsAttempted);
-            command.Parameters.AddWithValue("@ExtraPointsMade",
-                (object?)stats.ExtraPointsMade ?? DBNull.Value);
-            command.Parameters.AddWithValue("@ExtraPointsAttempted",
-                (object?)stats.ExtraPointsAttempted ?? DBNull.Value);
             command.Parameters.AddWithValue("@ReturnYards", stats.ReturnYards);
             command.Parameters.AddWithValue("@ReturnAttempts", stats.ReturnAttempts);
 
