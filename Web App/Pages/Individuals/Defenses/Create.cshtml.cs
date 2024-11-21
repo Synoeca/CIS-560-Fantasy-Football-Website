@@ -14,7 +14,7 @@ namespace Web_App.Pages.Individuals.Defenses
         private readonly TeamRepository _teamRepository;
 
         [BindProperty]
-        public Defense Defense { get; set; } = new();
+        public Defense Defense { get; set; }
         [BindProperty]
         public int PlayerID { get; set; }
         public List<SelectListItem> GamesList { get; set; } = [];

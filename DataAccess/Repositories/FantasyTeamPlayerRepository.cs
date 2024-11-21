@@ -169,8 +169,8 @@ namespace DataAccess.Repositories
                 roster.Add(new FantasyTeamPlayer
                 (
                     reader.GetInt32(reader.GetOrdinal("PlayerID")),
-                    reader.GetInt32(reader.GetOrdinal("PositionID")),
-                    fantasyTeamId // Set the fantasy team ID for reference if needed
+                    fantasyTeamId, // Set the fantasy team ID for reference if needed
+                    reader.GetInt32(reader.GetOrdinal("PositionID"))
                 ));
             }
 

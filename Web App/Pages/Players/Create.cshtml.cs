@@ -12,7 +12,7 @@ namespace Web_App.Pages.Players
         private readonly TeamRepository _teamRepository;
 
         [BindProperty]
-        public Player Player { get; set; } = new();
+        public Player Player { get; set; } 
         public List<SelectListItem> TeamsList { get; set; } = [];
         public List<SelectListItem> ClassesList { get; set; } =
         [

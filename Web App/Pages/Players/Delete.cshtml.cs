@@ -11,7 +11,7 @@ namespace Web_App.Pages.Players
         private readonly TeamRepository _teamRepository;
 
         [BindProperty]
-        public Player Player { get; set; } = new();
+        public Player? Player { get; set; } 
         public string TeamName { get; set; } = string.Empty;
 
         public DeleteModel(IConfiguration configuration)
@@ -30,8 +30,8 @@ namespace Web_App.Pages.Players
 
         public IActionResult OnGet(int id)
         {
-            Player = _playerRepository.GetPlayerById(id) ?? new Player();
-            if (Player.PlayerID == 0)
+            Player = _playerRepository.GetPlayerById(id) ?? null;
+            if (Player == null)
             {
                 return NotFound();
             }

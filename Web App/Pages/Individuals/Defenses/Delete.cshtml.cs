@@ -11,7 +11,7 @@ namespace Web_App.Pages.Individuals.Defenses
         private readonly GameRepository _gameRepository;
 
         [BindProperty]
-        public Defense Defense { get; set; } = new();
+        public Defense Defense { get; set; }
         public Game? Game { get; set; }
 
         [BindProperty(SupportsGet = true)]  // Add this to ensure PlayerID is bound from route

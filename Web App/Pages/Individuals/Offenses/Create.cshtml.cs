@@ -14,7 +14,7 @@ namespace Web_App.Pages.Individuals.Offenses
         private readonly TeamRepository _teamRepository;
 
         [BindProperty]
-        public Offense Offense { get; set; } = new();
+        public Offense Offense { get; set; } 
         [BindProperty]
         public int PlayerID { get; set; }
         public List<SelectListItem> GamesList { get; set; } = [];

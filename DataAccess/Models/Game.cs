@@ -25,5 +25,9 @@ namespace DataAccess.Models
             this.HomeTeamScore = homeScore;
             this.AwayTeamScore = awayScore;
         }
+        public Game()
+        {
+
+        }
     }
 }

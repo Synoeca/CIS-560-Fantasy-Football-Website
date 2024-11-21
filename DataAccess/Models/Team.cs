@@ -21,5 +21,9 @@ namespace DataAccess.Models
             this.City = city;
             this.State = state;
         }
+        public Team ()
+        {
+
+        }
     }
 }

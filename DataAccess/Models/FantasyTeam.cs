@@ -22,6 +22,10 @@ namespace DataAccess.Models
             this.Wins = win;
             this.Losses = loss;
         }
+        public FantasyTeam ()
+        {
+
+        }
     }
 }
 

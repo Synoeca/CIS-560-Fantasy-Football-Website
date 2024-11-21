@@ -23,5 +23,9 @@ namespace DataAccess.Models
             this.ReturnYards = returnYards;
             this.ReturnAttempts = returnAtt;
         }
+        public SpecialTeams ()
+        {
+
+        }
     }
 }
