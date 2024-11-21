@@ -30,7 +30,6 @@ namespace DataAccess.Repositories
                         PlayerID = Convert.ToInt32(reader["PlayerID"]),
                         GameID = Convert.ToInt32(reader["GameID"]),
                         Interceptions = reader["Interceptions"] is DBNull ? 0 : Convert.ToInt32(reader["Interceptions"]),
-                        Tackles = reader["Tackles"] is DBNull ? 0 : Convert.ToInt32(reader["Tackles"]),
                         Sacks = reader["Sacks"] is DBNull ? 0 : Convert.ToInt32(reader["Sacks"]),
                         ForcedFumbles = reader["ForcedFumbles"] is DBNull ? 0 : Convert.ToInt32(reader["ForcedFumbles"])
                     });
@@ -54,7 +53,6 @@ namespace DataAccess.Repositories
                 command.Parameters.AddWithValue("@PlayerID", defense.PlayerID);
                 command.Parameters.AddWithValue("@GameID", defense.GameID);
                 command.Parameters.AddWithValue("@Interceptions", defense.Interceptions);
-                command.Parameters.AddWithValue("@Tackles", defense.Tackles);
                 command.Parameters.AddWithValue("@Sacks", defense.Sacks);
                 command.Parameters.AddWithValue("@ForcedFumbles", defense.ForcedFumbles);
 

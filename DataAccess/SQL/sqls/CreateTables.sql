@@ -136,6 +136,7 @@ IF OBJECT_ID(N'Football.FantasyTeamPlayer', 'U') IS NULL
 	);
 GO
 
+-- DraftStatus Table
 IF OBJECT_ID(N'Football.DraftStatus', 'U') IS NULL
     CREATE TABLE Football.DraftStatus (
         DraftStatusID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
