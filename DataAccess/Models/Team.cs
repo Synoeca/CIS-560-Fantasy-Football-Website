@@ -10,11 +10,16 @@ namespace DataAccess.Models
     {
         public int TeamID { get; set; }
         public string? SchoolName { get; set; }
-        public int SeasonID { get; set; }
         public string? TeamName { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }
-        public int Wins { get; set; }
-        public int Loses { get; set; }
+        public Team (int team, string? school, string? name, string? city, string? state)
+        {
+            this.TeamID = team;
+            this.SchoolName = school;
+            this.TeamName = name;
+            this.City = city;
+            this.State = state;
+        }
     }
 }

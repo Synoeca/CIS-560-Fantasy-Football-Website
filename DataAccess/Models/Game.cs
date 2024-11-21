@@ -15,5 +15,15 @@ namespace DataAccess.Models
         public int Week { get; set; }
         public int HomeTeamScore { get; set; }
         public int AwayTeamScore { get; set; }
+        public Game (int id, int? home, int? away, DateTime date, int week, int homeScore, int awayScore)
+        {
+            this.GameID = id;
+            this.HomeTeam = home;
+            this.AwayTeam = away;
+            this.Date = date;
+            this.Week = week;
+            this.HomeTeamScore = homeScore;
+            this.AwayTeamScore = awayScore;
+        }
     }
 }

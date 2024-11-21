@@ -17,5 +17,17 @@ namespace DataAccess.Models
         public float ReceivingYards { get; set; }
         public int Receptions { get; set; }
         public int Touchdowns { get; set; }
+        public Offense(int player, int game, int passYards, int passAtt, int rushYards, int carries, int recieveYards, int receptions, int tds)
+        {
+            this.PlayerID = player;
+            this.GameID = game;
+            this.PassingYards = passYards;
+            this.PassingAttempts = passAtt;
+            this.RushingYards = rushYards;
+            this.Carries = carries;
+            this.ReceivingYards = recieveYards;
+            this.Receptions = receptions;
+            this.Touchdowns = tds;
+        }
     }
 }

@@ -10,6 +10,11 @@ namespace DataAccess.Models
 	{
 		public int PositionID { get; set; }
 		public string PositionName { get; set; }
+		public Position (int id, string name)
+		{
+			this.PositionID = id;
+			this.PositionName = name;
+		}
 	}
 }
 

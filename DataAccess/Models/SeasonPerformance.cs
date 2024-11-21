@@ -13,5 +13,13 @@ namespace DataAccess.Models
         public int Wins { get; set; }
         public int Losses { get; set; }
         public decimal WinningPercentage { get; set; }
+        public SeasonPerformance (int season, string school, int win, int loss, decimal percentage)
+        {
+            this.Season = season;
+            this.SchoolName = school;
+            this.Wins = win;
+            this.Losses = loss;
+            this.WinningPercentage = percentage;
+        }
     }
 }

@@ -14,6 +14,14 @@ namespace DataAccess.Models
         public int Wins { get; set; }
         public int Losses { get; set; }
         public string DraftStatus { get; set; } = "Not Started";
+
+        public FantasyTeam (int id, string name, int win, int loss)
+        {
+            this.FantasyTeamID = id;
+            this.FantasyTeamName = name;
+            this.Wins = win;
+            this.Losses = loss;
+        }
     }
 }
 

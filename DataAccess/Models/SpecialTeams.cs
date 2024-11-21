@@ -12,9 +12,16 @@ namespace DataAccess.Models
         public int GameID { get; set; }
         public int FieldGoalsMade { get; set; }
         public int FieldGoalsAttempted { get; set; }
-        public int? ExtraPointsMade { get; set; }        // Make nullable
-        public int? ExtraPointsAttempted { get; set; }   // Make nullable
         public float ReturnYards { get; set; }
         public int ReturnAttempts { get; set; }
+        public SpecialTeams (int player, int game, int fgMade, int fgAtt, float returnYards, int returnAtt)
+        {
+            this.PlayerID = player;
+            this.GameID = game;
+            this.FieldGoalsMade = fgMade;
+            this.FieldGoalsAttempted = fgAtt;
+            this.ReturnYards = returnYards;
+            this.ReturnAttempts = returnAtt;
+        }
     }
 }

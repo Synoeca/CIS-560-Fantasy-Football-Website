@@ -14,5 +14,14 @@ namespace DataAccess.Models
 		public string Class { get; set; }
 		public string HealthStatus { get; set; }
 		public string BenchStatus { get; set; }
+		public Player(int player, int team, string name, string classYear, string health, string bench)
+		{
+			this.PlayerID = player;
+			this.TeamID = team;
+			this.Name = name;
+			this.Class = classYear;
+			this.HealthStatus = health;
+			this.BenchStatus = bench;
+		}
 	}
 }

@@ -11,8 +11,16 @@ namespace DataAccess.Models
         public int PlayerID { get; set; }
         public int GameID { get; set; }
         public int Interceptions { get; set; }
-        public int Tackles { get; set; }
         public int Sacks { get; set; }
         public int ForcedFumbles { get; set; }
+
+        public Defense(int player, int game, int ints, int sacks, int fumbles)
+        {
+            this.PlayerID = player;
+            this.GameID = game;
+            this.Interceptions = ints;
+            this.Sacks = sacks;
+            this.ForcedFumbles = fumbles;
+        }
     }
 }
