@@ -24,13 +24,13 @@ namespace DataAccess.Repositories
             while (reader.Read())
             {
                 teams.Add(new FantasyTeam
-                {
-                    FantasyTeamID = reader.GetInt32(0),
-                    FantasyTeamName = reader.GetString(1),
-                    Wins = reader.GetInt32(2),
-                    Losses = reader.GetInt32(3),
-                    DraftStatus = reader.GetString(4) // Ensure this column exists in your query
-                });
+                (
+                    reader.GetInt32(0),
+                    reader.GetString(1),
+                    reader.GetInt32(2),
+                    reader.GetInt32(3)
+                    //reader.GetString(4) // Ensure this column exists in your query
+                ));
             }
             return teams;
         }
@@ -79,12 +79,12 @@ namespace DataAccess.Repositories
                 while (reader.Read())
                 {
                     teams.Add(new FantasyTeam
-                    {
-                        FantasyTeamID = reader.GetInt32(0),
-                        FantasyTeamName = reader.GetString(1),
-                        Wins = reader.GetInt32(2),
-                        Losses = reader.GetInt32(3)
-                    });
+                    (
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetInt32(2),
+                        reader.GetInt32(3)
+                    ));
                 }
             }
             catch (Exception ex)
@@ -156,12 +156,12 @@ namespace DataAccess.Repositories
             if (reader.Read())
             {
                 return new FantasyTeam
-                {
-                    FantasyTeamID = reader.GetInt32(0),
-                    FantasyTeamName = reader.GetString(1),
-                    Wins = reader.GetInt32(2),
-                    Losses = reader.GetInt32(3)
-                };
+                (
+                    reader.GetInt32(0),
+                    reader.GetString(1),
+                    reader.GetInt32(2),
+                    reader.GetInt32(3)
+                );
             }
             return null; // Return null if no team found
         }

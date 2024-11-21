@@ -24,14 +24,14 @@ public class SpecialTeamsRepository
             while (reader.Read())
             {
                 specialTeamsStats.Add(new SpecialTeams
-                {
-                    PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                    GameID = Convert.ToInt32(reader["GameID"]),
-                    FieldGoalsMade = Convert.ToInt32(reader["FieldGoalsMade"]),
-                    FieldGoalsAttempted = Convert.ToInt32(reader["FieldGoalsAttempted"]),
-                    ReturnYards = reader["ReturnYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReturnYards"]),
-                    ReturnAttempts = Convert.ToInt32(reader["ReturnAttempts"])
-                });
+                (
+                    Convert.ToInt32(reader["PlayerID"]),
+                    Convert.ToInt32(reader["GameID"]),
+                    Convert.ToInt32(reader["FieldGoalsMade"]),
+                    Convert.ToInt32(reader["FieldGoalsAttempted"]),
+                    reader["ReturnYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReturnYards"]),
+                    Convert.ToInt32(reader["ReturnAttempts"])
+                ));
             }
         }
         catch (Exception ex)
@@ -78,9 +78,6 @@ public class SpecialTeamsRepository
             command.Parameters.AddWithValue("@GameID", stats.GameID);
             command.Parameters.AddWithValue("@FieldGoalsMade", stats.FieldGoalsMade);
             command.Parameters.AddWithValue("@FieldGoalsAttempted", stats.FieldGoalsAttempted);
-            command.Parameters.AddWithValue("@ExtraPointsMade", stats.ExtraPointsMade ?? (object)DBNull.Value);
-            command.Parameters.AddWithValue("@ExtraPointsAttempted",
-                stats.ExtraPointsAttempted ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@ReturnYards", stats.ReturnYards);
             command.Parameters.AddWithValue("@ReturnAttempts", stats.ReturnAttempts);
 
@@ -128,20 +125,14 @@ public class SpecialTeamsRepository
             if (reader.Read())
             {
                 return new SpecialTeams
-                {
-                    PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                    GameID = Convert.ToInt32(reader["GameID"]),
-                    FieldGoalsMade = Convert.ToInt32(reader["FieldGoalsMade"]),
-                    FieldGoalsAttempted = Convert.ToInt32(reader["FieldGoalsAttempted"]),
-                    ExtraPointsMade = reader["ExtraPointsMade"] is DBNull
-                        ? null
-                        : Convert.ToInt32(reader["ExtraPointsMade"]),
-                    ExtraPointsAttempted = reader["ExtraPointsAttempted"] is DBNull
-                        ? null
-                        : Convert.ToInt32(reader["ExtraPointsAttempted"]),
-                    ReturnYards = reader["ReturnYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReturnYards"]),
-                    ReturnAttempts = Convert.ToInt32(reader["ReturnAttempts"])
-                };
+                (
+                    Convert.ToInt32(reader["PlayerID"]),
+                    Convert.ToInt32(reader["GameID"]),
+                    Convert.ToInt32(reader["FieldGoalsMade"]),
+                    Convert.ToInt32(reader["FieldGoalsAttempted"]),
+                    reader["ReturnYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReturnYards"]),
+                    Convert.ToInt32(reader["ReturnAttempts"])
+                );
             }
 
             return null;

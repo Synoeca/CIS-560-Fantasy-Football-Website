@@ -26,10 +26,10 @@ namespace DataAccess.Repositories
             while (reader.Read())
             {
                 positions.Add(new Position
-                {
-                    PositionID = reader.GetInt32(0),
-                    PositionName = reader.GetString(1)
-                });
+                (
+                    reader.GetInt32(0),
+                    reader.GetString(1)
+                ));
             }
 
             return positions;

@@ -47,11 +47,11 @@ namespace DataAccess.Repositories
                     }
 
                     availablePlayers.Add(new FantasyTeamPlayer
-                    {
-                        PlayerID = reader.GetInt32(reader.GetOrdinal("PlayerID")),
-                        FantasyTeamID = null,
-                        PositionID = reader.GetInt32(reader.GetOrdinal("PositionID"))
-                    });
+                    (
+                        reader.GetInt32(reader.GetOrdinal("PlayerID")),
+                        null,
+                        reader.GetInt32(reader.GetOrdinal("PositionID"))
+                    ));
                 }
             }
             catch (Exception ex)
@@ -138,11 +138,11 @@ namespace DataAccess.Repositories
                 while (reader.Read())
                 {
                     availablePlayers.Add(new FantasyTeamPlayer
-                    {
-                        PlayerID = reader.GetInt32(reader.GetOrdinal("PlayerID")),
-                        FantasyTeamID = null,
-                        PositionID = reader.GetInt32(reader.GetOrdinal("PositionID"))
-                    });
+                    (
+                        reader.GetInt32(reader.GetOrdinal("PlayerID")),
+                        null,
+                        reader.GetInt32(reader.GetOrdinal("PositionID"))
+                    ));
                 }
             }
             catch (Exception ex)
@@ -167,11 +167,11 @@ namespace DataAccess.Repositories
             while (reader.Read())
             {
                 roster.Add(new FantasyTeamPlayer
-                {
-                    PlayerID = reader.GetInt32(reader.GetOrdinal("PlayerID")),
-                    PositionID = reader.GetInt32(reader.GetOrdinal("PositionID")),
-                    FantasyTeamID = fantasyTeamId // Set the fantasy team ID for reference if needed
-                });
+                (
+                    reader.GetInt32(reader.GetOrdinal("PlayerID")),
+                    reader.GetInt32(reader.GetOrdinal("PositionID")),
+                    fantasyTeamId // Set the fantasy team ID for reference if needed
+                ));
             }
 
             return roster;

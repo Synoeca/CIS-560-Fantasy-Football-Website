@@ -49,16 +49,15 @@ namespace DataAccess.Repositories
                 using SqlDataReader? reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Game game = new()
-                    {
-                        GameID = Convert.ToInt32(reader["GameID"]),
-                        HomeTeam = reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
-                        AwayTeam = reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
-                        Date = reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
-                        Week = reader["Week"] is DBNull ? 0 : Convert.ToInt32(reader["Week"]),
-                        HomeTeamScore = reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
-                        AwayTeamScore = reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
-                    };
+                    Game game = new(
+                        Convert.ToInt32(reader["GameID"]),
+                        reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
+                        reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
+                        reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
+                        reader["Week"] is DBNull ? 0 : Convert.ToInt32(reader["Week"]),
+                        reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
+                        reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
+                    );
                     games.Add(game);
                 }
                 return games;
@@ -151,15 +150,15 @@ namespace DataAccess.Repositories
                 if (reader.Read())
                 {
                     return new Game
-                    {
-                        GameID = Convert.ToInt32(reader["GameID"]),
-                        HomeTeam = reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
-                        AwayTeam = reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
-                        Date = reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
-                        Week = reader["Week"] is DBNull ? 0 : Convert.ToInt32(reader["Week"]),
-                        HomeTeamScore = reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
-                        AwayTeamScore = reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
-                    };
+                    (
+                        Convert.ToInt32(reader["GameID"]),
+                        reader["HomeTeam"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeam"]),
+                        reader["AwayTeam"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeam"]),
+                        reader["Date"] is DBNull ? DateTime.MinValue : Convert.ToDateTime(reader["Date"]),
+                        reader["Week"] is DBNull ? 0 : Convert.ToInt32(reader["Week"]),
+                        reader["HomeTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["HomeTeamScore"]),
+                        reader["AwayTeamScore"] is DBNull ? 0 : Convert.ToInt32(reader["AwayTeamScore"])
+                    );
                 }
                 return null;
             }

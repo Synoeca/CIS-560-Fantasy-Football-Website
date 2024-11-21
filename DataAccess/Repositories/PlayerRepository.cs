@@ -29,15 +29,14 @@ namespace DataAccess.Repositories
                 using SqlDataReader? reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Player player = new()
-                    {
-                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                        Name = Convert.ToString(reader["Name"]) ?? string.Empty,
-                        TeamID = Convert.ToInt32(reader["TeamID"]),
-                        Class = Convert.ToString(reader["Class"]) ?? string.Empty,
-                        HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
-                        BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty
-                    };
+                    Player player = new(
+                        Convert.ToInt32(reader["PlayerID"]),
+                        Convert.ToInt32(reader["TeamID"]),
+                        Convert.ToString(reader["Name"]) ?? string.Empty,
+                        Convert.ToString(reader["Class"]) ?? string.Empty,
+                        Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
+                        Convert.ToString(reader["BenchStatus"]) ?? string.Empty
+                    );
                     players.Add(player);
                 }
             }
@@ -63,15 +62,14 @@ namespace DataAccess.Repositories
                 using SqlDataReader? reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Player player = new()
-                    {
-                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                        Name = Convert.ToString(reader["Name"]) ?? string.Empty,
-                        TeamID = Convert.ToInt32(reader["TeamID"]),
-                        Class = Convert.ToString(reader["Class"]) ?? string.Empty,
-                        HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
-                        BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty
-                    };
+                    Player player = new(
+                        Convert.ToInt32(reader["PlayerID"]),
+                        Convert.ToInt32(reader["TeamID"]),
+                        Convert.ToString(reader["Name"]) ?? string.Empty,
+                        Convert.ToString(reader["Class"]) ?? string.Empty,
+                        Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
+                        Convert.ToString(reader["BenchStatus"]) ?? string.Empty
+                    );
                     players.Add(player);
                 }
             }
@@ -145,15 +143,14 @@ namespace DataAccess.Repositories
                 using SqlDataReader? reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Player player = new()
-                    {
-                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                        Name = Convert.ToString(reader["Name"]) ?? string.Empty,
-                        TeamID = Convert.ToInt32(reader["TeamID"]),
-                        Class = Convert.ToString(reader["Class"]) ?? string.Empty,
-                        HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
-                        BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty
-                    };
+                    Player player = new(
+                        Convert.ToInt32(reader["PlayerID"]),
+                        Convert.ToInt32(reader["TeamID"]),
+                        Convert.ToString(reader["Name"]) ?? string.Empty,
+                        Convert.ToString(reader["Class"]) ?? string.Empty,
+                        Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
+                        Convert.ToString(reader["BenchStatus"]) ?? string.Empty
+                    );
                     players.Add(player);
                 }
             }
@@ -177,14 +174,14 @@ namespace DataAccess.Repositories
                 if (reader.Read())
                 {
                     return new Player
-                    {
-                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                        Name = Convert.ToString(reader["Name"]) ?? string.Empty,
-                        TeamID = Convert.ToInt32(reader["TeamID"]),
-                        Class = Convert.ToString(reader["Class"]) ?? string.Empty,
-                        HealthStatus = Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
-                        BenchStatus = Convert.ToString(reader["BenchStatus"]) ?? string.Empty
-                    };
+                    (
+                        Convert.ToInt32(reader["PlayerID"]),
+                        Convert.ToInt32(reader["TeamID"]),
+                        Convert.ToString(reader["Name"]) ?? string.Empty,
+                        Convert.ToString(reader["Class"]) ?? string.Empty,
+                        Convert.ToString(reader["HealthStatus"]) ?? string.Empty,
+                        Convert.ToString(reader["BenchStatus"]) ?? string.Empty
+                    );
                 }
                 return null;
             }
@@ -272,14 +269,14 @@ namespace DataAccess.Repositories
                         while (reader.Read())
                         {
                             availablePlayers.Add(new Player
-                            {
-                                PlayerID = reader.GetInt32(reader.GetOrdinal("PlayerID")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
-                                TeamID = reader.GetInt32(reader.GetOrdinal("TeamID")),
-                                Class = reader.GetString(reader.GetOrdinal("Class")),
-                                HealthStatus = reader.GetString(reader.GetOrdinal("HealthStatus")),
-                                BenchStatus = reader.GetString(reader.GetOrdinal("BenchStatus"))
-                            });
+                            (
+                                reader.GetInt32(reader.GetOrdinal("PlayerID")),
+                                reader.GetInt32(reader.GetOrdinal("TeamID")),
+                                reader.GetString(reader.GetOrdinal("Name")),
+                                reader.GetString(reader.GetOrdinal("Class")),
+                                reader.GetString(reader.GetOrdinal("HealthStatus")),
+                                reader.GetString(reader.GetOrdinal("BenchStatus"))
+                            ));
                         }
                     }
                 }
@@ -319,16 +316,15 @@ namespace DataAccess.Repositories
 
                 while (reader.Read())
                 {
-                    PlayerGamePerformance performance = new()
-                    {
-                        PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                        AveragePassingAttempts = Convert.ToDouble(reader["AveragePassingAttempts"]),
-                        AverageRushingYards = Convert.ToDouble(reader["AverageRushingYards"]),
-                        AverageCarries = Convert.ToDouble(reader["AverageCarries"]),
-                        AverageReceivingYards = Convert.ToDouble(reader["AverageReceivingYards"]),
-                        AverageReceptions = Convert.ToDouble(reader["AverageReceptions"]),
-                        AverageTouchdowns = Convert.ToDouble(reader["AverageTouchdowns"])
-                    };
+                    PlayerGamePerformance performance = new(
+                        Convert.ToInt32(reader["PlayerID"]),
+                        Convert.ToDouble(reader["AveragePassingAttempts"]),
+                        Convert.ToDouble(reader["AverageRushingYards"]),
+                        Convert.ToDouble(reader["AverageCarries"]),
+                        Convert.ToDouble(reader["AverageReceivingYards"]),
+                        Convert.ToDouble(reader["AverageReceptions"]),
+                        Convert.ToDouble(reader["AverageTouchdowns"])
+                    );
                     performances.Add(performance);
                 }
                 return performances;

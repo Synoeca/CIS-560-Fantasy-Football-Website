@@ -42,14 +42,13 @@ namespace DataAccess.Repositories
                 using SqlDataReader? reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Team team = new()
-                    {
-                        TeamID = Convert.ToInt32(reader["TeamID"]),
-                        SchoolName = reader["SchoolName"] is DBNull ? string.Empty : Convert.ToString(reader["SchoolName"]),
-                        TeamName = reader["TeamName"] is DBNull ? string.Empty : Convert.ToString(reader["TeamName"]),
-                        City = reader["City"] is DBNull ? string.Empty : Convert.ToString(reader["City"]),
-                        State = reader["State"] is DBNull ? string.Empty : Convert.ToString(reader["State"])
-                    };
+                    Team team = new(
+                        Convert.ToInt32(reader["TeamID"]),
+                        reader["SchoolName"] is DBNull ? string.Empty : Convert.ToString(reader["SchoolName"]),
+                        reader["TeamName"] is DBNull ? string.Empty : Convert.ToString(reader["TeamName"]),
+                        reader["City"] is DBNull ? string.Empty : Convert.ToString(reader["City"]),
+                        reader["State"] is DBNull ? string.Empty : Convert.ToString(reader["State"])
+                    );
                     teams.Add(team);
                 }
                 return teams;

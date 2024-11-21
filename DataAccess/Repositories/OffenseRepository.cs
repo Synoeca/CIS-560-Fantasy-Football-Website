@@ -24,17 +24,17 @@ public class OffenseRepository
             while (reader.Read())
             {
                 offenseStats.Add(new Offense
-                {
-                    PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                    GameID = Convert.ToInt32(reader["GameID"]),
-                    PassingYards = reader["PassingYards"] is DBNull ? 0f : Convert.ToSingle(reader["PassingYards"]),
-                    PassingAttempts = Convert.ToInt32(reader["PassingAttempts"]),
-                    RushingYards = reader["RushingYards"] is DBNull ? 0f : Convert.ToSingle(reader["RushingYards"]),
-                    Carries = Convert.ToInt32(reader["Carries"]),
-                    ReceivingYards = reader["ReceivingYards"] is DBNull ? 0f : Convert.ToSingle(reader["ReceivingYards"]),
-                    Receptions = Convert.ToInt32(reader["Receptions"]),
-                    Touchdowns = Convert.ToInt32(reader["Touchdowns"])
-                });
+                (
+                    Convert.ToInt32(reader["PlayerID"]),
+                    Convert.ToInt32(reader["GameID"]),
+                    Convert.ToInt32(reader["PassingYards"]),
+                    Convert.ToInt32(reader["PassingAttempts"]),
+                    Convert.ToInt32(reader["RushingYards"]),
+                    Convert.ToInt32(reader["Carries"]),
+                    Convert.ToInt32(reader["ReceivingYards"]),
+                    Convert.ToInt32(reader["Receptions"]),
+                    Convert.ToInt32(reader["Touchdowns"])
+                ));
             }
         }
         catch (Exception ex)
@@ -97,17 +97,17 @@ public class OffenseRepository
             if (reader.Read())
             {
                 return new Offense
-                {
-                    PlayerID = Convert.ToInt32(reader["PlayerID"]),
-                    GameID = Convert.ToInt32(reader["GameID"]),
-                    PassingYards = Convert.ToSingle(reader["PassingYards"]),
-                    PassingAttempts = Convert.ToInt32(reader["PassingAttempts"]),
-                    RushingYards = Convert.ToSingle(reader["RushingYards"]),
-                    Carries = Convert.ToInt32(reader["Carries"]),
-                    ReceivingYards = Convert.ToSingle(reader["ReceivingYards"]),
-                    Receptions = Convert.ToInt32(reader["Receptions"]),
-                    Touchdowns = Convert.ToInt32(reader["Touchdowns"])
-                };
+                (
+                    Convert.ToInt32(reader["PlayerID"]),
+                    Convert.ToInt32(reader["GameID"]),
+                    Convert.ToInt32(reader["PassingYards"]),
+                    Convert.ToInt32(reader["PassingAttempts"]),
+                    Convert.ToInt32(reader["RushingYards"]),
+                    Convert.ToInt32(reader["Carries"]),
+                    Convert.ToInt32(reader["ReceivingYards"]),
+                    Convert.ToInt32(reader["Receptions"]),
+                    Convert.ToInt32(reader["Touchdowns"])
+                );
             }
             return null;
         }

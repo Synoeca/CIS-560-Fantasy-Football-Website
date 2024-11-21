@@ -33,15 +33,14 @@ namespace DataAccess.Repositories
                 using SqlDataReader? reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Seasons season = new()
-                    {
-                        SeasonID = Convert.ToInt32(reader["SeasonID"]),
-                        GameID = reader["GameID"] is DBNull ? null : Convert.ToInt32(reader["GameID"]),
-                        TeamID = reader["TeamID"] is DBNull ? null : Convert.ToInt32(reader["TeamID"]),
-                        Year = reader["Year"] is DBNull ? null : Convert.ToInt32(reader["Year"]),
-                        Wins = reader["Wins"] is DBNull ? null : Convert.ToInt32(reader["Wins"]),
-                        Loses = reader["Loses"] is DBNull ? null : Convert.ToInt32(reader["Loses"])
-                    };
+                    Seasons season = new(
+                        Convert.ToInt32(reader["SeasonID"]),
+                        reader["GameID"] is DBNull ? null : Convert.ToInt32(reader["GameID"]),
+                        reader["TeamID"] is DBNull ? null : Convert.ToInt32(reader["TeamID"]),
+                        reader["Year"] is DBNull ? null : Convert.ToInt32(reader["Year"]),
+                        reader["Wins"] is DBNull ? null : Convert.ToInt32(reader["Wins"]),
+                        reader["Loses"] is DBNull ? null : Convert.ToInt32(reader["Loses"])
+                    );
                     seasons.Add(season);
                 }
                 return seasons;
@@ -64,15 +63,14 @@ namespace DataAccess.Repositories
 
                 if (reader.Read())
                 {
-                    return new Seasons()
-                    {
-                        SeasonID = Convert.ToInt32(reader["SeasonID"]),
-                        GameID = reader["GameID"] is DBNull ? null : Convert.ToInt32(reader["GameID"]),
-                        TeamID = reader["TeamID"] is DBNull ? null : Convert.ToInt32(reader["TeamID"]),
-                        Year = reader["Year"] is DBNull ? null : Convert.ToInt32(reader["Year"]),
-                        Wins = reader["Wins"] is DBNull ? null : Convert.ToInt32(reader["Wins"]),
-                        Loses = reader["Loses"] is DBNull ? null : Convert.ToInt32(reader["Loses"])
-                    };
+                    return new Seasons(
+                        Convert.ToInt32(reader["SeasonID"]),
+                        reader["GameID"] is DBNull ? null : Convert.ToInt32(reader["GameID"]),
+                        reader["TeamID"] is DBNull ? null : Convert.ToInt32(reader["TeamID"]),
+                        reader["Year"] is DBNull ? null : Convert.ToInt32(reader["Year"]),
+                        reader["Wins"] is DBNull ? null : Convert.ToInt32(reader["Wins"]),
+                        reader["Loses"] is DBNull ? null : Convert.ToInt32(reader["Loses"])
+                    );
                 }
                 return null;
             }
@@ -97,14 +95,13 @@ namespace DataAccess.Repositories
 
                 while (reader.Read())
                 {
-                    SeasonPerformance performance = new()
-                    {
-                        Season = Convert.ToInt32(reader["Season"]),
-                        SchoolName = reader["SchoolName"].ToString() ?? string.Empty,
-                        Wins = Convert.ToInt32(reader["Wins"]),
-                        Losses = Convert.ToInt32(reader["Losses"]),
-                        WinningPercentage = Convert.ToDecimal(reader["WinningPercentage"])
-                    };
+                    SeasonPerformance performance = new(
+                        Convert.ToInt32(reader["Season"]),
+                        reader["SchoolName"].ToString() ?? string.Empty,
+                        Convert.ToInt32(reader["Wins"]),
+                        Convert.ToInt32(reader["Losses"]),
+                        Convert.ToDecimal(reader["WinningPercentage"])
+                    );
                     performances.Add(performance);
                 }
                 return performances;
