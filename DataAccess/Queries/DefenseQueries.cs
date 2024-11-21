@@ -27,6 +27,7 @@ namespace DataAccess.Queries
                   ForcedFumbles = @ForcedFumbles
               WHERE PlayerID = @PlayerID AND GameID = @GameID
           """;
+
         public static readonly string DeleteDefense = "DELETE FROM Football.Defense WHERE PlayerID = @PlayerID AND GameID = @GameID";
     }
 }

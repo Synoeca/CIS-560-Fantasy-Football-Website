@@ -52,36 +52,6 @@ namespace DataAccess.Repositories
             }
         }
 
-        public Seasons? GetSeasonById(int seasonId)
-        {
-            try
-            {
-                using SqlConnection connection = new(_connectionString);
-                connection.Open();
-                using SqlCommand command = new(SeasonsQueries.GetSeasonById, connection);
-                command.Parameters.AddWithValue("@SeasonID", seasonId);
-                using SqlDataReader? reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    return new Seasons()
-                    {
-                        SeasonID = Convert.ToInt32(reader["SeasonID"]),
-                        GameID = reader["GameID"] is DBNull ? null : Convert.ToInt32(reader["GameID"]),
-                        TeamID = reader["TeamID"] is DBNull ? null : Convert.ToInt32(reader["TeamID"]),
-                        Year = reader["Year"] is DBNull ? null : Convert.ToInt32(reader["Year"]),
-                        Wins = reader["Wins"] is DBNull ? null : Convert.ToInt32(reader["Wins"]),
-                        Loses = reader["Loses"] is DBNull ? null : Convert.ToInt32(reader["Loses"])
-                    };
-                }
-                return null;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         public IEnumerable<SeasonPerformance> GetSeasonPerformance(int year)
         {
             List<SeasonPerformance> performances = [];

@@ -8,7 +8,7 @@ namespace Web_App.Pages
     public class SeasonPerformanceModel : PageModel
     {
         private readonly ILogger<SeasonPerformanceModel> _logger;
-        private readonly SeasonsRepository _seasonsRepository;
+        private readonly SeasonsRepository _seasonsRepository = null!;
 
         public List<SeasonPerformance> Performance2024 { get; set; } = [];
         public List<SeasonPerformance> Performance2023 { get; set; } = [];

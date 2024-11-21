@@ -10,15 +10,10 @@ namespace DataAccess.Queries
     {
         public static readonly string GetAllTeams = "SELECT * FROM Football.Team";
 
-        /// <summary>
-        /// Gets team name by team ID
-        /// </summary>
         public static readonly string GetTeamNameById ="""
                          SELECT TeamName
                          FROM Football.Team
                          WHERE TeamID = @TeamID
            """;
-
-        // Add more queries for other CRUD operations (INSERT, UPDATE, DELETE)
     }
 }

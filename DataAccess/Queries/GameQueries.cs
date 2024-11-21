@@ -1,4 +1,6 @@
-﻿public static class GameQueries
+﻿namespace DataAccess.Queries;
+
+public static class GameQueries
 {
     public static readonly string GetAllGames = """
             SELECT GameID, HomeTeam, AwayTeam, Date, Week, HomeTeamScore, AwayTeamScore 

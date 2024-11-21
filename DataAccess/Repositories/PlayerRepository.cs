@@ -259,44 +259,16 @@ namespace DataAccess.Repositories
             }
         }
 
-        public IEnumerable<Player> GetAvailablePlayers()
+        public string? GetPlayerNameById(int playerId)
         {
-            List<Player> availablePlayers = new List<Player>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(PlayerQueries.GetAvailablePlayers, connection))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            availablePlayers.Add(new Player
-                            {
-                                PlayerID = reader.GetInt32(reader.GetOrdinal("PlayerID")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
-                                TeamID = reader.GetInt32(reader.GetOrdinal("TeamID")),
-                                Class = reader.GetString(reader.GetOrdinal("Class")),
-                                HealthStatus = reader.GetString(reader.GetOrdinal("HealthStatus")),
-                                BenchStatus = reader.GetString(reader.GetOrdinal("BenchStatus"))
-                            });
-                        }
-                    }
-                }
-            }
-            return availablePlayers;
-        }
-
-        public string GetPlayerNameById(int playerId)
-        {
-            string playerName = string.Empty;
+            string? playerName;
             try
             {
                 using SqlConnection connection = new(_connectionString);
                 connection.Open();
                 using SqlCommand command = new(PlayerQueries.GetPlayerNameById, connection);
                 command.Parameters.AddWithValue("@PlayerID", playerId);
-                playerName = (string)command.ExecuteScalar();
+                playerName = (string?)command.ExecuteScalar();
             }
             catch (Exception ex)
             {

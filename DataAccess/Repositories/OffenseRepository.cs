@@ -1,6 +1,8 @@
-﻿using DataAccess.Models;
+﻿using System.Data.SqlClient;
+using DataAccess.Models;
 using DataAccess.Queries;
-using System.Data.SqlClient;
+
+namespace DataAccess.Repositories;
 
 public class OffenseRepository
 {
@@ -51,7 +53,6 @@ public class OffenseRepository
             using SqlConnection connection = new(_connectionString);
             connection.Open();
 
-            // First check if the record already exists
             using SqlCommand checkCommand = new(OffenseQueries.GetOffenseByPlayerAndGame, connection);
             checkCommand.Parameters.AddWithValue("@PlayerID", offense.PlayerID);
             checkCommand.Parameters.AddWithValue("@GameID", offense.GameID);
@@ -63,7 +64,6 @@ public class OffenseRepository
             }
             reader.Close();
 
-            // If no existing record, proceed with insert
             using SqlCommand command = new(OffenseQueries.InsertOffense, connection);
             command.Parameters.AddWithValue("@PlayerID", offense.PlayerID);
             command.Parameters.AddWithValue("@GameID", offense.GameID);

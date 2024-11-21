@@ -66,7 +66,7 @@ namespace DataAccess.Repositories
             }
         }
 
-        public Defense GetDefenseByPlayerAndGame(int playerId, int gameId)
+        public Defense? GetDefenseByPlayerAndGame(int playerId, int gameId)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace DataAccess.Repositories
             }
         }
 
-        public void UpdateDefense(Defense defense)
+        public void UpdateDefense(Defense? defense)
         {
             try
             {

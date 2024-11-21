@@ -36,11 +36,4 @@ public static class SpecialTeamsQueries
             DELETE FROM Football.SpecialTeams
             WHERE PlayerID = @PlayerID AND GameID = @GameID
         """;
-
-    public static readonly string GetAllSpecialTeamsStats = "SELECT * FROM Football.SpecialTeams";
-
-    public static readonly string GetSpecialTeamsByGameId = """
-            SELECT * FROM Football.SpecialTeams
-            WHERE GameID = @GameID
-        """;
 }

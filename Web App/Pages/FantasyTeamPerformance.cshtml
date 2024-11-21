@@ -1,0 +1,179 @@
+﻿@page
+@using DataAccess.Models
+@model FantasyTeamPerformanceModel
+@{
+    ViewData["Title"] = "Fantasy Team Performance";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">2024 Team Performance Statistics</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th colspan="7" class="text-center border-start">Offense</th>
+                                <th colspan="4" class="text-center border-start">Defense</th>
+                                <th colspan="4" class="text-center border-start">Special Teams</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <!-- Offense -->
+                                <th>Pass Yds</th>
+                                <th>Pass Att</th>
+                                <th>Rush Yds</th>
+                                <th>Carries</th>
+                                <th>Rec Yds</th>
+                                <th>Rec</th>
+                                <th>TD</th>
+                                <!-- Defense -->
+                                <th>Tackles</th>
+                                <th>Sacks</th>
+                                <th>INT</th>
+                                <th>FF</th>
+                                <!-- Special Teams -->
+                                <th>FG</th>
+                                <th>XP</th>
+                                <th>Ret Yds</th>
+                                <th>Ret Att</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (KeyValuePair<FantasyTeam, (decimal PassYds, int PassAtt, decimal RushYds, int Carries, decimal RecYds, int Receptions, int TDs, int Tackles, int Sacks, int Ints, int ForcedFumbles, int FGs, int XPs, decimal ReturnYds, int ReturnAtt)> team in Model.Performance2024)
+                            {
+                                <tr>
+                                    <td>@team.Key.FantasyTeamName</td>
+                                    <td>@team.Value.PassYds.ToString("F1")</td>
+                                    <td>@team.Value.PassAtt</td>
+                                    <td>@team.Value.RushYds.ToString("F1")</td>
+                                    <td>@team.Value.Carries</td>
+                                    <td>@team.Value.RecYds.ToString("F1")</td>
+                                    <td>@team.Value.Receptions</td>
+                                    <td>@team.Value.TDs</td>
+                                    <td>@team.Value.Tackles</td>
+                                    <td>@team.Value.Sacks</td>
+                                    <td>@team.Value.Ints</td>
+                                    <td>@team.Value.ForcedFumbles</td>
+                                    <td>@team.Value.FGs</td>
+                                    <td>@team.Value.XPs</td>
+                                    <td>@team.Value.ReturnYds.ToString("F1")</td>
+                                    <td>@team.Value.ReturnAtt</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2023 Season Table -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="mb-0">2023 Team Performance Statistics</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th colspan="7" class="text-center border-start">Offense</th>
+                                <th colspan="4" class="text-center border-start">Defense</th>
+                                <th colspan="4" class="text-center border-start">Special Teams</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <!-- Offense -->
+                                <th>Pass Yds</th>
+                                <th>Pass Att</th>
+                                <th>Rush Yds</th>
+                                <th>Carries</th>
+                                <th>Rec Yds</th>
+                                <th>Rec</th>
+                                <th>TD</th>
+                                <!-- Defense -->
+                                <th>Tackles</th>
+                                <th>Sacks</th>
+                                <th>INT</th>
+                                <th>FF</th>
+                                <!-- Special Teams -->
+                                <th>FG</th>
+                                <th>XP</th>
+                                <th>Ret Yds</th>
+                                <th>Ret Att</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (KeyValuePair<FantasyTeam, (decimal PassYds, int PassAtt, decimal RushYds, int Carries, decimal RecYds, int Receptions, int TDs, int Tackles, int Sacks, int Ints, int ForcedFumbles, int FGs, int XPs, decimal ReturnYds, int ReturnAtt)> team in Model.Performance2023)
+                            {
+                                <tr>
+                                    <td>@team.Key.FantasyTeamName</td>
+                                    <td>@team.Value.PassYds.ToString("F1")</td>
+                                    <td>@team.Value.PassAtt</td>
+                                    <td>@team.Value.RushYds.ToString("F1")</td>
+                                    <td>@team.Value.Carries</td>
+                                    <td>@team.Value.RecYds.ToString("F1")</td>
+                                    <td>@team.Value.Receptions</td>
+                                    <td>@team.Value.TDs</td>
+                                    <td>@team.Value.Tackles</td>
+                                    <td>@team.Value.Sacks</td>
+                                    <td>@team.Value.Ints</td>
+                                    <td>@team.Value.ForcedFumbles</td>
+                                    <td>@team.Value.FGs</td>
+                                    <td>@team.Value.XPs</td>
+                                    <td>@team.Value.ReturnYds.ToString("F1")</td>
+                                    <td>@team.Value.ReturnAtt</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="mb-0">Quick Actions</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/SeasonPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-users mb-2"></i>
+                                <br />Season Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/PlayerPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-shield-alt mb-2"></i>
+                                <br />Player Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/FantasyTeamPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-calendar mb-2"></i>
+                                <br />Fantasy Team Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/FantasyTeamPoints" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-trophy mb-2"></i>
+                                <br />Fantasy Team Points
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

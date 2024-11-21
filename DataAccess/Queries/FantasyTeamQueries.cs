@@ -2,7 +2,6 @@
 {
     public static class FantasyTeamQueries
     {
-        // Team Management Queries
         public static readonly string GetAllFantasyTeams =
             "SELECT * FROM Football.FantasyTeam";
 
@@ -97,7 +96,6 @@
             WHERE ds.DraftStatusID = 1
         """;
 
-        // Draft Operation Queries
         public static readonly string StartDraft = """
             UPDATE Football.DraftStatus 
             SET IsDraftInProgress = 1, 

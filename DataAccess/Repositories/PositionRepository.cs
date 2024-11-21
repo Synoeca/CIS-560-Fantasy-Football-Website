@@ -15,10 +15,9 @@ namespace DataAccess.Repositories
             _connectionString = connectionString;
         }
 
-        // Existing method to get all positions
         public IEnumerable<Position>? GetAllPositions()
         {
-            List<Position>? positions = new();
+            List<Position>? positions = [];
             using SqlConnection connection = new(_connectionString);
             SqlCommand command = new(PositionQueries.GetAllPositions, connection);
             connection.Open();
@@ -35,17 +34,16 @@ namespace DataAccess.Repositories
             return positions;
         }
 
-        // Existing method to get position name by ID
-        public string GetPositionNameById(int positionId)
+        public string? GetPositionNameById(int positionId)
         {
-            string positionName = string.Empty;
+            string? positionName;
             try
             {
                 using SqlConnection connection = new(_connectionString);
                 connection.Open();
                 using SqlCommand command = new(PositionQueries.GetPositionNameById, connection);
                 command.Parameters.AddWithValue("@PositionID", positionId);
-                positionName = (string)command.ExecuteScalar();
+                positionName = (string?)command.ExecuteScalar();
             }
             catch (Exception ex)
             {
@@ -54,7 +52,6 @@ namespace DataAccess.Repositories
             return positionName;
         }
 
-        // New method to get PositionID by PlayerID
         public int GetPositionIdByPlayerId(int playerId)
         {
             int positionId = 0;

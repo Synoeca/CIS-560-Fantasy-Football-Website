@@ -9,9 +9,9 @@ namespace DataAccess.Queries
     public class DBQueries
     {
         public static readonly string CheckDB = """                       
-                        SELECT COUNT(*) 
-                        FROM sys.databases 
-                        WHERE name = 'Team13'
+                SELECT COUNT(*) 
+                FROM sys.databases 
+                WHERE name = 'Team13'
             """;
 
         public static readonly string CheckSchema = """

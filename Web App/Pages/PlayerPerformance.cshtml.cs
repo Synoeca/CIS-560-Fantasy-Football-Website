@@ -7,8 +7,8 @@ namespace Web_App.Pages
 {
     public class PlayerPerformanceModel : PageModel
     {
-        private readonly PlayerRepository _playerRepository;
-        public PlayerRepository PlayerRepository { get; set; }
+        private readonly PlayerRepository? _playerRepository;
+        public PlayerRepository? PlayerRepository { get; set; }
 
         public List<PlayerGamePerformance> Performance2024 { get; set; } = [];
         public List<PlayerGamePerformance> Performance2023 { get; set; } = [];
@@ -25,7 +25,7 @@ namespace Web_App.Pages
 
         public void OnGet()
         {
-            Performance2024 = _playerRepository.GetPlayerPerformance(2024).ToList();
+            Performance2024 = _playerRepository!.GetPlayerPerformance(2024).ToList();
             Performance2023 = _playerRepository.GetPlayerPerformance(2023).ToList();
         }
     }

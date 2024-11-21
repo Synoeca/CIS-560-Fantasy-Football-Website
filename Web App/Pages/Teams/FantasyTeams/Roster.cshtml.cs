@@ -46,12 +46,12 @@ namespace Web_App.Pages.Teams.FantasyTeams
             return RedirectToPage(new { id = fantasyTeamId }); 
         }
 
-        public string GetPlayerName(int playerId)
+        public string? GetPlayerName(int playerId)
         {
             return _playerRepository.GetPlayerNameById(playerId);
         }
 
-        public string GetPositionName(int positionId)
+        public string? GetPositionName(int positionId)
         {
             return _positionRepository.GetPositionNameById(positionId);
         }

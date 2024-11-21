@@ -1,6 +1,8 @@
-﻿using DataAccess.Models;
+﻿using System.Data.SqlClient;
+using DataAccess.Models;
 using DataAccess.Queries;
-using System.Data.SqlClient;
+
+namespace DataAccess.Repositories;
 
 public class SpecialTeamsRepository
 {
@@ -29,7 +31,6 @@ public class SpecialTeamsRepository
                     GameID = Convert.ToInt32(reader["GameID"]),
                     FieldGoalsMade = Convert.ToInt32(reader["FieldGoalsMade"]),
                     FieldGoalsAttempted = Convert.ToInt32(reader["FieldGoalsAttempted"]),
-                    // Handle nullable fields
                     ExtraPointsMade = reader["ExtraPointsMade"] is DBNull
                         ? null
                         : Convert.ToInt32(reader["ExtraPointsMade"]),
@@ -49,7 +50,6 @@ public class SpecialTeamsRepository
         return specialTeamsStats;
     }
 
-    // Add CRUD operations
     public int InsertSpecialTeamsStats(SpecialTeams stats)
     {
         try

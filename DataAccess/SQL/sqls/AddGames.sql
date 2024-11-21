@@ -91,3 +91,77 @@ VALUES
  -- Houston at Arizona
  (1, 7, '2024-11-15', 110, 27, 3);
 GO
+
+
+-- Insert more 2023 Games
+INSERT INTO Football.Game (HomeTeam, AwayTeam, [Date], [Week], HomeTeamScore, AwayTeamScore) 
+VALUES 
+-- September 2023
+(1, 2, '2023-09-02', 1, 24, 21),   -- Arizona vs ASU
+(3, 4, '2023-09-02', 1, 31, 28),   -- Baylor vs BYU
+(5, 6, '2023-09-02', 1, 35, 24),   -- Cincinnati vs Colorado
+(7, 8, '2023-09-09', 2, 28, 17),   -- Houston vs Iowa State
+(9, 10, '2023-09-09', 2, 42, 35),  -- K-State vs Kansas
+(11, 12, '2023-09-16', 3, 31, 24), -- OK State vs TCU
+(13, 14, '2023-09-16', 3, 38, 28), -- Texas Tech vs UCF
+(15, 16, '2023-09-23', 4, 27, 24), -- Utah vs West Virginia
+
+-- October 2023
+(2, 3, '2023-10-07', 6, 35, 31),   -- ASU vs Baylor
+(4, 5, '2023-10-07', 6, 28, 21),   -- BYU vs Cincinnati
+(6, 7, '2023-10-14', 7, 34, 27),   -- Colorado vs Houston
+(8, 9, '2023-10-14', 7, 31, 28),   -- Iowa State vs K-State
+(10, 11, '2023-10-21', 8, 45, 38), -- Kansas vs OK State
+(12, 13, '2023-10-21', 8, 35, 31), -- TCU vs Texas Tech
+(14, 15, '2023-10-28', 9, 24, 21), -- UCF vs Utah
+(16, 1, '2023-10-28', 9, 28, 24),  -- West Virginia vs Arizona
+
+-- November 2023
+(2, 4, '2023-11-04', 10, 31, 27),  -- ASU vs BYU
+(3, 5, '2023-11-04', 10, 35, 28),  -- Baylor vs Cincinnati
+(6, 8, '2023-11-11', 11, 28, 24),  -- Colorado vs Iowa State
+(7, 9, '2023-11-11', 11, 31, 28),  -- Houston vs K-State
+(10, 12, '2023-11-18', 12, 42, 35),-- Kansas vs TCU
+(11, 13, '2023-11-18', 12, 38, 35),-- OK State vs Texas Tech
+(14, 16, '2023-11-25', 13, 31, 28),-- UCF vs West Virginia
+(15, 1, '2023-11-25', 13, 27, 24); -- Utah vs Arizona
+
+-- Add performance data for these games
+INSERT INTO Football.Offense (PlayerID, GameID, PassingYards, PassingAttempts, RushingYards, Carries, ReceivingYards, Receptions, Touchdowns)
+SELECT p.PlayerID, g.GameID,
+       CASE WHEN ftp.PositionID = 1 THEN 275 ELSE 0 END,
+       CASE WHEN ftp.PositionID = 1 THEN 35 ELSE 0 END,
+       CASE WHEN ftp.PositionID = 2 THEN 95 ELSE 0 END,
+       CASE WHEN ftp.PositionID = 2 THEN 18 ELSE 0 END,
+       CASE WHEN ftp.PositionID IN (4,5) THEN 85 ELSE 0 END,
+       CASE WHEN ftp.PositionID IN (4,5) THEN 6 ELSE 0 END,
+       CASE 
+           WHEN ftp.PositionID = 1 THEN 2
+           WHEN ftp.PositionID = 2 THEN 1
+           WHEN ftp.PositionID IN (4,5) THEN 1
+           ELSE 0
+       END
+FROM Football.Player p
+JOIN Football.FantasyTeamPlayer ftp ON p.PlayerID = ftp.PlayerID
+JOIN Football.Game g ON g.HomeTeam = p.TeamID OR g.AwayTeam = p.TeamID
+WHERE YEAR(g.[Date]) = 2023
+AND ftp.FantasyTeamID IS NOT NULL
+AND ftp.PositionID IN (1,2,4,5)
+AND NOT EXISTS (
+    SELECT 1 FROM Football.Offense o 
+    WHERE o.PlayerID = p.PlayerID AND o.GameID = g.GameID
+);
+
+INSERT INTO Football.SpecialTeams (PlayerID, GameID, FieldGoalsMade, FieldGoalsAttempted, ExtraPointsMade, ExtraPointsAttempted)
+SELECT p.PlayerID, g.GameID, 
+       2, 3, 4, 4
+FROM Football.Player p
+JOIN Football.FantasyTeamPlayer ftp ON p.PlayerID = ftp.PlayerID
+JOIN Football.Game g ON g.HomeTeam = p.TeamID OR g.AwayTeam = p.TeamID
+WHERE YEAR(g.[Date]) = 2023
+AND ftp.FantasyTeamID IS NOT NULL
+AND ftp.PositionID = 11
+AND NOT EXISTS (
+    SELECT 1 FROM Football.SpecialTeams st 
+    WHERE st.PlayerID = p.PlayerID AND st.GameID = g.GameID
+);

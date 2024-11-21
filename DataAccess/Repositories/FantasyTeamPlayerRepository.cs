@@ -69,7 +69,6 @@ namespace DataAccess.Repositories
                 using SqlConnection connection = new(_connectionString);
                 connection.Open();
 
-                // Validate if the player is available for drafting
                 using (SqlCommand validateCommand = new(FantasyTeamPlayerQueries.ValidatePlayerAvailability, connection))
                 {
                     validateCommand.Parameters.AddWithValue("@PlayerID", playerId);
@@ -80,8 +79,7 @@ namespace DataAccess.Repositories
                     }
                 }
 
-                // Fetch the PositionID using PositionRepository
-                PositionRepository positionRepository = new PositionRepository(_connectionString);
+                PositionRepository positionRepository = new(_connectionString);
                 int positionId = positionRepository.GetPositionIdByPlayerId(playerId);
 
                 if (positionId == 0)
@@ -89,16 +87,13 @@ namespace DataAccess.Repositories
                     throw new Exception("Unable to determine the player's position.");
                 }
 
-                // Add player to the fantasy team with the position
                 using SqlCommand command = new(FantasyTeamPlayerQueries.AddPlayerToTeam, connection);
                 command.Parameters.AddWithValue("@FantasyTeamID", fantasyTeamId);
                 command.Parameters.AddWithValue("@PlayerID", playerId);
                 command.Parameters.AddWithValue("@PositionID", positionId);
 
                 command.ExecuteNonQuery();
-
-                // Update current drafting team and round
-                UpdateDraftingStatus(fantasyTeamRepo); // Call method to update status
+                UpdateDraftingStatus(fantasyTeamRepo);
             }
             catch (Exception ex)
             {
@@ -108,21 +103,10 @@ namespace DataAccess.Repositories
 
         private void UpdateDraftingStatus(FantasyTeamRepository fantasyTeamRepo)
         {
-            // Get current round
-            int currentRound = fantasyTeamRepo.GetCurrentDraftRound();
-
-            // Get total teams
             int totalTeams = fantasyTeamRepo.GetTotalTeams();
-
-            // Get current drafting team ID
             int currentDraftingTeamId = fantasyTeamRepo.GetCurrentDraftingTeamId();
-
-            // Logic to determine next drafting team (rotate teams)
-            int nextDraftingTeamId = (currentDraftingTeamId % totalTeams) + 1; // Rotate through teams
-
-            // Update round and current drafting team in the repository
-            //fantasyTeamRepo.UpdateDraftRound(currentRound + 1); // Increment round after drafting
-            fantasyTeamRepo.UpdateCurrentDraftingTeam(nextDraftingTeamId); // Update current drafting team
+            int nextDraftingTeamId = (currentDraftingTeamId % totalTeams) + 1;
+            fantasyTeamRepo.UpdateCurrentDraftingTeam(nextDraftingTeamId);
         }
 
 
@@ -154,7 +138,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<FantasyTeamPlayer> GetRosterByFantasyId(int fantasyTeamId)
         {
-            List<FantasyTeamPlayer> roster = new List<FantasyTeamPlayer>();
+            List<FantasyTeamPlayer> roster = [];
 
             using SqlConnection connection = new(_connectionString);
             SqlCommand command = new(FantasyTeamPlayerQueries.GetRosterByFantasyId, connection);
@@ -170,7 +154,7 @@ namespace DataAccess.Repositories
                 {
                     PlayerID = reader.GetInt32(reader.GetOrdinal("PlayerID")),
                     PositionID = reader.GetInt32(reader.GetOrdinal("PositionID")),
-                    FantasyTeamID = fantasyTeamId // Set the fantasy team ID for reference if needed
+                    FantasyTeamID = fantasyTeamId
                 });
             }
 
