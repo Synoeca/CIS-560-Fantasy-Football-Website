@@ -24,6 +24,26 @@ public static class GameQueries
            WHERE GameID = @GameID
        """;
 
+    public static readonly string DeleteSpecialTeamsForGame = """
+          DELETE FROM Football.SpecialTeams
+          WHERE GameID = @GameID
+      """;
+
+    public static readonly string DeleteSeasonsForGame = """
+         DELETE FROM Football.Seasons
+         WHERE GameID = @GameID
+     """;
+
+    public static readonly string DeleteOffenseForGame = """
+         DELETE FROM Football.Offense
+         WHERE GameID = @GameID
+     """;
+
+    public static readonly string DeleteDefenseForGame = """
+         DELETE FROM Football.Defense
+         WHERE GameID = @GameID
+     """;
+
     public static readonly string DeleteGame = """
            DELETE FROM Football.Game
            WHERE GameID = @GameID
