@@ -124,12 +124,46 @@ namespace DataAccess.Repositories
             {
                 using SqlConnection connection = new(_connectionString);
                 connection.Open();
-                using SqlCommand command = new(GameQueries.DeleteGame, connection);
 
-                command.Parameters.AddWithValue("@GameID", gameId);
+                using SqlTransaction transaction = connection.BeginTransaction();
+                try
+                {
+                    using (SqlCommand specialTeamsCommand = new(GameQueries.DeleteSpecialTeamsForGame, connection, transaction))
+                    {
+                        specialTeamsCommand.Parameters.AddWithValue("@GameID", gameId);
+                        specialTeamsCommand.ExecuteNonQuery();
+                    }
 
-                int rowsAffected = command.ExecuteNonQuery();
-                return rowsAffected > 0;
+                    using (SqlCommand offenseCommand = new(GameQueries.DeleteOffenseForGame, connection, transaction))
+                    {
+                        offenseCommand.Parameters.AddWithValue("@GameID", gameId);
+                        offenseCommand.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand defenseCommand = new(GameQueries.DeleteDefenseForGame, connection, transaction))
+                    {
+                        defenseCommand.Parameters.AddWithValue("@GameID", gameId);
+                        defenseCommand.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand seasonCommand = new(GameQueries.DeleteSeasonsForGame, connection, transaction))
+                    {
+                        seasonCommand.Parameters.AddWithValue("@GameID", gameId);
+                        seasonCommand.ExecuteNonQuery();
+                    }
+
+                    using SqlCommand gameCommand = new(GameQueries.DeleteGame, connection, transaction);
+                    gameCommand.Parameters.AddWithValue("@GameID", gameId);
+                    int rowsAffected = gameCommand.ExecuteNonQuery();
+
+                    transaction.Commit();
+                    return rowsAffected > 0;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
             catch (Exception ex)
             {
