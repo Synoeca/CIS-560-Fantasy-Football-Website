@@ -1,0 +1,61 @@
+﻿@page
+@model Web_App.Pages.Teams.FantasyTeams.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Fantasy Team";
+}
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Delete Fantasy Team</h2>
+                <a asp-page="./FantasyTeam" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.Team == null)
+            {
+                    <div class="alert alert-danger">
+                        Team not found.
+                    </div>
+            }
+            else if (Model.IsDraftInProgress)
+            {
+                    <div class="alert alert-warning">
+                        <h4 class="alert-heading">Warning!</h4>
+                        <p>You cannot delete the team "@Model.Team.FantasyTeamName" because the draft is currently in progress.</p>
+                        <p>Please end the draft before attempting to delete this team.</p>
+                    </div>
+            }
+            else
+            {
+                    <div class="alert alert-danger">
+                        <h4 class="alert-heading">Warning!</h4>
+                        <p>Are you sure you want to delete the team "@Model.Team.FantasyTeamName"? This action cannot be undone.</p>
+                    </div>
+
+                    <dl class="row">
+                        <dt class="col-sm-2">Team Name</dt>
+                        <dd class="col-sm-10">@Model.Team.FantasyTeamName</dd>
+
+                        <dt class="col-sm-2">Wins</dt>
+                        <dd class="col-sm-10">@Model.Team.Wins</dd>
+
+                        <dt class="col-sm-2">Losses</dt>
+                        <dd class="col-sm-10">@Model.Team.Losses</dd>
+                    </dl>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="Team.FantasyTeamID" />
+                        <button type="submit" class="btn btn-danger" 
+                    @(Model.IsDraftInProgress ? "disabled" : "")>
+                            <i class="fas fa-trash me-1"></i> Delete Team
+                        </button>
+                    </form>
+            }
+        </div>
+    </div>
+</div>

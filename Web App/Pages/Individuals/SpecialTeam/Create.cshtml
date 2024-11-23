@@ -1,0 +1,78 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CreateModel
+@{
+    ViewData["Title"] = "Create Special Teams Stats";
+}
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Create New Special Teams Stats</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams.GameID" class="form-label">Game</label>
+                        <select asp-for="SpecialTeams.GameID" class="form-select" asp-items="Model.GamesList" required>
+                            <option value="">Select Game</option>
+                        </select>
+                        <span asp-validation-for="SpecialTeams.GameID" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams.FieldGoalsMade" class="form-label">Field Goals Made</label>
+                        <input asp-for="SpecialTeams.FieldGoalsMade" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="SpecialTeams.FieldGoalsMade" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams.FieldGoalsAttempted" class="form-label">Field Goals Attempted</label>
+                        <input asp-for="SpecialTeams.FieldGoalsAttempted" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="SpecialTeams.FieldGoalsAttempted" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams.ExtraPointsMade" class="form-label">Extra Points Made</label>
+                        <input asp-for="SpecialTeams.ExtraPointsMade" class="form-control" type="number" min="0" />
+                        <span asp-validation-for="SpecialTeams.ExtraPointsMade" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams.ExtraPointsAttempted" class="form-label">Extra Points Attempted</label>
+                        <input asp-for="SpecialTeams.ExtraPointsAttempted" class="form-control" type="number" min="0" />
+                        <span asp-validation-for="SpecialTeams.ExtraPointsAttempted" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams.ReturnYards" class="form-label">Return Yards</label>
+                        <input asp-for="SpecialTeams.ReturnYards" class="form-control" type="number" step="0.1" required />
+                        <span asp-validation-for="SpecialTeams.ReturnYards" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams.ReturnAttempts" class="form-label">Return Attempts</label>
+                        <input asp-for="SpecialTeams.ReturnAttempts" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="SpecialTeams.ReturnAttempts" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Create Special Teams Stats</button>
+                        <a asp-page="/Individuals/Individual" 
+                           asp-route-playerId="@Model.PlayerID" 
+                           asp-route-activeTab="specialteams" 
+                           class="btn btn-secondary">Back to Player Details</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

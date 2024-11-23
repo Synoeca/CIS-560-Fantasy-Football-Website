@@ -1,0 +1,160 @@
+﻿@page
+@using DataAccess.Models
+@model FantasyTeamPointsModel
+@{
+    ViewData["Title"] = "Fantasy Team Points";
+}
+
+<div class="container">
+    <div class="row">
+        <!-- 2024 Season -->
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">2024 Season Points Summary</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Total Points</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (KeyValuePair<FantasyTeam, int> team in Model.TeamPoints2024.OrderByDescending(t => t.Value))
+                            {
+                                <tr>
+                                    <td>@team.Key.FantasyTeamName</td>
+                                    <td>@team.Value</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="mt-4">Detailed Performance</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Player</th>
+                                <th>Points</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (KeyValuePair<FantasyTeam, List<(string PlayerName, int Position, int Points)>> team in Model.DetailedPerformance2024.OrderByDescending(t => t.Value.Sum(p => p.Points)))
+                            {
+                                @foreach ((string playerName, int position, int points) in team.Value)
+                                {
+                                    <tr>
+                                        <td>@team.Key.FantasyTeamName</td>
+                                        <td>@playerName (@Model.PositionRepository.GetPositionNameById(@position))</td>
+                                        <td>@points pts</td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2023 Season -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="mb-0">2023 Season Points Summary</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Total Points</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (KeyValuePair<FantasyTeam, int> team in Model.TeamPoints2023.OrderByDescending(t => t.Value))
+                            {
+                                <tr>
+                                    <td>@team.Key.FantasyTeamName</td>
+                                    <td>@team.Value</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="mt-4">Detailed Performance</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Player</th>
+                                <th>Points</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (KeyValuePair<FantasyTeam, List<(string PlayerName, int Position, int Points)>> team in Model.DetailedPerformance2023.OrderByDescending(t => t.Value.Sum(p => p.Points)))
+                            {
+                                @foreach ((string playerName, int position, int points) in team.Value)
+                                {
+                                    <tr>
+                                        <td>@team.Key.FantasyTeamName</td>
+                                        <td>@playerName (@Model.PositionRepository.GetPositionNameById(@position))</td>
+                                        <td>@points pts</td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="mb-0">Quick Actions</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/SeasonPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-users mb-2"></i>
+                                <br />Season Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/PlayerPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-shield-alt mb-2"></i>
+                                <br />Player Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/FantasyTeamPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-calendar mb-2"></i>
+                                <br />Fantasy Team Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/FantasyTeamPoints" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-trophy mb-2"></i>
+                                <br />Fantasy Team Points
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

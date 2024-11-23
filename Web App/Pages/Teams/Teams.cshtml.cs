@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using DataAccess.Models;
 using DataAccess.Repositories;
 
-namespace Web_App.Pages
+namespace Web_App.Pages.Teams
 {
     public class TeamsModel : PageModel
     {

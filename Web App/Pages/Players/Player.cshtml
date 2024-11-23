@@ -1,0 +1,302 @@
+﻿@page
+@using DataAccess.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PlayerModel
+@{
+    ViewData["Title"] = "Players";
+    ViewData["Subtitle"] = "Player Information and Statistics";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Players Roster</h2>
+                <div>
+                    <span class="badge badge-primary me-2">Total: @Model.TotalFilteredCount</span>
+                    <a asp-page="/Players/Create" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Create New Player
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <!-- Filters -->
+            <form method="get" class="row g-3 mb-4" id="filterForm">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Search by name (press Enter)"
+                           asp-for="SearchString" id="nameSearch"/>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select filter-control" asp-for="TeamFilter" asp-items="Model.TeamsList">
+                        <option value="">All Teams</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select filter-control" asp-for="ClassFilter" asp-items="Model.ClassesList">
+                        <option value="">All Classes</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select filter-control" asp-for="StatusFilter" asp-items="Model.StatusList">
+                        <option value="">All Statuses</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select filter-control" asp-for="SortOrder">
+                        <option value="">Sort By</option>
+                        <option value="name">Name ↑</option>
+                        <option value="name_desc">Name ↓</option>
+                        <option value="class">Class ↑</option>
+                        <option value="class_desc">Class ↓</option>
+                        <option value="team">Team ↑</option>
+                        <option value="team_desc">Team ↓</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger w-100" id="resetButton">Reset</button>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <a asp-page="/Player" asp-route-sortOrder="@(Model.SortOrder == "name" ? "name_desc" : "name")"
+                               class="text-dark text-decoration-none">
+                                Name @(Model.SortOrder switch
+                                     {
+                                         "name" => "↑",
+                                         "name_desc" => "↓",
+                                         _ => ""
+                                     })
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a asp-page="/Player" asp-route-sortOrder="@(Model.SortOrder == "team" ? "team_desc" : "team")"
+                               class="text-dark text-decoration-none">
+                                School @(Model.SortOrder switch
+                                       {
+                                           "team" => "↑",
+                                           "team_desc" => "↓",
+                                           _ => ""
+                                       })
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a asp-page="/Player" asp-route-sortOrder="@(Model.SortOrder == "class" ? "class_desc" : "class")"
+                               class="text-dark text-decoration-none">
+                                Class @(Model.SortOrder switch
+                                      {
+                                          "class" => "↑",
+                                          "class_desc" => "↓",
+                                          _ => ""
+                                      })
+                            </a>
+                        </th>
+                        <th scope="col">Health</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (Model.Players.Any())
+                    {
+                        @foreach (Player player in Model.Players)
+                        {
+                            <tr>
+                                <td>@player.PlayerID</td>
+                                <td class="d-flex justify-content-between align-items-center">
+                                        <a asp-page="/Individuals/Individual" asp-route-playerId="@player.PlayerID" class="text-decoration-none">
+                                        <strong>@player.Name</strong>
+                                    </a>
+                                    <div class="action-buttons">
+                                        <a asp-page="./Edit" asp-route-id="@player.PlayerID" 
+                                           class="btn btn-sm btn-outline-primary" 
+                                           title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-page="./Delete" asp-route-id="@player.PlayerID" 
+                                           class="btn btn-sm btn-outline-danger" 
+                                           title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>@Model.TeamRepository.GetTeamNameById(Convert.ToInt32(player.TeamID))</td>
+                                <td>@player.Class</td>
+                                <td>
+                                    <span class="@(player.HealthStatus.ToLower() == "healthy" ? "text-success" : "text-danger")">
+                                        @player.HealthStatus
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge @(player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">
+                                        @player.BenchStatus
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="fas fa-info-circle me-2"></i>No players found in the database
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (Model.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        @{
+                            const int pageRangeSize = 10;
+                            int startPage = Math.Max(1, Model.CurrentPage - (pageRangeSize / 2));
+                            int endPage = Math.Min(Model.TotalPages, startPage + pageRangeSize - 1);
+
+                            if (endPage - startPage + 1 < pageRangeSize)
+                            {
+                                startPage = Math.Max(1, endPage - pageRangeSize + 1);
+                            }
+                        }
+
+                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-page="/Players/Player"
+                               asp-route-currentPage="1"
+                               asp-route-searchString="@Model.SearchString"
+                               asp-route-teamFilter="@Model.TeamFilter"
+                               asp-route-classFilter="@Model.ClassFilter"
+                               asp-route-statusFilter="@Model.StatusFilter"
+                               asp-route-sortOrder="@Model.SortOrder">
+                                &laquo;
+                            </a>
+                        </li>
+                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-page="/Players/Player"
+                               asp-route-currentPage="@(Model.CurrentPage - 1)"
+                               asp-route-searchString="@Model.SearchString"
+                               asp-route-teamFilter="@Model.TeamFilter"
+                               asp-route-classFilter="@Model.ClassFilter"
+                               asp-route-statusFilter="@Model.StatusFilter"
+                               asp-route-sortOrder="@Model.SortOrder">
+                                &lsaquo;
+                            </a>
+                        </li>
+
+                        @if (startPage > 1)
+                        {
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                        }
+
+                        @for (int i = startPage; i <= endPage; i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-page="/Players/Player"
+                                   asp-route-currentPage="@i"
+                                   asp-route-searchString="@Model.SearchString"
+                                   asp-route-teamFilter="@Model.TeamFilter"
+                                   asp-route-classFilter="@Model.ClassFilter"
+                                   asp-route-statusFilter="@Model.StatusFilter"
+                                   asp-route-sortOrder="@Model.SortOrder">@i</a>
+                            </li>
+                        }
+
+                        @if (endPage < Model.TotalPages)
+                        {
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                        }
+
+                        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-page="/Players/Player"
+                               asp-route-currentPage="@(Model.CurrentPage + 1)"
+                               asp-route-searchString="@Model.SearchString"
+                               asp-route-teamFilter="@Model.TeamFilter"
+                               asp-route-classFilter="@Model.ClassFilter"
+                               asp-route-statusFilter="@Model.StatusFilter"
+                               asp-route-sortOrder="@Model.SortOrder">
+                                &rsaquo;
+                            </a>
+                        </li>
+                        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-page="/Players/Player"
+                               asp-route-currentPage="@Model.TotalPages"
+                               asp-route-searchString="@Model.SearchString"
+                               asp-route-teamFilter="@Model.TeamFilter"
+                               asp-route-classFilter="@Model.ClassFilter"
+                               asp-route-statusFilter="@Model.StatusFilter"
+                               asp-route-sortOrder="@Model.SortOrder">
+                                &raquo;
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('select.filter-control').forEach(control => {
+            control.addEventListener('change', () => {
+                document.getElementById('filterForm').submit();
+            });
+        });
+
+        const nameSearch = document.getElementById('nameSearch');
+        const filterForm = document.getElementById('filterForm');
+        const hasValidSearchValue = () => nameSearch.value.trim() !== '';
+
+        let previousSearchValue = nameSearch.value.trim();
+
+        nameSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const currentValue = nameSearch.value.trim();
+                if (hasValidSearchValue() || (previousSearchValue !== '' && currentValue === '')) {
+                    filterForm.submit();
+                }
+                previousSearchValue = currentValue;
+            }
+        });
+
+        nameSearch.addEventListener('blur', () => {
+            const currentValue = nameSearch.value.trim();
+            if (hasValidSearchValue() || (previousSearchValue !== '' && currentValue === '')) {
+                filterForm.submit();
+            }
+            previousSearchValue = currentValue;
+        });
+
+        nameSearch.addEventListener('input', () => {
+            const currentValue = nameSearch.value.trim();
+            if (previousSearchValue !== '' && currentValue === '') {
+                filterForm.submit();
+            }
+            previousSearchValue = currentValue;
+        });
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            document.querySelectorAll('select.filter-control').forEach(select => {
+                select.selectedIndex = 0;
+            });
+
+            nameSearch.value = '';
+            previousSearchValue = '';
+            filterForm.submit();
+        });
+    </script>
+}

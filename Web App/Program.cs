@@ -1,19 +1,38 @@
 using DataAccess.Repositories;
+using Web_App.Extensions;
+using Web_App.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDatabaseInitializer();
 
-// Simplified connection string
-var connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=CIS560;Integrated Security=True";
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+}
 
-// Register repositories with the connection string
 builder.Services.AddScoped<PlayerRepository>(_ => new PlayerRepository(connectionString));
+builder.Services.AddScoped<FantasyTeamRepository>(_ => new FantasyTeamRepository(connectionString));
+builder.Services.AddScoped<PositionRepository>(_ => new PositionRepository(connectionString));
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    try
+    {
+        DatabaseInitializer initializer = scope.ServiceProvider.GetRequiredService<DatabaseInitializer>();
+        await initializer.InitializeAsync();
+        Console.WriteLine("Database initialized successfully.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
+    }
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -26,4 +45,4 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
 
-app.Run();  
+app.Run();

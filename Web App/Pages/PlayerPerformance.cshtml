@@ -1,0 +1,86 @@
+﻿@page
+@using DataAccess.Models
+@model PlayerPerformanceModel
+@{
+    ViewData["Title"] = "Player Performance";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">2024 Player Performance</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Player ID</th>
+                                <th>Avg. Pass Att.</th>
+                                <th>Avg. Rush Yds</th>
+                                <th>Avg. Carries</th>
+                                <th>Avg. Rec. Yds</th>
+                                <th>Avg. Receptions</th>
+                                <th>Avg. TD</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (PlayerGamePerformance? perf in Model.Performance2024)
+                            {
+                                <tr>
+                                    <td>@Model.PlayerRepository!.GetPlayerNameById(@perf.PlayerID)</td>
+                                    <td>@perf.AveragePassingAttempts.ToString("F1")</td>
+                                    <td>@perf.AverageRushingYards.ToString("F1")</td>
+                                    <td>@perf.AverageCarries.ToString("F1")</td>
+                                    <td>@perf.AverageReceivingYards.ToString("F1")</td>
+                                    <td>@perf.AverageReceptions.ToString("F1")</td>
+                                    <td>@perf.AverageTouchdowns.ToString("F1")</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="mb-0">Quick Actions</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/SeasonPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-users mb-2"></i>
+                                <br />Season Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/PlayerPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-shield-alt mb-2"></i>
+                                <br />Player Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/FantasyTeamPerformance" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-calendar mb-2"></i>
+                                <br />Fantasy Team Performance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/FantasyTeamPoints" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-trophy mb-2"></i>
+                                <br />Fantasy Team Points
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

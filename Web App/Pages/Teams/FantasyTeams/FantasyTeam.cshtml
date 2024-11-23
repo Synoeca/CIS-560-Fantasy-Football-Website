@@ -1,0 +1,484 @@
+﻿@page
+@using DataAccess.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model FantasyTeamModel
+
+@{
+    ViewData["Title"] = "Fantasy Team"; 
+    ViewData["Subtitle"] = "Fantasy Team Information and Statistics"; 
+}
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Fantasy Teams</h2>
+                <div>
+                    <span class="badge badge-primary me-2">Total: @Model.TotalFilteredCount</span>
+                    <a asp-page="./Create" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Create New Fantasy Team
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Draft Status Alert -->
+            @if (!Model.IsDraftInProgress)
+            {
+                <div class="alert alert-warning mt-3">
+                    <h4 class="alert-heading">Draft Not Started</h4>
+                    <p>Start the draft to begin building your fantasy teams.</p>
+                    <form method="post">
+                        <button type="submit" asp-page-handler="StartDraft" class="btn btn-primary">Start Draft</button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <!-- Available Players Section -->
+                <div class="mt-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="mb-0">Available Players</h3>
+                                <div>
+                                    <span class="badge bg-light text-primary">
+                                        Round: @Model.CurrentDraftRound
+                                    </span>
+                                    <span class="badge bg-light text-primary ms-2">
+                                        Drafting: @(Model.FantasyTeams.FirstOrDefault(t => t.FantasyTeamID == Model.CurrentDraftingTeamId)?.FantasyTeamName ?? "Unknown")
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Players Filters -->
+                            <form method="get" class="row g-3 mb-4" id="playerFilterForm">
+                                <!-- Only include player-related parameters -->
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" 
+                                           placeholder="Search by player name (press Enter)" 
+                                           asp-for="PlayerSearchString"
+                                           id="playerNameSearch" />
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select filter-control" asp-for="PlayerSortOrder">
+                                        <option value="">Sort By</option>
+                                        <option value="name">Name ↑</option>
+                                        <option value="name_desc">Name ↓</option>
+                                        <option value="position">Position ↑</option>
+                                        <option value="position_desc">Position ↓</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select filter-control" asp-for="PositionFilter" asp-items="Model.PositionsList"></select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-secondary w-100" 
+                                            id="playerResetButton">Reset</button>
+                                </div>
+                            </form>
+
+                            <!-- Available Players Table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">
+                                            <a asp-page="/FantasyTeam" 
+                                               asp-route-PlayerSortOrder="@(Model.PlayerSortOrder == "name" ? "name_desc" : "name")"
+                                               asp-route-PlayerSearchString="@Model.PlayerSearchString"
+                                               asp-route-PositionFilter="@Model.PositionFilter"
+                                               class="text-dark text-decoration-none">
+                                                Player Name @(Model.PlayerSortOrder switch { "name" => "↑", "name_desc" => "↓", _ => "" })
+                                            </a>
+                                        </th>
+                                        <th scope="col">
+                                            <a asp-page="/FantasyTeam" 
+                                               asp-route-PlayerSortOrder="@(Model.PlayerSortOrder == "position" ? "position_desc" : "position")"
+                                               asp-route-PlayerSearchString="@Model.PlayerSearchString"
+                                               asp-route-PositionFilter="@Model.PositionFilter"
+                                               class="text-dark text-decoration-none">
+                                                Position @(Model.PlayerSortOrder switch { "position" => "↑", "position_desc" => "↓", _ => "" })
+                                            </a>
+                                        </th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if (Model.AvailablePlayers.Any())
+                                    {
+                                        @foreach (FantasyTeamPlayer player in Model.AvailablePlayers)
+                                        {
+                                            <tr>
+                                                <td>@Model.PlayerRepository!.GetPlayerNameById(player.PlayerID)</td>
+                                                <td>@Model.PositionRepository!.GetPositionNameById(player.PositionID)</td>
+                                                <td>
+                                                    <form method="post" asp-page-handler="DraftPlayer" class="d-inline">
+                                                        <input type="hidden" name="playerId" value="@player.PlayerID" />
+                                                        <input type="hidden" name="fantasyTeamId" value="@Model.CurrentDraftingTeamId" />
+                                                        <button type="submit" 
+                                                                class="btn btn-sm btn-success @(Model.CurrentDraftingTeamId == 0 ? "disabled" : "")"
+                                                                disabled="@(Model.CurrentDraftingTeamId == 0)">
+                                                            <i class="fas fa-plus-circle me-1"></i>Draft
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="3" class="text-center py-4">
+                                                <div class="text-muted">
+                                                    <i class="fas fa-info-circle me-2"></i>No available players found
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                                <!-- End Draft Button -->
+                                @if (Model.IsDraftInProgress)
+                                {
+                                    <form method="post" asp-page-handler="EndDraft" id="endDraftForm">
+                                        <button type="submit" class="btn btn-danger mt-3">End Draft</button>
+                                    </form>
+                                }
+                            </div>
+
+                            <!-- Players Pagination -->
+                            @if (Model.PlayerTotalPages > 1)
+                            {
+                                <nav aria-label="Available players navigation" class="mt-4">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item @(Model.PlayerCurrentPage == 1 ? "disabled" : "")">
+                                            <a class="page-link" asp-page="/FantasyTeam"
+                                               asp-route-PlayerCurrentPage="1"
+                                               asp-route-PlayerSearchString="@Model.PlayerSearchString"
+                                               asp-route-PlayerSortOrder="@Model.PlayerSortOrder"
+                                               asp-route-PositionFilter="@Model.PositionFilter">&laquo;</a>
+                                        </li>
+                                        @for (int i = Math.Max(1, Model.PlayerCurrentPage - 2);
+                                              i <= Math.Min(Model.PlayerTotalPages, Model.PlayerCurrentPage + 2); i++)
+                                        {
+                                            <li class="page-item @(i == Model.PlayerCurrentPage ? "active" : "")">
+                                                <a class="page-link" asp-page="/FantasyTeam"
+                                                   asp-route-PlayerCurrentPage="@i"
+                                                   asp-route-PlayerSearchString="@Model.PlayerSearchString"
+                                                   asp-route-PlayerSortOrder="@Model.PlayerSortOrder"
+                                                   asp-route-PositionFilter="@Model.PositionFilter">@i</a>
+                                            </li>
+                                        }
+                                        <li class="page-item @(Model.PlayerCurrentPage == Model.PlayerTotalPages ? "disabled" : "")">
+                                            <a class="page-link" asp-page="/FantasyTeam"
+                                               asp-route-PlayerCurrentPage="@Model.PlayerTotalPages"
+                                               asp-route-PlayerSearchString="@Model.PlayerSearchString"
+                                               asp-route-PlayerSortOrder="@Model.PlayerSortOrder"
+                                               asp-route-PositionFilter="@Model.PositionFilter">&raquo;</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Fantasy Teams Filters -->
+            <form method="get" class="row g-3 mb-4 mt-4" id="filterForm">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" 
+                           placeholder="Search by team name (press Enter)" 
+                           asp-for="SearchString"
+                           id="nameSearch" />
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select filter-control" asp-for="SortOrder" id="sortOrder">
+                        <option value="">Sort By</option>
+                        <option value="name">Team Name ↑</option>
+                        <option value="name_desc">Team Name ↓</option>
+                        <option value="wins">Wins ↑</option>
+                        <option value="wins_desc">Wins ↓</option>
+                        <option value="losses">Losses ↑</option>
+                        <option value="losses_desc">Losses ↓</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-secondary w-100" id="resetButton">Reset</button>
+                </div>
+
+                <!-- Required hidden fields -->
+                <input type="hidden" name="CurrentPage" value="@Model.CurrentPage" />
+            </form>
+
+            <!-- Fantasy Teams Table -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <a asp-page="/FantasyTeam" 
+                                   asp-route-sortOrder="@(Model.SortOrder == "name" ? "name_desc" : "name")"
+                                   asp-route-searchString="@Model.SearchString"
+                                   class="text-dark text-decoration-none">
+                                    Team Name @(Model.SortOrder switch { "name" => "↑", "name_desc" => "↓", _ => "" })
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <a asp-page="/FantasyTeam" 
+                                   asp-route-sortOrder="@(Model.SortOrder == "wins" ? "wins_desc" : "wins")"
+                                   asp-route-searchString="@Model.SearchString"
+                                   class="text-dark text-decoration-none">
+                                    Wins @(Model.SortOrder switch { "wins" => "↑", "wins_desc" => "↓", _ => "" })
+                                </a>
+                            </th>
+                            <th scope="col">Losses</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.FantasyTeams.Any())
+                        {
+                            @foreach (FantasyTeam team in Model.FantasyTeams)
+                            {
+                                <tr>
+                                    <td>@team.FantasyTeamID</td>
+                                    <td><strong>@team.FantasyTeamName</strong></td>
+                                    <td>@team.Wins</td>
+                                    <td>@team.Losses</td>
+                                    <td>
+                                        <a asp-page="./Edit" asp-route-id="@team.FantasyTeamID" 
+                                           class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fas fa-edit me-1"></i>Edit
+                                        </a>
+                                        <a asp-page="./Delete" asp-route-id="@team.FantasyTeamID" 
+                                           class="btn btn-sm btn-outline-danger me-1">
+                                            <i class="fas fa-trash me-1"></i>Delete
+                                        </a>
+                                        <a asp-page="./Roster" asp-route-id="@team.FantasyTeamID" 
+                                           class="btn btn-sm btn-outline-secondary">
+                                            <i class="fas fa-users me-1"></i>Roster
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-info-circle me-2"></i>No fantasy teams found
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (Model.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        @{
+                            const int pageRangeSize = 10;
+                            int startPage = Math.Max(1, Model.CurrentPage - (pageRangeSize / 2));
+                            int endPage = Math.Min(Model.TotalPages, startPage + pageRangeSize - 1);
+                            
+                            if (endPage - startPage + 1 < pageRangeSize)
+                            {
+                                startPage = Math.Max(1, endPage - pageRangeSize + 1);
+                            }
+                        }
+                        <!-- Previous and First Page Links -->
+                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-page="/FantasyTeam" asp-route-currentPage="1">«</a>
+                        </li>
+
+                        <!-- Previous Page Link -->
+                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-page="/FantasyTeam" asp-route-currentPage="@Model.CurrentPage - 1">‹</a>
+                        </li>
+
+                        @if (startPage > 1)
+                        {
+                            <li class="page-item disabled"><span class="page-link">...</span></li>;
+                        }
+
+                        <!-- Page Number Links -->
+                        @for (int i = startPage; i <= endPage; i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-page="/FantasyTeam" asp-route-currentPage="@i">@i</a>
+                            </li>;
+                        }
+
+                        @if (endPage < Model.TotalPages)
+                        {
+                            <li class="page-item disabled"><span class="page-link">...</span></li>;
+                        }
+
+                        <!-- Next Page Link -->
+                        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-page="/FantasyTeam" asp-route-currentPage="@Model.CurrentPage + 1">›</a>
+                        </li>
+
+                        <!-- Last Page Link -->
+                        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-page="/FantasyTeam" asp-route-currentPage="@Model.TotalPages">»</a>
+                        </li>
+                    </ul>
+                </nav>;
+            }
+        </div> 
+    </div> 
+</div>
+
+@section Scripts {
+    <script>
+    // Tab handling
+    var triggerTabList = [].slice.call(document.querySelectorAll('#statsTabs button'));
+    triggerTabList.forEach(function (triggerEl) {
+        var tabTrigger = new bootstrap.Tab(triggerEl);
+        triggerEl.addEventListener('click', function (event) {
+            event.preventDefault();
+            tabTrigger.show();
+        });
+    });
+
+    // Team filter handling
+    const teamFilterForm = document.getElementById('filterForm');
+    const teamFilters = teamFilterForm?.querySelectorAll('select.filter-control');
+    const teamNameSearch = document.getElementById('nameSearch');
+    let previousTeamSearchValue = teamNameSearch?.value.trim() || '';
+
+    if (teamFilters) {
+        teamFilters.forEach(control => {
+            control.addEventListener('change', () => {
+                teamFilterForm.submit();
+            });
+        });
+    }
+
+    if (teamNameSearch) {
+        // Handle Enter key
+        teamNameSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                teamFilterForm.submit();
+            }
+        });
+
+        // Handle loss of focus (blur)
+        teamNameSearch.addEventListener('blur', () => {
+            const currentValue = teamNameSearch.value.trim();
+            if (currentValue !== previousTeamSearchValue) {
+                teamFilterForm.submit();
+            }
+            previousTeamSearchValue = currentValue;
+        });
+
+        // Handle input changes
+        let teamSearchTimeout;
+        teamNameSearch.addEventListener('input', () => {
+            const currentValue = teamNameSearch.value.trim();
+            clearTimeout(teamSearchTimeout);
+            
+            if (currentValue === '' && previousTeamSearchValue !== '') {
+                teamFilterForm.submit();
+            } else {
+                // Auto-submit after 500ms of typing
+                teamSearchTimeout = setTimeout(() => {
+                    if (currentValue !== previousTeamSearchValue) {
+                        teamFilterForm.submit();
+                    }
+                }, 500);
+            }
+            previousTeamSearchValue = currentValue;
+        });
+    }
+
+    document.getElementById('resetButton')?.addEventListener('click', () => {
+        if (teamFilters) {
+            teamFilters.forEach(select => {
+                select.selectedIndex = 0;
+            });
+        }
+        if (teamNameSearch) {
+            teamNameSearch.value = '';
+            previousTeamSearchValue = '';
+        }
+        teamFilterForm?.submit();
+    });
+
+    // Player filter handling (only when draft is in progress)
+    const playerFilterForm = document.getElementById('playerFilterForm');
+    const playerFilters = playerFilterForm?.querySelectorAll('select.filter-control');
+    const playerNameSearch = document.getElementById('playerNameSearch');
+    let previousPlayerSearchValue = playerNameSearch?.value.trim() || '';
+
+    if (playerFilters) {
+        playerFilters.forEach(control => {
+            control.addEventListener('change', () => {
+                playerFilterForm.submit();
+            });
+        });
+    }
+
+    if (playerNameSearch) {
+        // Handle Enter key
+        playerNameSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                playerFilterForm.submit();
+            }
+        });
+
+        // Handle loss of focus (blur)
+        playerNameSearch.addEventListener('blur', () => {
+            const currentValue = playerNameSearch.value.trim();
+            if (currentValue !== previousPlayerSearchValue) {
+                playerFilterForm.submit();
+            }
+            previousPlayerSearchValue = currentValue;
+        });
+
+        // Handle input changes
+        let playerSearchTimeout;
+        playerNameSearch.addEventListener('input', () => {
+            const currentValue = playerNameSearch.value.trim();
+            clearTimeout(playerSearchTimeout);
+            
+            if (currentValue === '' && previousPlayerSearchValue !== '') {
+                playerFilterForm.submit();
+            } else {
+                // Auto-submit after 500ms of typing
+                playerSearchTimeout = setTimeout(() => {
+                    if (currentValue !== previousPlayerSearchValue) {
+                        playerFilterForm.submit();
+                    }
+                }, 500);
+            }
+            previousPlayerSearchValue = currentValue;
+        });
+    }
+
+    document.getElementById('playerResetButton')?.addEventListener('click', () => {
+        if (playerFilters) {
+            playerFilters.forEach(select => {
+                select.selectedIndex = 0;
+            });
+        }
+        if (playerNameSearch) {
+            playerNameSearch.value = '';
+            previousPlayerSearchValue = '';
+        }
+        playerFilterForm?.submit();
+    });
+    </script>
+}

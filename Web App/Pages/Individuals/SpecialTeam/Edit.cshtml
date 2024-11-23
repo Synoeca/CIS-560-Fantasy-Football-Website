@@ -1,0 +1,70 @@
+﻿@page "{playerId:int}/{gameId:int}"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Web_App.Pages.Individuals.SpecialTeam.EditModel
+@{
+    ViewData["Title"] = "Edit Special Teams Stats";
+}
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Edit Special Teams Stats</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <input type="hidden" asp-for="SpecialTeams!.PlayerID" />
+                <input type="hidden" asp-for="SpecialTeams!.GameID" />
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Game</label>
+                        <input type="text" class="form-control" value="@Model.Game?.Date.ToString("MM/dd/yyyy")" disabled />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams!.FieldGoalsMade" class="form-label">Field Goals Made</label>
+                        <input asp-for="SpecialTeams!.FieldGoalsMade" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="SpecialTeams!.FieldGoalsMade" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams!.FieldGoalsAttempted" class="form-label">Field Goals Attempted</label>
+                        <input asp-for="SpecialTeams!.FieldGoalsAttempted" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="SpecialTeams!.FieldGoalsAttempted" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams!.ExtraPointsMade" class="form-label">Extra Points Made</label>
+                        <input asp-for="SpecialTeams!.ExtraPointsMade" class="form-control" type="number" min="0" />
+                        <span asp-validation-for="SpecialTeams!.ExtraPointsMade" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams!.ExtraPointsAttempted" class="form-label">Extra Points Attempted</label>
+                        <input asp-for="SpecialTeams!.ExtraPointsAttempted" class="form-control" type="number" min="0" />
+                        <span asp-validation-for="SpecialTeams!.ExtraPointsAttempted" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams!.ReturnYards" class="form-label">Return Yards</label>
+                        <input asp-for="SpecialTeams!.ReturnYards" class="form-control" type="number" step="0.1" required />
+                        <span asp-validation-for="SpecialTeams!.ReturnYards" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="SpecialTeams!.ReturnAttempts" class="form-label">Return Attempts</label>
+                        <input asp-for="SpecialTeams!.ReturnAttempts" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="SpecialTeams!.ReturnAttempts" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <a asp-page="/Individuals/Individual"
+                           asp-route-playerId="@Model.PlayerID"
+                           asp-route-activeTab="specialteams"
+                           class="btn btn-secondary">Back to Player</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

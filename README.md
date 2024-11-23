@@ -39,14 +39,13 @@ Here is a screenshot of our Fantasy Team page:
 ![Fantasy Team](https://github.com/user-attachments/assets/ed36842d-d60a-42b1-93ec-9960a621e0f2)
 
 Here is a screenshot of our Season Performance page:
-![Season Performance](https://github.com/user-attachments/assets/7efdba3a-43d1-4fb2-9738-b48f9903a13b)
+![Season Performance](https://github.com/user-attachments/assets/ee1e12d0-dfcd-4ea9-bf95-b6a7b37cfb0a)
 
 Here is a screenshot of our Player Performance page:
-![Player Performance](https://github.com/user-attachments/assets/c18977e3-6cb6-4948-b4be-c6fe09522fa4)
+![Player Performance](https://github.com/user-attachments/assets/497295ff-0c89-48f0-802e-07b81cd2fda4)
 
 Here is a screenshot of our Fantasy Team Performance page:
-![Fantasy Team Performance](https://github.com/user-attachments/assets/5734cade-7c0c-4c61-8df0-99924153d8b3)
+![Fantasy Team Performance](https://github.com/user-attachments/assets/1055688a-17e3-4aa0-8986-435150714b83)
 
 Here is a screenshot of our Fantasy Team Points page:
-![Fantasy Team Points](https://github.com/user-attachments/assets/64a3302e-b758-4dbd-87d4-abb288ec3508)
-
+![Fantasy Team Points](https://github.com/user-attachments/assets/c88780a7-740b-4494-bf2f-75c83b84f4eb)

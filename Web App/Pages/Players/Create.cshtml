@@ -1,0 +1,70 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CreateModel
+@{
+    ViewData["Title"] = "Create Player";
+}
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Create New Player</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Player.Name" class="form-label">Name</label>
+                        <input asp-for="Player.Name" class="form-control" required />
+                        <span asp-validation-for="Player.Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Player.TeamID" class="form-label">Team</label>
+                        <select asp-for="Player.TeamID" class="form-select" asp-items="Model.TeamsList" required>
+                            <option value="">Select Team</option>
+                        </select>
+                        <span asp-validation-for="Player.TeamID" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Player.Class" class="form-label">Class</label>
+                        <select asp-for="Player.Class" class="form-select" asp-items="Model.ClassesList" required>
+                            <option value="">Select Class</option>
+                        </select>
+                        <span asp-validation-for="Player.Class" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Player.HealthStatus" class="form-label">Health Status</label>
+                        <select asp-for="Player.HealthStatus" class="form-select" required>
+                            <option value="Healthy">Healthy</option>
+                            <option value="Injured">Injured</option>
+                        </select>
+                        <span asp-validation-for="Player.HealthStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Player.BenchStatus" class="form-label">Bench Status</label>
+                        <select asp-for="Player.BenchStatus" class="form-select" required>
+                            <option value="Active">Active</option>
+                            <option value="Benched">Benched</option>
+                        </select>
+                        <span asp-validation-for="Player.BenchStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Create Player</button>
+                        <a asp-page="./Player" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,52 @@
+﻿@page "{playerId:int}/{gameId:int}"
+@model DeleteModel
+@{
+    ViewData["Title"] = "Delete Offense Stats";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Delete Offense Stats</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h3 class="alert-heading">Are you sure you want to delete these offense stats?</h3>
+                <p>This action cannot be undone.</p>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Game Date</dt>
+                        <dd class="col-sm-8">@Model.Game?.Date.ToString("MM/dd/yyyy")</dd>
+                        <dt class="col-sm-4">Passing Yards</dt>
+                        <dd class="col-sm-8">@Model.Offense.PassingYards</dd>
+                        <dt class="col-sm-4">Passing Attempts</dt>
+                        <dd class="col-sm-8">@Model.Offense.PassingAttempts</dd>
+                        <dt class="col-sm-4">Rushing Yards</dt>
+                        <dd class="col-sm-8">@Model.Offense.RushingYards</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Carries</dt>
+                        <dd class="col-sm-8">@Model.Offense.Carries</dd>
+                        <dt class="col-sm-4">Receiving Yards</dt>
+                        <dd class="col-sm-8">@Model.Offense.ReceivingYards</dd>
+                        <dt class="col-sm-4">Receptions</dt>
+                        <dd class="col-sm-8">@Model.Offense.Receptions</dd>
+                        <dt class="col-sm-4">Touchdowns</dt>
+                        <dd class="col-sm-8">@Model.Offense.Touchdowns</dd>
+                    </dl>
+                </div>
+            </div>
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <button type="submit" class="btn btn-danger">Delete Offense Stats</button>
+                <a asp-page="/Individuals/Individual"
+                   asp-route-playerId="@Model.PlayerID"
+                   asp-route-activeTab="offense"
+                   class="btn btn-secondary">Back to Player</a>
+            </form>
+        </div>
+    </div>
+</div>

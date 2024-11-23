@@ -1,0 +1,14 @@
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'Team13')
+BEGIN
+    CREATE DATABASE Team13;
+END
+GO
+
+USE Team13;
+GO
+
+IF SCHEMA_ID(N'Football') IS NULL
+BEGIN
+    EXEC(N'CREATE SCHEMA Football;');
+END
+GO

@@ -1,0 +1,58 @@
+﻿@page "{playerId:int}/{gameId:int}"
+@model EditModel
+@{
+    ViewData["Title"] = "Edit Defense Stats";
+}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mb-0">Edit Defense Stats</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="PlayerID" />
+                <input type="hidden" asp-for="Defense.PlayerID" />
+                <input type="hidden" asp-for="Defense.GameID" />
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Game</label>
+                        <input type="text" class="form-control" value="@Model.Game?.Date.ToString("MM/dd/yyyy")" disabled />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.Interceptions" class="form-label">Interceptions</label>
+                        <input asp-for="Defense.Interceptions" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.Interceptions" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.Tackles" class="form-label">Tackles</label>
+                        <input asp-for="Defense.Tackles" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.Tackles" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.Sacks" class="form-label">Sacks</label>
+                        <input asp-for="Defense.Sacks" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.Sacks" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Defense.ForcedFumbles" class="form-label">Forced Fumbles</label>
+                        <input asp-for="Defense.ForcedFumbles" class="form-control" type="number" min="0" required />
+                        <span asp-validation-for="Defense.ForcedFumbles" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <a asp-page="/Individuals/Individual"
+                           asp-route-playerId="@Model.PlayerID"
+                           asp-route-activeTab="defense"
+                           class="btn btn-secondary">Back to Player</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

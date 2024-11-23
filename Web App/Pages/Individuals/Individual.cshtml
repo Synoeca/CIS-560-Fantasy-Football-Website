@@ -1,0 +1,311 @@
+﻿@page
+@using DataAccess.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IndividualModel
+@{
+    ViewData["Title"] = "Player Details";
+    ViewData["Subtitle"] = $"{Model.Player?.Name}'s Statistics";
+    string activeTab = string.IsNullOrEmpty(Model.ActiveTab) ? "offense" : Model.ActiveTab.ToLower();
+}
+
+<style>
+    #statsTabs .nav-link {
+        color: var(--primary-color);
+        background-color: var(--secondary-color);
+        border: 1px solid var(--primary-color);
+    }
+
+        #statsTabs .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        #statsTabs .nav-link:hover {
+            color: white;
+            background-color: var(--primary-color);
+        }
+</style>
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">@Model.Player?.Name</h2>
+                <span class="badge badge-primary">@Model.Player?.Class</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <p>
+                <span class="fw-bold">Team:</span>
+                @{
+                    System.Diagnostics.Debug.Assert(Model.Player != null, "Model.Player != null");
+                }
+                @Model.TeamRepository!.GetTeamNameById(Model.Player.TeamID) | <span class="fw-bold">Status:</span> <span class="badge @(Model.Player.BenchStatus.ToLower() == "active" ? "status-active" : "status-benched")">@Model.Player.BenchStatus</span>
+            </p>
+            
+            <ul class="nav nav-tabs" id="statsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(activeTab == "offense" ? "active" : "")"
+                            id="offense-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#offense"
+                            type="button"
+                            role="tab"
+                            aria-controls="offense"
+                            aria-selected="true">
+                        Offense
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(activeTab == "defense" ? "active" : "")"
+                            id="defense-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#defense"
+                            type="button"
+                            role="tab"
+                            aria-controls="defense"
+                            aria-selected="false">
+                        Defense
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(activeTab == "specialteams" ? "active" : "")"
+                            id="special-teams-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#specialteams"
+                            type="button"
+                            role="tab"
+                            aria-controls="specialteams"
+                            aria-selected="false">
+                        Special Teams
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content mt-3" id="statsTabContent">
+                <div class="tab-pane fade @(activeTab == "offense" ? "show active" : "")"
+                     id="offense"
+                     role="tabpanel"
+                     aria-labelledby="offense-tab">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Offense Statistics</h3>
+                        <a asp-page="./Offenses/Create" asp-route-playerId="@Model.Player.PlayerID" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i> Add Offense Stats
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        @if (Model.OffenseStats.Any())
+                        {
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Matchup</th>
+                                        <th>Passing Yards</th>
+                                        <th>Passing Attempts</th>
+                                        <th>Rushing Yards</th>
+                                        <th>Carries</th>
+                                        <th>Receiving Yards</th>
+                                        <th>Receptions</th>
+                                        <th>Touchdowns</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Offense? stat in Model.OffenseStats)
+                                    {
+                                        Game? game = Model.GameRepository.GetGameById(stat.GameID);
+                                        string awayTeam = Model.TeamRepository.GetTeamNameById((int)game?.AwayTeam!);
+                                        <tr>
+                                            <td>@game?.Date.ToString("MM/dd/yyyy")</td>
+                                            <td>vs. @awayTeam</td>
+                                            <td>@stat.PassingYards.ToString("F1")</td>
+                                            <td>@stat.PassingAttempts</td>
+                                            <td>@stat.RushingYards.ToString("F1")</td>
+                                            <td>@stat.Carries</td>
+                                            <td>@stat.ReceivingYards.ToString("F1")</td>
+                                            <td>@stat.Receptions</td>
+                                            <td>@stat.Touchdowns</td>
+                                            <td class="text-end">
+                                                <div class="action-buttons">
+                                                    <a asp-page="./Offenses/Edit" asp-route-playerId="@Model.Player.PlayerID" asp-route-gameId="@stat.GameID"
+                                                       class="btn btn-sm btn-outline-primary"
+                                                       title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a asp-page="./Offenses/Delete" asp-route-playerId="@Model.Player.PlayerID" asp-route-gameId="@stat.GameID"
+                                                       class="btn btn-sm btn-outline-danger"
+                                                       title="Delete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="fas fa-info-circle me-2"></i>No offense statistics available
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade @(activeTab == "defense" ? "show active" : "")"
+                     id="defense"
+                     role="tabpanel"
+                     aria-labelledby="defense-tab">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Defense Statistics</h3>
+                        <a asp-page="./Defenses/Create" asp-route-playerId="@Model.Player.PlayerID" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i> Add Defense Stats
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        @if (Model.DefenseStats.Any())
+                        {
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Matchup</th>
+                                        <th>Interceptions</th>
+                                        <th>Tackles</th>
+                                        <th>Sacks</th>
+                                        <th>Forced Fumbles</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Defense? stat in Model.DefenseStats)
+                                    {
+                                        Game? game = Model.GameRepository.GetGameById(stat.GameID);
+                                        string awayTeam = Model.TeamRepository.GetTeamNameById((int)game?.AwayTeam!);
+                                        <tr>
+                                            <td>@game?.Date.ToString("MM/dd/yyyy")</td>
+                                            <td>vs. @awayTeam</td>
+                                            <td>@stat.Interceptions</td>
+                                            <td>@stat.Tackles</td>
+                                            <td>@stat.Sacks</td>
+                                            <td>@stat.ForcedFumbles</td>
+                                            <td class="text-end">
+                                                <div class="action-buttons">
+                                                    <a asp-page="./Defenses/Edit" asp-route-playerId="@Model.Player.PlayerID" asp-route-gameId="@stat.GameID"
+                                                       class="btn btn-sm btn-outline-primary"
+                                                       title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a asp-page="./Defenses/Delete" asp-route-playerId="@Model.Player.PlayerID" asp-route-gameId="@stat.GameID"
+                                                       class="btn btn-sm btn-outline-danger"
+                                                       title="Delete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="fas fa-info-circle me-2"></i>No Defense statistics available
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade @(activeTab == "specialteams" ? "show active" : "")"
+                     id="specialteams"
+                     role="tabpanel"
+                     aria-labelledby="special-teams-tab">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Special Teams Statistics</h3>
+                        <a asp-page="./SpecialTeam/Create" asp-route-playerId="@Model.Player.PlayerID" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i> Add Special Teams Stats
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        @if (Model.SpecialTeamsStats!.Any())
+                        {
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Matchup</th>
+                                        <th>Field Goals Made</th>
+                                        <th>Field Goals Attempted</th>
+                                        <th>Extra Points Made</th>
+                                        <th>Extra Points Attempted</th>
+                                        <th>Return Yards</th>
+                                        <th>Return Attempts</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (SpecialTeams? stat in Model.SpecialTeamsStats!)
+                                    {
+                                        Game? game = Model.GameRepository?.GetGameById(stat.GameID);
+                                        string awayTeam = Model.TeamRepository.GetTeamNameById((int)game?.AwayTeam!);
+                                        <tr>
+                                            <td>@game?.Date.ToString("MM/dd/yyyy")</td>
+                                            <td>vs. @awayTeam</td>
+                                            <td>@stat.FieldGoalsMade</td>
+                                            <td>@stat.FieldGoalsAttempted</td>
+                                            <td>@stat.ExtraPointsMade</td>
+                                            <td>@stat.ExtraPointsAttempted</td>
+                                            <td>@stat.ReturnYards.ToString("F1")</td>
+                                            <td>@stat.ReturnAttempts</td>
+                                            <td class="text-end">
+                                                <div class="action-buttons">
+                                                    <a asp-page="./SpecialTeam/Edit" asp-route-playerId="@Model.Player.PlayerID" asp-route-gameId="@stat.GameID"
+                                                       class="btn btn-sm btn-outline-primary"
+                                                       title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a asp-page="./SpecialTeam/Delete" asp-route-playerId="@Model.Player.PlayerID" asp-route-gameId="@stat.GameID"
+                                                       class="btn btn-sm btn-outline-danger"
+                                                       title="Delete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="fas fa-info-circle me-2"></i>No Special Teams statistics available
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var triggerTabList = [].slice.call(document.querySelectorAll('#statsTabs button'))
+        triggerTabList.forEach(function (triggerEl) {
+            var tabTrigger = new bootstrap.Tab(triggerEl)
+
+            triggerEl.addEventListener('click', function (event) {
+                event.preventDefault()
+                tabTrigger.show()
+            })
+        })
+    </script>
+}

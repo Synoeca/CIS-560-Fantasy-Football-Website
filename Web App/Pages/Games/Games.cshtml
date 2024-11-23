@@ -1,5 +1,6 @@
 ﻿@page
 @using DataAccess.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model GamesModel
 @{
     ViewData["Title"] = "Games";
@@ -10,23 +11,29 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h2 class="mb-0">Games Schedule</h2>
-                <span class="badge badge-primary">Total: @(Model.Games?.Count ?? 0)</span>
+                <div>
+                    <span class="badge badge-primary me-2">Total: @(Model.Games?.Count ?? 0)</span>
+                    <a asp-page="./Create" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Create New Game
+                    </a>
+                </div>
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
-                    <thead class="table-light">
+                    <thead style="background-color: var(); color: var();">
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Week</th>
                             <th scope="col">Date</th>
                             <th scope="col">Home Team</th>
                             <th scope="col">Away Team</th>
                             <th scope="col">Home Score</th>
                             <th scope="col">Away Score</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
                     <tbody>
                         @if (Model.Games != null && Model.Games.Any())
                         {
@@ -34,18 +41,37 @@
                             {
                                 <tr>
                                     <td>@game.GameID</td>
+                                    <td>@game.Week</td>
                                     <td>@game.Date.ToString("MM/dd/yyyy")</td>
-                                    <td><strong>@Model.GameRepository.GetTeamNameById(Convert.ToInt32(game.HomeTeam))</strong></td>
-                                    <td><strong>@Model.GameRepository.GetTeamNameById(Convert.ToInt32(game.AwayTeam))</strong></td>
+                                    <td>
+                                        <strong>@Model.GameRepository.GetTeamNameById(Convert.ToInt32(game.HomeTeam))</strong>
+                                    </td>
+                                    <td>
+                                        <strong>@Model.GameRepository.GetTeamNameById(Convert.ToInt32(game.AwayTeam))</strong>
+                                    </td>
                                     <td>@game.HomeTeamScore</td>
                                     <td>@game.AwayTeamScore</td>
+                                    <td class="text-end">
+                                        <div class="action-buttons">
+                                            <a asp-page="./Edit" asp-route-id="@game.GameID"
+                                               class="btn btn-sm btn-outline-primary"
+                                               title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                        <a asp-page="./Delete" asp-route-id="@game.GameID"
+                                           class="btn btn-sm btn-outline-danger"
+                                           title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="6" class="text-center py-4">
+                                <td colspan="8" class="text-center py-4">
                                     <div class="text-muted">
                                         <i class="fas fa-info-circle me-2"></i>No games found in the database
                                     </div>
