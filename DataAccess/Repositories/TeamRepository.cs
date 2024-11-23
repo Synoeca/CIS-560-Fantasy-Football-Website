@@ -1,8 +1,8 @@
 ﻿using DataAccess.Models;
+using DataAccess.Queries;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.SqlClient;
-using FootballData.Sql.Queries;
 
 namespace DataAccess.Repositories
 {

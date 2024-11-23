@@ -1,5 +1,5 @@
 ﻿using DataAccess.Models;
-using FootballData.Sql.Queries;
+using DataAccess.Queries;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
