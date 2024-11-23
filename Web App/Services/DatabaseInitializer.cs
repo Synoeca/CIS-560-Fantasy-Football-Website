@@ -53,7 +53,7 @@ namespace Web_App.Services
 
                     // Read the CreateDatabase.sql file from the correct path
                     string createDbScript = await File.ReadAllTextAsync(
-                        Path.Combine(_environment.ContentRootPath, "..", "DataAccess", "SQL", "sqls", "CreateDatabase.sql"));
+                        Path.Combine(_environment.ContentRootPath, "..", "DataAccess", "Tables", "CreateDatabase.sql"));
 
                     foreach (string batch in SplitSqlStatements(createDbScript))
                     {
@@ -130,7 +130,8 @@ namespace Web_App.Services
 
                 _logger.LogInformation("Database not initialized. Starting initialization process...");
 
-                string sqlFolderPath = Path.Combine(_environment.ContentRootPath, "..", "DataAccess", "SQL", "sqls");
+                string sqlFolderPath1 = Path.Combine(_environment.ContentRootPath, "..", "DataAccess", "Tables");
+                string sqlFolderPath2 = Path.Combine(_environment.ContentRootPath, "..", "DataAccess", "Data");
                 string[] sqlFiles =
                 [
                     "DropTables.sql",
@@ -152,13 +153,28 @@ namespace Web_App.Services
                 await using SqlConnection connection = new(_connectionString);
                 await connection.OpenAsync();
 
+                int i = 0;
+
                 foreach (string file in sqlFiles)
                 {
-                    string filePath = Path.Combine(sqlFolderPath, file);
-                    if (!File.Exists(filePath))
+                    string filePath;
+                    if (i < 2)
                     {
-                        _logger.LogWarning($"SQL file not found: {filePath}");
-                        continue;
+                        filePath = Path.Combine(sqlFolderPath1, file);
+                        if (!File.Exists(filePath))
+                        {
+                            _logger.LogWarning($"SQL file not found: {filePath}");
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        filePath = Path.Combine(sqlFolderPath2, file);
+                        if (!File.Exists(filePath))
+                        {
+                            _logger.LogWarning($"SQL file not found: {filePath}");
+                            continue;
+                        }
                     }
 
                     _logger.LogInformation($"Executing SQL script: {file}");
@@ -172,6 +188,7 @@ namespace Web_App.Services
                         }
                     }
                     _logger.LogInformation($"Successfully executed SQL script: {file}");
+                    i++;
                 }
 
                 _logger.LogInformation("Database initialization completed successfully.");
