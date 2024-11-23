@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 using DataAccess.Models;
-using DataAccess.Queries;
+using FootballData.Sql.Queries;
 
 namespace DataAccess.Repositories
 {

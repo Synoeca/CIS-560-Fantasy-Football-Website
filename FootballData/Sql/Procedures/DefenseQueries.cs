@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Queries
+namespace FootballData.Sql.Queries
 {
     public static class DefenseQueries
     {
